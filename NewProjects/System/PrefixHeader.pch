@@ -1,0 +1,47 @@
+//
+//  PrefixHeader.pch
+//  NewProjects
+//
+//  Created by feijiu_1 on 2017/12/7.
+//  Copyright © 2017年 DSOperation. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#define NSUSE_DEFO [NSUserDefaults standardUserDefaults]
+#define ScreenWidth ([UIScreen mainScreen].bounds.size.width)
+#define ScreenHeight ([UIScreen mainScreen].bounds.size.height)
+#define kDevice_Is_iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+/*
+  category
+ */
+#import "UIColor+ColorChange.h"
+#import "UITextField+PlaceholderColor.h"
+#import "UIButton+SGImagePosition.h"
+
+
+//6217  8550 0003 3957 549
+/*
+ 颜色值 RGB(166, 13, 24)
+ */
+#define RGB(x, y, z) [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1.0]
+#define BG_COLOR  RGB(239,239,239)
+#define Main_Color RGB(166, 14, 22)
+
+/*
+ 第三方
+ */
+#import "SDAutoLayout.h"
+#import "LCProgressHUD.h"
+#import "AFNetworking.h"
+#import "ToolClass.h"
+#import "UIButton+WebCache.h"//按钮加载url
+#import "UIImageView+WebCache.h"//图片加载url
+
+
+
+
+
+#endif /* PrefixHeader_pch */
