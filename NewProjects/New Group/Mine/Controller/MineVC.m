@@ -24,11 +24,14 @@ static const CGFloat ratio =0.6;
 
 
 - (void)viewWillAppear:(BOOL)animated{
-    
 // 设置导航栏背景透明(取值范围0~1)
    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
 //去掉透明后导航栏下边的黑边
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+     [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:1];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -163,13 +166,15 @@ static const CGFloat ratio =0.6;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row==0) {
-//        BasicInforMationVC * vc
+        BasicInforMationVC * vc=[BasicInforMationVC new];
+        vc.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     
     
-    LoginVC * vc =[LoginVC new];
-    vc.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:vc animated:YES];
+//    LoginVC * vc =[LoginVC new];
+//    vc.hidesBottomBarWhenPushed=YES;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
