@@ -10,10 +10,21 @@
 #import "RegistVC.h"//注册
 @interface LoginVC ()
 @property(nonatomic,strong)UIView * bgView;
+@property(nonatomic,strong)UITextField * phoneText;
+@property(nonatomic,strong)UITextField * pswText;
 @end
 
 @implementation LoginVC
 
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.hidden=YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+     self.navigationController.navigationBar.hidden=NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -69,6 +80,7 @@
     accountText.font=[UIFont systemFontOfSize:15];
     accountText.leftView=[ToolClass imageViewNameStr:@"login_phone"];
     accountText.leftViewMode=UITextFieldViewModeAlways;
+    _phoneText=accountText;
     [textView sd_addSubviews:@[accountText]];
     accountText.sd_layout
     .leftSpaceToView(textView, 5)
@@ -78,6 +90,7 @@
     
     //密码
     UITextField * pswText =[UITextField new];
+    _pswText=pswText;
     pswText.placeholder=@"Password";
     pswText.placeholderColor=[UIColor whiteColor];
     pswText.textColor=[UIColor whiteColor];
@@ -154,7 +167,9 @@
 }
 //登录按钮
 -(void)loginBtnClick{
-    
+    NSString * user =[ToolClass isString:_phoneText.text];
+    NSString * psw =[ToolClass isString:_pswText.text];
+    NSLog(@">>>%@>>>>%@",user,psw);
 }
 
 

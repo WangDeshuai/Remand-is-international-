@@ -8,7 +8,14 @@
 
 #import "RegistVC.h"
 #import "RegistCell.h"
-@interface RegistVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface RegistVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+{
+    NSString * _userName;//用户名
+    NSString * _password;//密码
+    NSString * _password2;//确认密码
+    NSString * _emailText;//邮箱
+    NSString * _codeText;//验证码
+}
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)NSArray * titleArr;
 @end
@@ -57,7 +64,8 @@
 {
     RegistCell * cell =[RegistCell cellWithTableView:tableView IndexPath:indexPath];
     cell.titleLabel.text=_titleArr[indexPath.row];
-   
+    cell.contentText.delegate=self;
+    cell.contentText.tag=indexPath.row;
     if (indexPath.row==0) {
         cell.contentText.placeholder=@"Username must contain 8 or more  characters";
     }else if(indexPath.row==1){
@@ -127,7 +135,37 @@
 #pragma mark ---按钮点击事件
 -(void)footBtnClick:(UIButton*)btn{
     NSLog(@"按钮点击");
+    NSLog(@">>>>%@>>>%@>>>>%@>>>>%@>>>%@",_userName,_password,_password2,_emailText,_codeText);
+    
+    
+    
 }
+
+
+
+
+
+#pragma mark --textFieldDelegate
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag==0) {
+        //用户名
+        _userName=textField.text;
+    }else if (textField.tag==1){
+        //密码
+        _password=textField.text;
+    }else if (textField.tag==2){
+        //确认密码
+        _password2=textField.text;
+    }else if (textField.tag==3){
+        //邮箱
+        _emailText=textField.text;
+    }else if (textField.tag==4){
+        //验证码
+        _codeText=textField.text;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

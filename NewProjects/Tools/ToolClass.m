@@ -66,11 +66,12 @@
 
 #pragma mark --判断字符串是不是空
 +(NSString*)isString:(id)str{
-    NSString * string =nil;
-    if (str==nil || str==[NSNull null] || [str isEqualToString:@"(null)"] || [str isEqualToString:@"<null>"]) {
-        string=@"";
+    NSString * string =[NSString stringWithFormat:@"%@",str];
+    if (string==nil  || [string isEqualToString:@"(null)"] || [string isEqualToString:@"<null>"]) {
+        
+       return @"";
     }else{
-        string=[NSString stringWithFormat:@"%@",str];
+        return string;
     }
     
     

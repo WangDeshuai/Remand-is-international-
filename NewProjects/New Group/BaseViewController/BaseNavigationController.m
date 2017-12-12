@@ -18,7 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    self.navigationBar.barTintColor=[UIColor colorWithHexString:@"#b8211d"];//Main_Color;
+    self.navigationBar.barTintColor=Main_Color;
     self.navigationBar.barStyle = UIBarStyleBlack;
     self.interactivePopGestureRecognizer.enabled=NO;
     self.fd_prefersNavigationBarHidden = NO;

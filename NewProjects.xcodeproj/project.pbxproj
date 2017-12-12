@@ -52,6 +52,15 @@
 		9674BA781FDE612A00865E74 /* RegistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA771FDE612A00865E74 /* RegistCell.m */; };
 		9674BA7B1FDE836300865E74 /* BasicInforMationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */; };
 		9674BA7E1FDE881E00865E74 /* BasicInforMationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */; };
+		96B00DC11FDF6D56000EB2D2 /* PublishMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */; };
+		96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */; };
+		96B00DC81FDF722C000EB2D2 /* ChildPublishCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC71FDF722C000EB2D2 /* ChildPublishCell.m */; };
+		96B00DD21FDFAF66000EB2D2 /* ViewRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DD11FDFAF66000EB2D2 /* ViewRecordVC.m */; };
+		96B00DD51FDFAFA0000EB2D2 /* ViewRecordMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DD41FDFAFA0000EB2D2 /* ViewRecordMainVC.m */; };
+		96B00DDC1FDFB400000EB2D2 /* MyPrivilegeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DDB1FDFB400000EB2D2 /* MyPrivilegeVC.m */; };
+		96B00DE01FDFBF8B000EB2D2 /* MyPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DDF1FDFBF8B000EB2D2 /* MyPrivilegeCell.m */; };
+		96B00DE41FDFD6DF000EB2D2 /* MemberVIPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */; };
+		96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */; };
 		96C91D351FD8EB0700DF0CE3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D341FD8EB0700DF0CE3 /* AppDelegate.m */; };
 		96C91D381FD8EB0700DF0CE3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D371FD8EB0700DF0CE3 /* ViewController.m */; };
 		96C91D3D1FD8EB0700DF0CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C91D3C1FD8EB0700DF0CE3 /* Assets.xcassets */; };
@@ -237,6 +246,24 @@
 		9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicInforMationVC.m; sourceTree = "<group>"; };
 		9674BA7C1FDE881E00865E74 /* BasicInforMationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicInforMationCell.h; sourceTree = "<group>"; };
 		9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicInforMationCell.m; sourceTree = "<group>"; };
+		96B00DBF1FDF6D56000EB2D2 /* PublishMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublishMainVC.h; sourceTree = "<group>"; };
+		96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublishMainVC.m; sourceTree = "<group>"; };
+		96B00DC21FDF6D7B000EB2D2 /* ChildPublishVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildPublishVC.h; sourceTree = "<group>"; };
+		96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildPublishVC.m; sourceTree = "<group>"; };
+		96B00DC61FDF722C000EB2D2 /* ChildPublishCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildPublishCell.h; sourceTree = "<group>"; };
+		96B00DC71FDF722C000EB2D2 /* ChildPublishCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildPublishCell.m; sourceTree = "<group>"; };
+		96B00DD01FDFAF66000EB2D2 /* ViewRecordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewRecordVC.h; sourceTree = "<group>"; };
+		96B00DD11FDFAF66000EB2D2 /* ViewRecordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewRecordVC.m; sourceTree = "<group>"; };
+		96B00DD31FDFAFA0000EB2D2 /* ViewRecordMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewRecordMainVC.h; sourceTree = "<group>"; };
+		96B00DD41FDFAFA0000EB2D2 /* ViewRecordMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewRecordMainVC.m; sourceTree = "<group>"; };
+		96B00DDA1FDFB400000EB2D2 /* MyPrivilegeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPrivilegeVC.h; sourceTree = "<group>"; };
+		96B00DDB1FDFB400000EB2D2 /* MyPrivilegeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPrivilegeVC.m; sourceTree = "<group>"; };
+		96B00DDE1FDFBF8B000EB2D2 /* MyPrivilegeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPrivilegeCell.h; sourceTree = "<group>"; };
+		96B00DDF1FDFBF8B000EB2D2 /* MyPrivilegeCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPrivilegeCell.m; sourceTree = "<group>"; };
+		96B00DE21FDFD6DF000EB2D2 /* MemberVIPVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberVIPVC.h; sourceTree = "<group>"; };
+		96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberVIPVC.m; sourceTree = "<group>"; };
+		96B00DE61FDFD78E000EB2D2 /* MemberVIPCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberVIPCell.h; sourceTree = "<group>"; };
+		96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberVIPCell.m; sourceTree = "<group>"; };
 		96C91D301FD8EB0700DF0CE3 /* NewProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C91D331FD8EB0700DF0CE3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		96C91D341FD8EB0700DF0CE3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -530,10 +557,11 @@
 		04ED7B511FDC403500424718 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				04ED7B531FDC405E00424718 /* MineCell.h */,
-				04ED7B541FDC405E00424718 /* MineCell.m */,
-				9674BA7C1FDE881E00865E74 /* BasicInforMationCell.h */,
-				9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */,
+				96B00DE51FDFD72A000EB2D2 /* 会员VIP */,
+				96B00DDD1FDFBDBA000EB2D2 /* 我的特权 */,
+				96B00DC51FDF71FC000EB2D2 /* 发布信息 */,
+				96B00DBD1FDF63A1000EB2D2 /* 我的 */,
+				96B00DBC1FDF638A000EB2D2 /* 基本信息 */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -541,10 +569,12 @@
 		04ED7B521FDC403B00424718 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				96C91DC41FD8F09400DF0CE3 /* MineVC.h */,
-				96C91DC51FD8F09400DF0CE3 /* MineVC.m */,
-				9674BA791FDE836300865E74 /* BasicInforMationVC.h */,
-				9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */,
+				96B00DE11FDFD6B8000EB2D2 /* 会员VIP */,
+				96B00DD61FDFB36B000EB2D2 /* 我的特权 */,
+				96B00DCF1FDFAF1F000EB2D2 /* 查看记录 */,
+				96B00DBE1FDF6D28000EB2D2 /* 发布信息 */,
+				96B00DBA1FDF634C000EB2D2 /* 我的 */,
+				96B00DBB1FDF6373000EB2D2 /* 基本信息 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -675,6 +705,109 @@
 				9674BA771FDE612A00865E74 /* RegistCell.m */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		96B00DBA1FDF634C000EB2D2 /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				96C91DC41FD8F09400DF0CE3 /* MineVC.h */,
+				96C91DC51FD8F09400DF0CE3 /* MineVC.m */,
+			);
+			path = "我的";
+			sourceTree = "<group>";
+		};
+		96B00DBB1FDF6373000EB2D2 /* 基本信息 */ = {
+			isa = PBXGroup;
+			children = (
+				9674BA791FDE836300865E74 /* BasicInforMationVC.h */,
+				9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */,
+			);
+			path = "基本信息";
+			sourceTree = "<group>";
+		};
+		96B00DBC1FDF638A000EB2D2 /* 基本信息 */ = {
+			isa = PBXGroup;
+			children = (
+				9674BA7C1FDE881E00865E74 /* BasicInforMationCell.h */,
+				9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */,
+			);
+			path = "基本信息";
+			sourceTree = "<group>";
+		};
+		96B00DBD1FDF63A1000EB2D2 /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				04ED7B531FDC405E00424718 /* MineCell.h */,
+				04ED7B541FDC405E00424718 /* MineCell.m */,
+			);
+			path = "我的";
+			sourceTree = "<group>";
+		};
+		96B00DBE1FDF6D28000EB2D2 /* 发布信息 */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DBF1FDF6D56000EB2D2 /* PublishMainVC.h */,
+				96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */,
+				96B00DC21FDF6D7B000EB2D2 /* ChildPublishVC.h */,
+				96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */,
+			);
+			path = "发布信息";
+			sourceTree = "<group>";
+		};
+		96B00DC51FDF71FC000EB2D2 /* 发布信息 */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DC61FDF722C000EB2D2 /* ChildPublishCell.h */,
+				96B00DC71FDF722C000EB2D2 /* ChildPublishCell.m */,
+			);
+			path = "发布信息";
+			sourceTree = "<group>";
+		};
+		96B00DCF1FDFAF1F000EB2D2 /* 查看记录 */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DD31FDFAFA0000EB2D2 /* ViewRecordMainVC.h */,
+				96B00DD41FDFAFA0000EB2D2 /* ViewRecordMainVC.m */,
+				96B00DD01FDFAF66000EB2D2 /* ViewRecordVC.h */,
+				96B00DD11FDFAF66000EB2D2 /* ViewRecordVC.m */,
+			);
+			path = "查看记录";
+			sourceTree = "<group>";
+		};
+		96B00DD61FDFB36B000EB2D2 /* 我的特权 */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DDA1FDFB400000EB2D2 /* MyPrivilegeVC.h */,
+				96B00DDB1FDFB400000EB2D2 /* MyPrivilegeVC.m */,
+			);
+			path = "我的特权";
+			sourceTree = "<group>";
+		};
+		96B00DDD1FDFBDBA000EB2D2 /* 我的特权 */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DDE1FDFBF8B000EB2D2 /* MyPrivilegeCell.h */,
+				96B00DDF1FDFBF8B000EB2D2 /* MyPrivilegeCell.m */,
+			);
+			path = "我的特权";
+			sourceTree = "<group>";
+		};
+		96B00DE11FDFD6B8000EB2D2 /* 会员VIP */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DE21FDFD6DF000EB2D2 /* MemberVIPVC.h */,
+				96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */,
+			);
+			path = "会员VIP";
+			sourceTree = "<group>";
+		};
+		96B00DE51FDFD72A000EB2D2 /* 会员VIP */ = {
+			isa = PBXGroup;
+			children = (
+				96B00DE61FDFD78E000EB2D2 /* MemberVIPCell.h */,
+				96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */,
+			);
+			path = "会员VIP";
 			sourceTree = "<group>";
 		};
 		96C91D271FD8EB0700DF0CE3 = {
@@ -1285,16 +1418,19 @@
 				96C91D9B1FD8EF1C00DF0CE3 /* IQUIScrollView+Additions.m in Sources */,
 				04ED7B2F1FDC0AF100424718 /* SDWebImageDownloaderOperation.m in Sources */,
 				96C91E011FD8F22C00DF0CE3 /* AFURLRequestSerialization.m in Sources */,
+				96B00DD21FDFAF66000EB2D2 /* ViewRecordVC.m in Sources */,
 				96C91DBD1FD8EFAB00DF0CE3 /* BaseNavigationController.m in Sources */,
 				04ED7B441FDC362500424718 /* ToolClass.m in Sources */,
 				96C91DBC1FD8EFAB00DF0CE3 /* BaseTabbarController.m in Sources */,
 				96C91DF41FD8F22C00DF0CE3 /* MJConst.m in Sources */,
 				96C91DFF1FD8F22C00DF0CE3 /* AFNetworkReachabilityManager.m in Sources */,
+				96B00DE01FDFBF8B000EB2D2 /* MyPrivilegeCell.m in Sources */,
 				96C91E001FD8F22C00DF0CE3 /* AFSecurityPolicy.m in Sources */,
 				96C91E5B1FD9261900DF0CE3 /* UIScrollView+MJExtension.m in Sources */,
 				04ED7B621FDD2D2500424718 /* ChildCell.m in Sources */,
 				04ED7B2E1FDC0AF100424718 /* SDWebImageDownloader.m in Sources */,
 				04ED7B061FDC0ABB00424718 /* UIView+SDAutoLayout.m in Sources */,
+				96B00DC81FDF722C000EB2D2 /* ChildPublishCell.m in Sources */,
 				04ED7B291FDC0AF100424718 /* MKAnnotationView+WebCache.m in Sources */,
 				96C91E531FD9261900DF0CE3 /* MJRefreshBackNormalFooter.m in Sources */,
 				96C91D431FD8EB0700DF0CE3 /* main.m in Sources */,
@@ -1308,6 +1444,7 @@
 				96C91E551FD9261900DF0CE3 /* MJRefreshGifHeader.m in Sources */,
 				04ED7B351FDC0AF100424718 /* UIImage+WebP.m in Sources */,
 				96C91E5A1FD9261900DF0CE3 /* NSBundle+MJRefresh.m in Sources */,
+				96B00DD51FDFAFA0000EB2D2 /* ViewRecordMainVC.m in Sources */,
 				04ED7B301FDC0AF100424718 /* SDWebImageManager.m in Sources */,
 				96127BCA1FDBD4D00040B21D /* SDCycleScrollView.m in Sources */,
 				96C91E541FD9261900DF0CE3 /* MJRefreshBackStateFooter.m in Sources */,
@@ -1333,6 +1470,7 @@
 				96C91DF51FD8F22C00DF0CE3 /* MJFoundation.m in Sources */,
 				96127BC91FDBD4D00040B21D /* SDCollectionViewCell.m in Sources */,
 				96127BC81FDBD4D00040B21D /* TAPageControl.m in Sources */,
+				96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */,
 				96C91E4D1FD9261900DF0CE3 /* MJRefreshFooter.m in Sources */,
 				04ED7B051FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				96C91DFA1FD8F22C00DF0CE3 /* MJTypeEncoding.m in Sources */,
@@ -1342,16 +1480,20 @@
 				96C91DFC1FD8F22C00DF0CE3 /* NSObject+MJKeyValue.m in Sources */,
 				04ED7B331FDC0AF100424718 /* UIImage+GIF.m in Sources */,
 				96127BC61FDBD4D00040B21D /* TAAnimatedDotView.m in Sources */,
+				96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */,
 				9674BA701FDE323700865E74 /* UIColor+ColorChange.m in Sources */,
+				96B00DC11FDF6D56000EB2D2 /* PublishMainVC.m in Sources */,
 				96C91DF91FD8F22C00DF0CE3 /* MJType.m in Sources */,
 				96C91E521FD9261900DF0CE3 /* MJRefreshBackGifFooter.m in Sources */,
 				04ED7B381FDC0AF100424718 /* UIView+WebCacheOperation.m in Sources */,
 				04ED7B471FDC383500424718 /* UIButton+SGImagePosition.m in Sources */,
+				96B00DE41FDFD6DF000EB2D2 /* MemberVIPVC.m in Sources */,
 				96C91D9F1FD8EF1C00DF0CE3 /* IQUIWindow+Hierarchy.m in Sources */,
 				96C91DFD1FD8F22C00DF0CE3 /* NSObject+MJMember.m in Sources */,
 				96C91DC61FD8F09400DF0CE3 /* MineVC.m in Sources */,
 				96C91DFE1FD8F22C00DF0CE3 /* AFHTTPSessionManager.m in Sources */,
 				04ED7B6D1FDD4DE800424718 /* ReleaseChildCell.m in Sources */,
+				96B00DDC1FDFB400000EB2D2 /* MyPrivilegeVC.m in Sources */,
 				96C91DB21FD8EF5100DF0CE3 /* LCProgressHUD.m in Sources */,
 				04ED7B4E1FDC395F00424718 /* UITextField+PlaceholderColor.m in Sources */,
 				96C91DA51FD8EF1C00DF0CE3 /* IQTitleBarButtonItem.m in Sources */,
