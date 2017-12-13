@@ -16,8 +16,8 @@
 @end
 
 @implementation MyPrivilegeVC
-static const CGFloat headHeight =160;
-static const CGFloat ratio =0.6;
+static const CGFloat headHeight =248;
+static const CGFloat ratio =0.66;
 - (void)viewWillAppear:(BOOL)animated{
     // 设置导航栏背景透明(取值范围0~1)
     [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
@@ -45,7 +45,7 @@ static const CGFloat ratio =0.6;
 -(UIView*)CraetTableViewHeader{
     UIView * headerView =[UIView new];
     headerView.backgroundColor=[UIColor clearColor];
-    headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight);
+    headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight+10);
     headerView.userInteractionEnabled=YES;
     //头像
     UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -56,7 +56,7 @@ static const CGFloat ratio =0.6;
     [headerView sd_addSubviews:@[headBtn]];
     headBtn.sd_layout
     .centerXEqualToView(headerView)
-    .topSpaceToView(headerView, 10)
+    .topSpaceToView(headerView, 10+64)
     .widthIs(80)
     .heightIs(80);
     //名字
@@ -73,7 +73,7 @@ static const CGFloat ratio =0.6;
     .centerXEqualToView(headBtn)
     .heightIs(20);
     [namelabel setSingleLineAutoResizeWithMaxWidth:ScreenWidth];
-    
+
     //副标题(名字下面label)
     UILabel * namelabel2=[UILabel new];
     namelabel2.text=@"Memvership level 3";
@@ -88,14 +88,14 @@ static const CGFloat ratio =0.6;
     .centerXEqualToView(headBtn)
     .heightIs(20);
     [namelabel2 setSingleLineAutoResizeWithMaxWidth:ScreenWidth];
-    
+//
     
     
     
     return headerView;
 }
 -(void)CreatTableView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64) style:UITableViewStylePlain];
+    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStylePlain];
     
     _tableView=tableView;
     tableView.dataSource=self;

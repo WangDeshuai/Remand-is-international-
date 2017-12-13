@@ -42,7 +42,7 @@
     _titleLabel.sd_layout
     .leftSpaceToView(self.contentView, 30)
     .heightIs(20)
-    .topSpaceToView(self.contentView, 25);
+    .topSpaceToView(self.contentView,5);
     [_titleLabel setSingleLineAutoResizeWithMaxWidth:300];
     
     _contentText=[[UITextField alloc]init];
@@ -54,7 +54,7 @@
     .leftSpaceToView(self.contentView, 30)
     .rightSpaceToView(self.contentView, 30)
     .heightIs(30)
-    .topSpaceToView(_titleLabel, 10);
+    .topSpaceToView(_titleLabel, 5);
     
     
     _lineView=[UIView new];
@@ -63,7 +63,7 @@
     _lineView.sd_layout
     .leftEqualToView(_contentText)
     .rightEqualToView(_contentText)
-    .bottomSpaceToView(self.contentView, 1)
+    .topSpaceToView(_contentText, 5)
     .heightIs(1);
     
     
@@ -77,17 +77,44 @@
     [self.contentView sd_addSubviews:@[_confirmBtn]];
     _confirmBtn.sd_layout
     .leftSpaceToView(self.contentView, 30)
-    .topSpaceToView(self.contentView, 10)
+    .topSpaceToView(_lineView, 10)
     .heightIs(30)
     .widthIs(100);
     
 //    _titleLabel.backgroundColor=[UIColor greenColor];
 //    _contentText.backgroundColor=[UIColor magentaColor];
 //
+    _tishiBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+//    _tishiBtn.hidden=YES;
+    [_tishiBtn setImage:[UIImage imageNamed:@"login_error"] forState:0];
+    [_tishiBtn setTitle:@"This username has been registered" forState:0];
     
+    _tishiBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
+    _tishiBtn.titleLabel.font=[UIFont systemFontOfSize:15];
+    [self.contentView sd_addSubviews:@[_tishiBtn]];
+    _tishiBtn.sd_layout
+    .leftEqualToView(_titleLabel)
+    .rightEqualToView(_lineView)
+    .heightIs(20)
+    .topSpaceToView(_confirmBtn, 5);
     
+    _tishiBtn.imageView.sd_layout
+    .leftSpaceToView(_tishiBtn, 0)
+    .centerYEqualToView(_tishiBtn)
+    .widthIs(15)
+    .heightIs(15);
     
+    _tishiBtn.titleLabel.sd_layout
+    .leftSpaceToView(_tishiBtn.imageView, 5)
+    .rightSpaceToView(_tishiBtn, 0)
+    .centerYEqualToView(_tishiBtn)
+    .heightIs(20);
+    
+    [self setupAutoHeightWithBottomView:_tishiBtn bottomMargin:5];
 }
+
+
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

@@ -63,9 +63,12 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RegistCell * cell =[RegistCell cellWithTableView:tableView IndexPath:indexPath];
+    cell.contentView.clipsToBounds = YES;
     cell.titleLabel.text=_titleArr[indexPath.row];
     cell.contentText.delegate=self;
     cell.contentText.tag=indexPath.row;
+    cell.tishiBtn.sd_layout.topSpaceToView(cell.lineView, 10);
+    cell.tishiBtn.hidden=YES;
     if (indexPath.row==0) {
         cell.contentText.placeholder=@"Username must contain 8 or more  characters";
     }else if(indexPath.row==1){
@@ -77,15 +80,20 @@
     }else if (indexPath.row==3){
         cell.contentText.placeholder=@"Enter e-mail for verfication code";
         cell.contentText.keyboardType=UIKeyboardTypeEmailAddress;
+        cell.confirmBtn.hidden=NO;
+        [cell.confirmBtn addTarget:self action:@selector(confirmBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        cell.tishiBtn.sd_layout.topSpaceToView(cell.confirmBtn, 10);
     }else if (indexPath.row==4) {
         cell.contentText.placeholder=@"Enter confirmation code";
         cell.contentText.keyboardType=UIKeyboardTypeNumberPad;
-        cell.confirmBtn.hidden=NO;
-        cell.titleLabel.sd_layout
-        .topSpaceToView(cell.confirmBtn, 25);
     }
     cell.contentText.placeholderColor=[[UIColor whiteColor]colorWithAlphaComponent:.6];
-
+//    if (indexPath.row==0 || indexPath.row==2|| indexPath.row==4) {
+//         cell.backgroundColor=[UIColor magentaColor];
+//    }else{
+//         cell.backgroundColor=[UIColor greenColor];
+//    }
+   
     return cell;
     
 }
@@ -93,12 +101,11 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==4) {
-        return 120;
-    }else{
-        return 90;
-    }
+    return [_tableView cellHeightForIndexPath:indexPath cellContentViewWidth:[ToolClass cellContentViewWith] tableView:tableView];
 }
+
+
+
 
 
 #pragma mark -----创建提交按钮
@@ -127,20 +134,69 @@
     .topSpaceToView(footView, 30)
     .heightIs(45);
     
-    
-    
     return footView;
 }
 
+
+
+
 #pragma mark ---按钮点击事件
+//注册
 -(void)footBtnClick:(UIButton*)btn{
-    NSLog(@"按钮点击");
-    NSLog(@">>>>%@>>>%@>>>>%@>>>>%@>>>%@",_userName,_password,_password2,_emailText,_codeText);
-    
-    
+//    NSLog(@">>>>%@>>>%@>>>>%@>>>>%@>>>%@",_userName,_password,_password2,_emailText,_codeText);
+    if ([_password isEqualToString:_password2]) {
+        [LCProgressHUD showFailure:@"两次密码不一致!"];
+        return;
+    }
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:[ToolClass isString:_codeText] forKey:@"email_code"];
+    [dic setObject:[ToolClass isString:_emailText] forKey:@"email"];
+    [dic setObject:[ToolClass isString:_userName] forKey:@"login_name"];
+    [dic setObject:[ToolClass isString:_password] forKey:@"login_pwd"];
+    [self registDic:dic];
     
 }
+///获取验证码
+-(void)confirmBtnClick:(UIButton*)btn{
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:[ToolClass isString:_emailText] forKey:@"email"];
+    [dic setObject:@"4497002800010001" forKey:@"msg_type"];
+    [self getCodeDic:dic CodeBtn:btn];
 
+}
+
+///实现倒计时
+-(void)timeDaoJiShi:(UIButton*)btn{
+  
+    __block int timeout=60; //倒计时时间
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(_timer, ^{
+        if(timeout<=0){ //倒计时结束，关闭
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //设置界面的按钮显示 根据自己需求设置
+                [btn setTitle:@"发送验证码" forState:UIControlStateNormal];
+                btn.userInteractionEnabled = YES;
+            });
+        }
+        else{
+            int seconds = timeout % 60;
+            NSString *strTime = [NSString stringWithFormat:@"%.2d", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //NSLog(@"____%@",strTime);
+                [UIView beginAnimations:nil context:nil];
+                [UIView setAnimationDuration:1];
+                [btn setTitle:[NSString stringWithFormat:@"%@秒",strTime] forState:UIControlStateNormal];
+                [UIView commitAnimations];
+                btn.userInteractionEnabled = NO;
+            });
+            timeout--;
+        }
+    });
+    dispatch_resume(_timer);
+}
 
 
 
@@ -148,9 +204,12 @@
 #pragma mark --textFieldDelegate
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
+  
+    
     if (textField.tag==0) {
         //用户名
         _userName=textField.text;
+         [self NetworkRequestParametersTextSting:textField.text Tag:textField.tag];
     }else if (textField.tag==1){
         //密码
         _password=textField.text;
@@ -166,19 +225,60 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+
+
+
+#pragma mark -----网络请求参数
+///验证用户名
+-(void)NetworkRequestParametersTextSting:(NSString*)str Tag:(NSInteger)tag{
+    
+    RegistCell * cell=[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:tag inSection:0]];
+    [[Engine sharedEngine]BJPostWithUrl:Main_URL withAPIName:RegistApi_Name withParame:@{@"login_name":[ToolClass isString:str]} callback:^(id item) {
+        NSLog(@"%@", item );
+         cell.tishiBtn.hidden = NO;
+        if ([[item objectForKey:@"resultCode"]integerValue]==1) {
+            [cell.tishiBtn setImage:[UIImage imageNamed:@"login_yeah"] forState:0];
+            [cell.tishiBtn setTitle:[item objectForKey:@"resultMessage"] forState:0];
+        }else{
+            [cell.tishiBtn setImage:[UIImage imageNamed:@"login_error"] forState:0];
+            [cell.tishiBtn setTitle:[item objectForKey:@"resultMessage"] forState:0];
+        }
+        
+        
+       
+    } failedBlock:nil];
+    
+}
+///获取验证码
+-(void)getCodeDic:(NSMutableDictionary*)dic CodeBtn:(UIButton*)btn{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:RegistApi_Code withParame:dic callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            [LCProgressHUD hide];
+            [self timeDaoJiShi:btn];
+        }else{
+            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
+        }
+    } failedBlock:^(id error) {
+        
+    }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+///注册请求
+-(void)registDic:(NSMutableDictionary*)dic{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:RegistApi_Regist withParame:dic callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            [LCProgressHUD hide];
+            [LCProgressHUD showMessage:@"注册成功"];
+        }else{
+            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
+        }
+    } failedBlock:^(id error) {
+        
+    }];
+    
 }
-*/
 
 @end

@@ -14,4 +14,5 @@
 @property(nonatomic,strong)UITextField * contentText;
 @property(nonatomic,strong)UIView * lineView;
 @property(nonatomic,strong)UIButton * confirmBtn;
+@property(nonatomic,strong)UIButton * tishiBtn;//提示语
 @end

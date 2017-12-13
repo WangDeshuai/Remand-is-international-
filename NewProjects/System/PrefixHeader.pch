@@ -12,15 +12,23 @@
 #define NSUSE_DEFO [NSUserDefaults standardUserDefaults]
 #define ScreenWidth ([UIScreen mainScreen].bounds.size.width)
 #define ScreenHeight ([UIScreen mainScreen].bounds.size.height)
+#define WINDOW [[[UIApplication sharedApplication] delegate] window]
 #define kDevice_Is_iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 
+/*
+ 域名
+ */
+
+#define API_key @"appen"
+#define API_pass @"appen"
+#define Main_URL @"http://111.198.24.20:8603/jsonapi/"
 /*
   category
  */
 #import "UIColor+ColorChange.h"
 #import "UITextField+PlaceholderColor.h"
 #import "UIButton+SGImagePosition.h"
-
+#import "API_Name.h"
 
 /*
  颜色值 RGB(166, 13, 24)
@@ -35,12 +43,13 @@
 #import "SDAutoLayout.h"
 #import "LCProgressHUD.h"
 #import "AFNetworking.h"
-#import "ToolClass.h"
 #import "UIButton+WebCache.h"//按钮加载url
 #import "UIImageView+WebCache.h"//图片加载url
 
-
-
-
-
+/*
+ 工具
+ */
+#import "Engine.h"
+#import "ToolClass.h"
+#import <Foundation/Foundation.h>
 #endif /* PrefixHeader_pch */

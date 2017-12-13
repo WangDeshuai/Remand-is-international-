@@ -19,4 +19,14 @@
 //post(图片)
 -(void)postPictureDatewithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))block  withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock   andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock;
 
+/**
+ 再塑宝国际版北京POST请求
+
+ @param url 服务器地址
+ @param apiName 接口名称
+ @param parame 请求参数Body
+ @param callback 返回参数
+ @param failedBlock 失败
+ */
+- (void)BJPostWithUrl:(NSString *)url withAPIName:(NSString *)apiName withParame:(NSDictionary *)parame callback:(void(^)(id item))callback failedBlock:(void(^)(id error))failedBlock;
 @end

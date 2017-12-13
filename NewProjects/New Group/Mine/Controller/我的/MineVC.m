@@ -23,8 +23,8 @@
 @end
 
 @implementation MineVC
-static const CGFloat headHeight =160;
-static const CGFloat ratio =0.6;
+static const CGFloat headHeight =248;
+static const CGFloat ratio =0.66;
 
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -41,6 +41,8 @@ static const CGFloat ratio =0.6;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"Personal center";
+    
+    self.navigationController.automaticallyAdjustsScrollViewInsets=NO;
     self.automaticallyAdjustsScrollViewInsets=NO;
     self.backHomeBtn.hidden=YES;
     [self CreatBgImageView];
@@ -67,6 +69,7 @@ static const CGFloat ratio =0.6;
     _imageview.frame=CGRectMake(0, 0, ScreenWidth, ScreenWidth*ratio);
     _imageRect=_imageview.frame;
     [self.view addSubview:_imageview];
+    
 }
 
 
@@ -76,8 +79,9 @@ static const CGFloat ratio =0.6;
 //创建表头
 -(UIView*)CraetTableViewHeader{
     UIView * headerView =[UIView new];
-    headerView.backgroundColor=[UIColor clearColor];
-    headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight);
+    headerView.backgroundColor=[UIColor clearColor];//换颜色就能看出来
+    headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight-54);
+    NSLog(@">>>%f",headHeight);
     headerView.userInteractionEnabled=YES;
     //头像
     UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];

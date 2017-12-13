@@ -63,13 +63,15 @@
 #pragma mark --读取plist文件
 +(NSMutableDictionary*)duquPlistWenJianPlistName:(NSString*)plistname;
 +(NSMutableArray*)duquArrayPlistWenJianPlistName:(NSString*)plistname;
-
+#pragma mark --MD5加密
++(NSString *) md5: (NSString *) inPutText;
 #pragma mark --删除plist文件
 +(void)deleagtePlistName:(NSString*)plistName;
 #pragma mark --判断是不是ipad如果是返回YES
 +(BOOL)isiPad;
 
-
+#pragma mark  获取当前时间
++(NSString *)getCurrentTime;
 #pragma mark --获取UUID
 +(NSString*)getUUIDStr;
 +(void)exitApplication;

@@ -10,4 +10,5 @@
 
 @interface MemberVIPCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
+@property(nonatomic,strong)UIButton * titleLabel;
 @end

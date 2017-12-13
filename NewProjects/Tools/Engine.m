@@ -124,5 +124,41 @@ static AFHTTPSessionManager *manager=nil;
 
 
 
-
+- (void)BJPostWithUrl:(NSString *)url withAPIName:(NSString *)apiName withParame:(NSDictionary *)parame callback:(void(^)(id item))callback failedBlock:(void(^)(id error))failedBlock
+{
+    [LCProgressHUD showLoading:@"请稍后..."];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    formatter.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    NSString *currentDate = [formatter stringFromDate:[NSDate date]];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parame
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+    NSString *jsonDataStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    jsonDataStr = [jsonDataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSString *api_secretStr = [NSString string];
+    api_secretStr = [NSString stringWithFormat:@"%@%@%@%@%@",apiName,API_key,jsonDataStr,currentDate,API_pass];
+    
+    NSString *mdString = [ToolClass md5:api_secretStr].uppercaseString;
+    NSDictionary *paramDic =@{@"api_key":API_key,@"api_input":jsonDataStr,@"api_target":apiName,@"api_secret":mdString,@"api_timespan":currentDate};
+    // 1.获得请求管理者
+    AFHTTPSessionManager *mgr = [self manager];
+    [mgr.requestSerializer setValue:@"zh_CN" forHTTPHeaderField:@"Accept-Language"];
+    // 2.发送POST请求
+    [mgr POST:[url stringByAppendingString:apiName]
+   parameters:paramDic
+     progress:nil
+      success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+          NSLog(@"====%@",responseObject);
+          callback(responseObject);
+          
+      }
+      failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+          if (failedBlock) {
+                [LCProgressHUD showFailure:@"请求错误"];
+              failedBlock(error);
+          }
+      }];
+}
 @end

@@ -40,6 +40,7 @@
     
     _leftImage=[UIButton buttonWithType:UIButtonTypeCustom];
 //    _leftImage.backgroundColor=[UIColor redColor];
+    _leftImage.userInteractionEnabled=YES;
     _leftImage.adjustsImageWhenHighlighted=NO;
     [self.contentView sd_addSubviews:@[_leftImage]];
     _leftImage.sd_layout

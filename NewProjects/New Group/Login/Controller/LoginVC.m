@@ -8,6 +8,7 @@
 
 #import "LoginVC.h"
 #import "RegistVC.h"//注册
+
 @interface LoginVC ()
 @property(nonatomic,strong)UIView * bgView;
 @property(nonatomic,strong)UITextField * phoneText;
