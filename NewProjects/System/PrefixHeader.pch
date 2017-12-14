@@ -45,6 +45,7 @@
 #import "AFNetworking.h"
 #import "UIButton+WebCache.h"//按钮加载url
 #import "UIImageView+WebCache.h"//图片加载url
+#import "MJExtension.h"
 
 /*
  工具
@@ -52,4 +53,9 @@
 #import "Engine.h"
 #import "ToolClass.h"
 #import <Foundation/Foundation.h>
+#import "Singleton.h"
+
+
+
+
 #endif /* PrefixHeader_pch */

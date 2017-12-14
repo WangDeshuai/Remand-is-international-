@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-
+#import "UserInfoBaseClass.h"
 @interface BasicInforMationVC : BaseViewController
-
+@property(nonatomic,strong)UserInfoBaseClass * model;
 @end

@@ -12,7 +12,7 @@
 
 
 //#pragma mark --个人类型转换
-//+(NSString*)myStype:(NSString*)str;
++(NSString *)registTyple:(NSString*)str;
 
 #pragma mark --性别转换
 +(NSString*)XingBieStr:(NSString*)xb;

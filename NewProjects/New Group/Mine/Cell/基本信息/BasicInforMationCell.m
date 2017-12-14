@@ -33,26 +33,38 @@
     return self;
 }
 -(void)CreatStar{
+    
+    _leftImage=[UIImageView new];
+    [self.contentView sd_addSubviews:@[_leftImage]];
+    _leftImage.sd_layout
+    .leftSpaceToView(self.contentView, 30)
+    .centerYEqualToView(self.contentView)
+    .widthIs(20)
+    .heightIs(20);
+    
+    
+    
+    
     _titleLabel=[[UILabel alloc]init];
     _titleLabel.textColor=[[UIColor whiteColor]colorWithAlphaComponent:.9];
-    _titleLabel.font=[UIFont systemFontOfSize:17];
+    _titleLabel.font=[UIFont systemFontOfSize:15];
     [self.contentView sd_addSubviews:@[_titleLabel]];
     _titleLabel.sd_layout
-    .leftSpaceToView(self.contentView, 30)
+    .leftSpaceToView(_leftImage, 15)
     .heightIs(20)
-    .topSpaceToView(self.contentView, 25);
+    .topSpaceToView(self.contentView, 10);
     [_titleLabel setSingleLineAutoResizeWithMaxWidth:300];
     
     _contentText=[[UITextField alloc]init];
     _contentText.textColor=[UIColor whiteColor];
     _contentText.font=[UIFont systemFontOfSize:18];
-    
+    _contentText.placeholderColor=[UIColor whiteColor];
     [self.contentView sd_addSubviews:@[_contentText]];
     _contentText.sd_layout
-    .leftSpaceToView(self.contentView, 30)
+    .leftEqualToView(_titleLabel)
     .rightSpaceToView(self.contentView, 30)
     .heightIs(30)
-    .topSpaceToView(_titleLabel, 10);
+    .topSpaceToView(_titleLabel, 0);
     
     
     _lineView=[UIView new];
@@ -61,7 +73,7 @@
     _lineView.sd_layout
     .leftEqualToView(_contentText)
     .rightEqualToView(_contentText)
-    .bottomSpaceToView(self.contentView, 1)
+    .topSpaceToView(_contentText, 5)
     .heightIs(1);
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

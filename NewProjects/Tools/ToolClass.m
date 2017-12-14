@@ -22,6 +22,22 @@
 //    }
 //    
 //}
+
+
++(NSString *)registTyple:(NSString*)str{
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:@"4497002900010001" forKey:@"个人"];
+    [dic setObject:@"4497002900010002" forKey:@"公司"];
+    [dic setObject:@"4497002900020001" forKey:@"供应商"];
+    [dic setObject:@"4497002900020002" forKey:@"采购商"];
+    [dic setObject:@"4497002900020003" forKey:@"全部"];
+    
+  return  [dic objectForKey:str];
+}
+
+
+
+
 #pragma mark --性别转换
 +(NSString*)XingBieStr:(NSString*)xb{
     if ([xb isEqualToString:@"0"]) {
@@ -36,7 +52,7 @@
 
 #pragma mark --判断是否登录（登录YES）
 +(BOOL)isLogin{
-    NSString * str =[NSUSE_DEFO objectForKey:@"token"];
+    NSString * str =[NSUSE_DEFO objectForKey:API_Token];
     if (str==nil) {
         return NO;
     }else{

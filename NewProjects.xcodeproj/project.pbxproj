@@ -53,6 +53,9 @@
 		9674BA781FDE612A00865E74 /* RegistCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA771FDE612A00865E74 /* RegistCell.m */; };
 		9674BA7B1FDE836300865E74 /* BasicInforMationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */; };
 		9674BA7E1FDE881E00865E74 /* BasicInforMationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */; };
+		969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */; };
+		969008AB1FE2639000C05DA6 /* BasiInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008AA1FE2639000C05DA6 /* BasiInfoView.m */; };
+		9695A1221FE2102C0083A625 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695A1211FE2102C0083A625 /* LoginModel.m */; };
 		96B00DC11FDF6D56000EB2D2 /* PublishMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */; };
 		96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */; };
 		96B00DC81FDF722C000EB2D2 /* ChildPublishCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC71FDF722C000EB2D2 /* ChildPublishCell.m */; };
@@ -249,6 +252,13 @@
 		9674BA7A1FDE836300865E74 /* BasicInforMationVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicInforMationVC.m; sourceTree = "<group>"; };
 		9674BA7C1FDE881E00865E74 /* BasicInforMationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasicInforMationCell.h; sourceTree = "<group>"; };
 		9674BA7D1FDE881E00865E74 /* BasicInforMationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasicInforMationCell.m; sourceTree = "<group>"; };
+		969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoBaseClass.m; sourceTree = "<group>"; };
+		969008A61FE2502400C05DA6 /* UserInfoBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoBaseClass.h; sourceTree = "<group>"; };
+		969008A91FE2639000C05DA6 /* BasiInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasiInfoView.h; sourceTree = "<group>"; };
+		969008AA1FE2639000C05DA6 /* BasiInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasiInfoView.m; sourceTree = "<group>"; };
+		9695A1201FE2102C0083A625 /* LoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
+		9695A1211FE2102C0083A625 /* LoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
+		9695A1231FE227F80083A625 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		96B00DBF1FDF6D56000EB2D2 /* PublishMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublishMainVC.h; sourceTree = "<group>"; };
 		96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublishMainVC.m; sourceTree = "<group>"; };
 		96B00DC21FDF6D7B000EB2D2 /* ChildPublishVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildPublishVC.h; sourceTree = "<group>"; };
@@ -517,20 +527,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		04ED7B3D1FDC2EE700424718 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		04ED7B3E1FDC2EEF00424718 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		04ED7B481FDC391600424718 /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,20 +538,6 @@
 				9674BA6F1FDE323700865E74 /* UIColor+ColorChange.m */,
 			);
 			path = Category;
-			sourceTree = "<group>";
-		};
-		04ED7B4F1FDC402600424718 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		04ED7B501FDC402C00424718 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		04ED7B511FDC403500424718 /* Cell */ = {
@@ -710,6 +692,7 @@
 		9674BA6A1FDE2D7600865E74 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				9695A11F1FE20FA90083A625 /* Model */,
 				9674BA751FDE611400865E74 /* Cell */,
 				9674BA741FDE5D1100865E74 /* Controller */,
 			);
@@ -734,6 +717,33 @@
 				9674BA771FDE612A00865E74 /* RegistCell.m */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		969008A81FE2636100C05DA6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				969008A91FE2639000C05DA6 /* BasiInfoView.h */,
+				969008AA1FE2639000C05DA6 /* BasiInfoView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9695A11F1FE20FA90083A625 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9695A1201FE2102C0083A625 /* LoginModel.h */,
+				9695A1211FE2102C0083A625 /* LoginModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9695A1241FE22B530083A625 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				969008A61FE2502400C05DA6 /* UserInfoBaseClass.h */,
+				969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		96B00DBA1FDF634C000EB2D2 /* 我的 */ = {
@@ -909,6 +919,7 @@
 				96C91D421FD8EB0700DF0CE3 /* main.m */,
 				96C91D671FD8ED4700DF0CE3 /* PrefixHeader.pch */,
 				96DE70441FE119D20022935F /* API_Name.h */,
+				9695A1231FE227F80083A625 /* Singleton.h */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1072,8 +1083,6 @@
 			children = (
 				04ED7B391FDC2EB300424718 /* Controller */,
 				04ED7B3A1FDC2EC200424718 /* Cell */,
-				04ED7B3D1FDC2EE700424718 /* View */,
-				04ED7B3E1FDC2EEF00424718 /* Model */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1081,10 +1090,10 @@
 		96C91DBF1FD8F05300DF0CE3 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				969008A81FE2636100C05DA6 /* View */,
+				9695A1241FE22B530083A625 /* Model */,
 				04ED7B521FDC403B00424718 /* Controller */,
 				04ED7B511FDC403500424718 /* Cell */,
-				04ED7B501FDC402C00424718 /* Model */,
-				04ED7B4F1FDC402600424718 /* View */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -1475,11 +1484,13 @@
 				96C91DF61FD8F22C00DF0CE3 /* MJIvar.m in Sources */,
 				96C91E551FD9261900DF0CE3 /* MJRefreshGifHeader.m in Sources */,
 				04ED7B351FDC0AF100424718 /* UIImage+WebP.m in Sources */,
+				969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */,
 				96C91E5A1FD9261900DF0CE3 /* NSBundle+MJRefresh.m in Sources */,
 				96B00DD51FDFAFA0000EB2D2 /* ViewRecordMainVC.m in Sources */,
 				04ED7B301FDC0AF100424718 /* SDWebImageManager.m in Sources */,
 				96127BCA1FDBD4D00040B21D /* SDCycleScrollView.m in Sources */,
 				96C91E541FD9261900DF0CE3 /* MJRefreshBackStateFooter.m in Sources */,
+				9695A1221FE2102C0083A625 /* LoginModel.m in Sources */,
 				96C91D9D1FD8EF1C00DF0CE3 /* IQUIView+Hierarchy.m in Sources */,
 				96C91E5D1FD9261900DF0CE3 /* UIView+MJExtension.m in Sources */,
 				96C91E021FD8F22C00DF0CE3 /* AFURLResponseSerialization.m in Sources */,
@@ -1505,6 +1516,7 @@
 				96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */,
 				96C91E4D1FD9261900DF0CE3 /* MJRefreshFooter.m in Sources */,
 				04ED7B051FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
+				969008AB1FE2639000C05DA6 /* BasiInfoView.m in Sources */,
 				96C91DFA1FD8F22C00DF0CE3 /* MJTypeEncoding.m in Sources */,
 				96127BC51FDBD4D00040B21D /* TAAbstractDotView.m in Sources */,
 				04ED7B5B1FDD243A00424718 /* ChildVC.m in Sources */,

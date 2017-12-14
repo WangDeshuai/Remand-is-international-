@@ -34,6 +34,7 @@
 //    self.automaticallyAdjustsScrollViewInsets=NO;
     [self CreatTextField];
     [self CreatTabelView];
+    [self getTopLunBo];
    
 }
 #pragma mark ---创建控件
@@ -145,19 +146,17 @@
 //    }
     
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+
+#pragma mark -----网络请求类-----
+-(void)getTopLunBo{
+    [LCProgressHUD showLoading:@"请稍后..."];
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:FirstApi_Topimage withParame:nil callback:^(id item) {
+        [LCProgressHUD hide];
+    } failedBlock:^(id error) {
+        
+    }];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -10,7 +10,12 @@
 
 @interface BasicInforMationCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
+///左边头像
+@property(nonatomic,strong)UIImageView * leftImage;
+///标题
 @property(nonatomic,strong)UILabel * titleLabel;
+///文本框内容
 @property(nonatomic,strong)UITextField * contentText;
+///线条
 @property(nonatomic,strong)UIView * lineView;
 @end

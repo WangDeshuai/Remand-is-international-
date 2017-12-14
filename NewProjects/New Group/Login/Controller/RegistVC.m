@@ -51,6 +51,7 @@
     tableView.tableFooterView=[self CreatTableViewFootView];
     tableView.backgroundColor=[UIColor clearColor];
     tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    tableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:tableView];
     
 }
@@ -144,7 +145,7 @@
 //注册
 -(void)footBtnClick:(UIButton*)btn{
 //    NSLog(@">>>>%@>>>%@>>>>%@>>>>%@>>>%@",_userName,_password,_password2,_emailText,_codeText);
-    if ([_password isEqualToString:_password2]) {
+    if (![_password isEqualToString:_password2]) {
         [LCProgressHUD showFailure:@"两次密码不一致!"];
         return;
     }
@@ -243,9 +244,10 @@
         }else{
             [cell.tishiBtn setImage:[UIImage imageNamed:@"login_error"] forState:0];
             [cell.tishiBtn setTitle:[item objectForKey:@"resultMessage"] forState:0];
+            
         }
         
-        
+       [LCProgressHUD hide];
        
     } failedBlock:nil];
     
@@ -270,14 +272,28 @@
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:RegistApi_Regist withParame:dic callback:^(id item) {
         NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
         if ([code isEqualToString:@"1"]) {
-            [LCProgressHUD hide];
             [LCProgressHUD showMessage:@"注册成功"];
+            self.registBlock(_userName, _password);
+            [self.navigationController popViewControllerAnimated:YES];
         }else{
             [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
         }
     } failedBlock:^(id error) {
         
     }];
+    
+    
+    /*
+     {
+     resultCode = 1;
+     resultList = "<null>";
+     resultMessage = "";
+     resultObject = "<null>";
+     resultType = "";
+     }
+     
+     */
+    
     
 }
 

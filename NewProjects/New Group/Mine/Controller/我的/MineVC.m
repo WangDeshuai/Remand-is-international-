@@ -14,12 +14,14 @@
 #import "MyPrivilegeVC.h"//我的特权
 #import "MemberVIPVC.h"//会员VIP
 #import "BasicInforMationVC.h"//基本信息
+#import "UserInfoBaseClass.h"
 @interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)NSArray * dataArray;
 @property(nonatomic,strong) UIImageView * imageview;
 @property(nonatomic,strong)NSArray * imageArray;
 @property(nonatomic,assign) CGRect  imageRect;
+@property(nonatomic,strong)UserInfoBaseClass * model;
 @end
 
 @implementation MineVC
@@ -32,6 +34,7 @@ static const CGFloat ratio =0.66;
    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
 //去掉透明后导航栏下边的黑边
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [self getVIPmessage];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -202,11 +205,16 @@ static const CGFloat ratio =0.66;
             
         }
     }else if (indexPath.section==1){
-        
+        if (indexPath.row==0) {
+            //基本信息
+            BasicInforMationVC * vc=[BasicInforMationVC new];
+            vc.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
     
    
-    //BasicInforMationVC * vc=[BasicInforMationVC new];
+    
    
 
 }
@@ -224,6 +232,30 @@ static const CGFloat ratio =0.66;
     }else{
         
     }
+}
+
+
+
+
+
+#pragma mark ----网络请求
+//获取会员信息
+-(void)getVIPmessage{
+    
+    [[Engine sharedEngine]BJPostWithUrl:Main_URL withAPIName:VIPApi_Message withParame:nil callback:^(id item) {
+        [LCProgressHUD hide];
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            UserInfoBaseClass * model =[UserInfoBaseClass modelObjectWithDictionary:item];
+            _model=model;
+            
+        }else{
+            
+        }
+        
+    } failedBlock:^(id error) {
+        
+    }];
 }
 
 

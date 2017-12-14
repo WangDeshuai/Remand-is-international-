@@ -104,9 +104,11 @@ static AFHTTPSessionManager *manager=nil;
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         progressBlock(uploadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
         NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"=====%@",str);
+        
         NSDictionary *dic = responseObject;
         succeedBlock(dic);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -131,7 +133,7 @@ static AFHTTPSessionManager *manager=nil;
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
     NSString *currentDate = [formatter stringFromDate:[NSDate date]];
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parame
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parame?parame:@{}
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:nil];
     NSString *jsonDataStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
@@ -140,7 +142,7 @@ static AFHTTPSessionManager *manager=nil;
     api_secretStr = [NSString stringWithFormat:@"%@%@%@%@%@",apiName,API_key,jsonDataStr,currentDate,API_pass];
     
     NSString *mdString = [ToolClass md5:api_secretStr].uppercaseString;
-    NSDictionary *paramDic =@{@"api_key":API_key,@"api_input":jsonDataStr,@"api_target":apiName,@"api_secret":mdString,@"api_timespan":currentDate};
+    NSDictionary *paramDic =@{@"api_key":API_key,@"api_input":jsonDataStr,@"api_target":apiName,@"api_secret":mdString,@"api_timespan":currentDate,@"api_token":[[NSUSE_DEFO objectForKey:API_Token]length]?[NSUSE_DEFO objectForKey:API_Token]:@""};
     // 1.获得请求管理者
     AFHTTPSessionManager *mgr = [self manager];
     [mgr.requestSerializer setValue:@"zh_CN" forHTTPHeaderField:@"Accept-Language"];
@@ -149,7 +151,13 @@ static AFHTTPSessionManager *manager=nil;
    parameters:paramDic
      progress:nil
       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-          NSLog(@"====%@",responseObject);
+          
+          NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
+          NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+          NSLog(@"=====%@",str);
+          
+          
+          
           callback(responseObject);
           
       }

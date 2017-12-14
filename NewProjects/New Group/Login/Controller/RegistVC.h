@@ -10,7 +10,6 @@
 
 @interface RegistVC : BaseViewController
 //字典
-@property (nonatomic,strong)NSDictionary *dic ;
-///字符串
-@property (nonatomic,strong)NSString  *name ;
+@property (nonatomic,copy)void(^registBlock)(NSString*username,NSString*psw); ;
+
 @end

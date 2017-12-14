@@ -8,7 +8,7 @@
 
 #import "LoginVC.h"
 #import "RegistVC.h"//注册
-
+#import "LoginModel.h"
 @interface LoginVC ()
 @property(nonatomic,strong)UIView * bgView;
 @property(nonatomic,strong)UITextField * phoneText;
@@ -164,6 +164,10 @@
 -(void)registBtnClick{
     RegistVC * vc =[RegistVC new];
     vc.hidesBottomBarWhenPushed=YES;
+    vc.registBlock = ^(NSString *username, NSString *psw) {
+        _phoneText.text=username;
+        _pswText.text=psw;
+    };
     [self.navigationController pushViewController:vc animated:YES];
 }
 //登录按钮
@@ -171,6 +175,35 @@
     NSString * user =[ToolClass isString:_phoneText.text];
     NSString * psw =[ToolClass isString:_pswText.text];
     NSLog(@">>>%@>>>>%@",user,psw);
+    
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:[ToolClass isString:_phoneText.text] forKey:@"email"];
+    [dic setObject:[ToolClass isString:_pswText.text] forKey:@"pwd"];
+    [dic setObject:@"4497002900130002" forKey:@"loginpath"];
+    [self loginDic:dic];
+}
+
+
+
+#pragma mark --网络请求类
+-(void)loginDic:(NSMutableDictionary*)dic{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:LoginApi_Login withParame:dic callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            [LCProgressHUD showMessage:@"登录成功"];
+            LoginModel * model =[[LoginModel alloc]initWithLoginDic:item];
+            [NSUSE_DEFO setObject:model.access_token forKey:API_Token];
+            [NSUSE_DEFO setObject:model.email forKey:API_Email];
+            [NSUSE_DEFO setObject:model.account_typeName forKey:API_Type];
+            [NSUSE_DEFO setObject:[ToolClass isString:_phoneText.text] forKey:API_UserName];
+            [NSUSE_DEFO synchronize];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
+        }
+    } failedBlock:^(id error) {
+        
+    }];
 }
 
 
