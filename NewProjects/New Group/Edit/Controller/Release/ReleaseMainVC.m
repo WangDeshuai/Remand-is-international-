@@ -22,6 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"Release";
+    self.backHomeBtn.hidden=YES;
     [self setupPageView];
 }
 - (void)setupPageView {

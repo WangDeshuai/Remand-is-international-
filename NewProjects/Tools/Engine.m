@@ -128,7 +128,7 @@ static AFHTTPSessionManager *manager=nil;
 
 - (void)BJPostWithUrl:(NSString *)url withAPIName:(NSString *)apiName withParame:(NSDictionary *)parame callback:(void(^)(id item))callback failedBlock:(void(^)(id error))failedBlock
 {
-    [LCProgressHUD showLoading:@"请稍后..."];
+//    [LCProgressHUD showLoading:@"请稍后..."];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
@@ -162,9 +162,8 @@ static AFHTTPSessionManager *manager=nil;
           
       }
       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
+        [LCProgressHUD showFailure:error.localizedDescription];
           if (failedBlock) {
-                [LCProgressHUD showFailure:@"请求错误"];
               failedBlock(error);
           }
       }];

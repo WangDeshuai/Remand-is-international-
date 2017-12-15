@@ -71,6 +71,12 @@
     .heightIs(20);
     
 }
+-(void)setModel:(HomeViewList *)model
+{
+    _model=model;
+    _titleLabel.text=model.productName;
+    _contentLabel.text=model.releaseTime;
+}
 -(void)setFrame:(CGRect)frame
 {
     frame.origin.x+=10;

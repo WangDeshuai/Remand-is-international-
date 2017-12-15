@@ -39,7 +39,8 @@ static NSString *VIPApi_modification =@"com_zft_zaisubaos_api_ApiMemberUpdateEn"
 static NSString * FirstApi_Topimage =@"com_zft_zaisubaos_api_ApiTopAdvertisementEn";
 ///首页商品展示
 static NSString * FirstApi_ShopShow =@"com_zft_zaisubaos_api_ApiHomePageProList";
-
+///首页搜索热词
+static NSString * SearchApi_Search =@"com_zft_zaisubaos_api_ApiQrySearchWordRecord";
 
 
 

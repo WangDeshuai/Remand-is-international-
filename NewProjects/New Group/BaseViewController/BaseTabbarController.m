@@ -9,7 +9,7 @@
 #import "BaseTabbarController.h"
 #import "BaseNavigationController.h"
 #import "HomeVC.h"
-#import "EditVC.h"
+#import "ReleaseMainVC.h"
 #import "MineVC.h"
 
 @interface BaseTabbarController ()
@@ -44,7 +44,7 @@
 -(void)CreatTabbar{
     //1. 初始化3个视图控制器
     HomeVC * vc1 =[HomeVC new];
-    EditVC * vc2 =[EditVC new];
+    ReleaseMainVC * vc2 =[ReleaseMainVC new];
     MineVC * vc3 =[MineVC new];
     //2.为3个试图控制器添加导航条
     BaseNavigationController * nav1 =[[BaseNavigationController alloc]initWithRootViewController:vc1];

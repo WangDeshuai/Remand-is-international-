@@ -224,11 +224,11 @@ static const CGFloat ratio =0.66;
 
 #pragma  mark ----按钮点击事件----------
 -(void)headBtnClick{
-    
+    LoginVC * vc =[LoginVC new];
+    vc.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:vc animated:YES];
     if ([ToolClass isLogin]==NO) {
-        LoginVC * vc =[LoginVC new];
-        vc.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:vc animated:YES];
+      
     }else{
         
     }

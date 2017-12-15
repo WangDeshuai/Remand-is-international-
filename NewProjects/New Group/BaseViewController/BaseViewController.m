@@ -52,26 +52,7 @@
 
 
 
-//#pragma mark - ******** push下一页并推出当前页 ********
-//- (void) pushViewController:(UIViewController *)viewController animated:(BOOL)animated dismiss:(BOOL)dismiss{
-//    [self.navigationController pushViewController:viewController animated:animated];
-//    if (dismiss) {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3  * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            NSMutableArray *marr = [[NSMutableArray alloc]initWithArray:self.navigationController.viewControllers];
-//            for (UIViewController *vc in marr) {
-//                if ([vc isKindOfClass:[self class]]) {
-//                    [marr removeObject:vc];
-//                    break;
-//                }
-//            }
-//            self.navigationController.viewControllers = marr;
-//        });
-//
-//    }
-//
-//
-//}
-//
+
 
 
 #pragma mark --返回按钮点击事件
@@ -95,15 +76,29 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (UITableView *)baseTableView
+{
+    if (!_baseTableView) {
+        UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectZero];
+        tableView.dataSource=self;
+        tableView.delegate=self;
+        tableView.rowHeight=70;
+        tableView.tableFooterView=[UIView new];
+        tableView.backgroundColor=BG_COLOR;
+        tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(mjHeaderRefresh)];
+        tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(mjFooterRefresh)];
+        _baseTableView = tableView;
+    }
+    return _baseTableView;
 }
-*/
-
+//下拉刷新触发
+- (void)mjHeaderRefresh
+{
+    
+}
+//上拉加载更多
+- (void)mjFooterRefresh
+{
+    
+}
 @end

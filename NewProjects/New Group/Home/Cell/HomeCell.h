@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeViewList.h"
 @interface HomeCell : UITableViewCell
-+(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
++(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath ;
+@property(nonatomic,strong)HomeViewList * model;
 @end

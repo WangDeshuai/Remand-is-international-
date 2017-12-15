@@ -24,7 +24,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title=@"Product available";
+    if (_tagg==0) {
+        self.title=@"Product available";
+    }else{
+        self.title=@"Business Procurement";
+    }
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSelectedIndex:) name:@"changeSelectedIndex" object:nil];
      [self setupPageView]; 
