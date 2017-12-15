@@ -37,6 +37,7 @@
 		04ED7B681FDD3BDA00424718 /* ReleaseChildVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B671FDD3BDA00424718 /* ReleaseChildVC.m */; };
 		04ED7B6D1FDD4DE800424718 /* ReleaseChildCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B6C1FDD4DE800424718 /* ReleaseChildCell.m */; };
 		04ED7B701FDD562500424718 /* ChildView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B6F1FDD562500424718 /* ChildView.m */; };
+		04FC06761FE3ED0800FD26DF /* SearchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FC06751FE3ED0800FD26DF /* SearchCell.m */; };
 		96127BC51FDBD4D00040B21D /* TAAbstractDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BB81FDBD4D00040B21D /* TAAbstractDotView.m */; };
 		96127BC61FDBD4D00040B21D /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BBA1FDBD4D00040B21D /* TAAnimatedDotView.m */; };
 		96127BC71FDBD4D00040B21D /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BBC1FDBD4D00040B21D /* TADotView.m */; };
@@ -225,6 +226,8 @@
 		04ED7B6C1FDD4DE800424718 /* ReleaseChildCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseChildCell.m; sourceTree = "<group>"; };
 		04ED7B6E1FDD562500424718 /* ChildView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildView.h; sourceTree = "<group>"; };
 		04ED7B6F1FDD562500424718 /* ChildView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildView.m; sourceTree = "<group>"; };
+		04FC06741FE3ED0800FD26DF /* SearchCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCell.h; sourceTree = "<group>"; };
+		04FC06751FE3ED0800FD26DF /* SearchCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCell.m; sourceTree = "<group>"; };
 		96127BB71FDBD4D00040B21D /* TAAbstractDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAbstractDotView.h; sourceTree = "<group>"; };
 		96127BB81FDBD4D00040B21D /* TAAbstractDotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAAbstractDotView.m; sourceTree = "<group>"; };
 		96127BB91FDBD4D00040B21D /* TAAnimatedDotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAAnimatedDotView.h; sourceTree = "<group>"; };
@@ -540,6 +543,8 @@
 			children = (
 				04ED7B3F1FDC2F1A00424718 /* HomeCell.h */,
 				04ED7B401FDC2F1A00424718 /* HomeCell.m */,
+				04FC06741FE3ED0800FD26DF /* SearchCell.h */,
+				04FC06751FE3ED0800FD26DF /* SearchCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1480,6 +1485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04ED7B2D1FDC0AF100424718 /* SDWebImageDecoder.m in Sources */,
+				04FC06761FE3ED0800FD26DF /* SearchCell.m in Sources */,
 				96C91DA21FD8EF1C00DF0CE3 /* IQTextView.m in Sources */,
 				96C91E491FD9261900DF0CE3 /* SGPageTitleViewConfigure.m in Sources */,
 				96C91DF31FD8F22C00DF0CE3 /* MJArgument.m in Sources */,

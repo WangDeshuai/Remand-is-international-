@@ -8,6 +8,7 @@
 
 #import "SearchVC.h"
 #import "SearchModel.h"
+#import "SearchCell.h"
 @interface SearchVC ()<UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic,strong)UITextField * searchText;
 @property(nonatomic,strong)UIView * topView;
@@ -137,24 +138,34 @@
 -(void)CreatCollectionView{
     
     UICollectionViewFlowLayout * layout =[UICollectionViewFlowLayout new];
-    layout.minimumLineSpacing=20;
-    layout.minimumInteritemSpacing=50;
-    layout.itemSize=CGSizeMake(100, 30);
+    layout.minimumLineSpacing=1;//高间距
+    layout.minimumInteritemSpacing=1;//宽间距
+    layout.itemSize=CGSizeMake(ScreenWidth/2-1, 44);
     _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(0, ScreenHeight/2, ScreenWidth, ScreenHeight/2) collectionViewLayout:layout];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
-    
+    _collectionView.alwaysBounceVertical = YES;
+    //[UIColor whiteColor]
+    _collectionView.backgroundColor=BG_COLOR;
     [self.view addSubview:_collectionView];
+    [_collectionView registerClass:[SearchCell class] forCellWithReuseIdentifier:@"cell"];
 }
 
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 
 
-
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    SearchCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    cell.backgroundColor=[UIColor whiteColor];
+    cell.nameLable.text=[NSString stringWithFormat:@"%lu",indexPath.item];
+    return cell;
+    
+}
 
 
 
