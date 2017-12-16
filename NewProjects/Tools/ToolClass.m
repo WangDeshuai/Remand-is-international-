@@ -36,6 +36,22 @@
 }
 
 
++(NSString *)base64EncodedString:(NSString*)string;
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];;
+    return [data base64EncodedStringWithOptions:0];
+}
++(NSString*)base64Decode:(NSString *)string {
+    //1.将base64编码后的字符串，解码成二进制数据
+    //这里不能使用注释掉的方法转换成二进制,因为 string 就是已经编码过的字符串
+    //NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [[NSData alloc]initWithBase64EncodedString:string options:0];
+    //2.返回解码的字符串
+    return [[NSString alloc] initWithData:data
+                                 encoding:NSUTF8StringEncoding];
+}
+
+
 
 
 #pragma mark --性别转换

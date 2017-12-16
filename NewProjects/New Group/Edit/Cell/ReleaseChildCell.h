@@ -12,4 +12,5 @@
 +(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
 @property(nonatomic,strong)UILabel * namelabel;
 @property(nonatomic,strong)UITextField * textField;
+@property(nonatomic,strong)UIButton * arrowBtn;
 @end

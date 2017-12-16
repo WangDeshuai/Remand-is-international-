@@ -22,10 +22,10 @@
     _nameLable=[UILabel new];
     _nameLable.font=[UIFont systemFontOfSize:15];
     _nameLable.alpha=.6;
-    _nameLable.textAlignment=1;
+    _nameLable.textAlignment=0;
     [self.contentView sd_addSubviews:@[_nameLable]];
     _nameLable.sd_layout
-    .leftSpaceToView(self.contentView,0)
+    .leftSpaceToView(self.contentView,15)
     .rightSpaceToView(self.contentView,0)
     .centerYEqualToView(self.contentView)
     .heightIs(20);

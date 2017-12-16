@@ -9,16 +9,21 @@
 #import "SearchVC.h"
 #import "SearchModel.h"
 #import "SearchCell.h"
+#import "SearchTabCell.h"
+#import "EditVC.h"
 @interface SearchVC ()<UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic,strong)UITextField * searchText;
 @property(nonatomic,strong)UIView * topView;
 @property(nonatomic,strong)UICollectionView * collectionView;
+@property(nonatomic,strong)SearchModel * searchModel;
 @end
 
 @implementation SearchVC
 -(void)viewWillAppear:(BOOL)animated
 {
       [self.navigationController.navigationBar addSubview:self.topView];
+    //网络请求加载数据
+    [self getReCi];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -32,8 +37,9 @@
     [self CreatCancelBtn];
     //导航条左边选框
     [self CreatBtn];
+    //加载tableView
     [self CreatTableView];
-    [self CreatCollectionView];
+  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,7 +59,7 @@
     return _topView;
 }
 
-
+#pragma mark ------控件加载-----
 -(void)CreatBtn{
     //search
     UIButton * searBtn =[UIButton buttonWithType:UIButtonTypeCustom];
@@ -113,48 +119,136 @@
 }
 
 -(void)CreatTableView{
-    self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-64);
+    self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     self.baseTableView.mj_header=nil;
     self.baseTableView.mj_footer=nil;
     self.baseTableView.rowHeight=44;
+    self.baseTableView.tableFooterView=[self CreatFootView];
+    self.baseTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.baseTableView];
     
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _searchModel.records.count;
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell =[tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (!cell) {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
-    cell.textLabel.text=@"1233";
-    
+    SearchTabCell * cell =[SearchTabCell cellWithTableView:tableView IndexPath:indexPath];
+    cell.nameLabel.text=[ToolClass base64Decode:_searchModel.records[indexPath.row]];
+    cell.cancelBtn.tag=indexPath.row;
+    [cell.cancelBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
--(void)CreatCollectionView{
+#pragma mark ---区尾(清空历史记录)
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+
+{
+    UIView * view =[UIView new];
+    view.backgroundColor=[UIColor whiteColor];
+
+    UIButton * btn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"Full search history" forState:0];
+    [btn addTarget:self action:@selector(btnAllClick) forControlEvents:UIControlEventTouchUpInside];
+    [btn setTitleColor:[UIColor lightGrayColor] forState:0];
+    btn.titleLabel.font=[UIFont systemFontOfSize:15];
+    btn.titleLabel.alpha=.6;
+    [view sd_addSubviews:@[btn]];
+    btn.sd_layout
+    .leftSpaceToView(view, 0)
+    .rightSpaceToView(view, 0)
+    .topSpaceToView(view, 0)
+    .bottomSpaceToView(view, 0);
+    
+   
+    return view;
+
+}
+
+
+
+#pragma mark ----表尾(collectionView)
+-(UIView*)CreatFootView{
+    UIView * bgView =[UIView new];
+    bgView.backgroundColor=[UIColor clearColor];
+    bgView.frame=CGRectMake(0, 0, ScreenWidth, 500);
+    //footView
+    UIView  * footView =[UIView new];
+     footView.backgroundColor=[UIColor whiteColor];
+    [bgView sd_addSubviews:@[footView]];
+    footView.sd_layout
+    .leftSpaceToView(bgView, 0)
+    .rightSpaceToView(bgView, 0)
+    .topSpaceToView(bgView, 20)
+    .bottomSpaceToView(bgView, 0);
+    //热门按钮
+    UIButton * remenBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [remenBtn setImage:[UIImage imageNamed:@"search_remen"] forState:0];
+    [remenBtn setTitle:@"Hot words" forState:0];
+    [remenBtn setTitleColor:[UIColor blackColor] forState:0];
+    remenBtn.frame=CGRectMake(15, 0, ScreenWidth-30, 44);
+    if (@available(iOS 8.2, *)) {
+        remenBtn.titleLabel.font=[UIFont systemFontOfSize:15 weight:.2];
+    } else {
+        // Fallback on earlier versions
+    }
+    remenBtn.contentHorizontalAlignment=1;
+    [remenBtn SG_imagePositionStyle:SGImagePositionStyleDefault spacing:8];
+    [footView addSubview:remenBtn];
+    //线条
+    UIView * lineView =[UIView new];
+    lineView.backgroundColor=BG_COLOR;
+    [footView sd_addSubviews:@[lineView]];
+    lineView.sd_layout
+    .leftSpaceToView(footView, 0)
+    .rightSpaceToView(footView, 0)
+    .topSpaceToView(footView, 43)
+    .heightIs(1);
+    
+    
+    
+    [self CreatCollectionView:footView];
+    
+    
+    return bgView;
+}
+
+
+
+
+
+
+
+
+-(void)CreatCollectionView:(UIView*)bgView{
     
     UICollectionViewFlowLayout * layout =[UICollectionViewFlowLayout new];
     layout.minimumLineSpacing=1;//高间距
     layout.minimumInteritemSpacing=1;//宽间距
-    layout.itemSize=CGSizeMake(ScreenWidth/2-1, 44);
-    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectMake(0, ScreenHeight/2, ScreenWidth, ScreenHeight/2) collectionViewLayout:layout];
+    layout.itemSize=CGSizeMake(ScreenWidth/2-1, 45);
+    _collectionView=[[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:layout];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
-    _collectionView.alwaysBounceVertical = YES;
-    //[UIColor whiteColor]
+//    _collectionView.alwaysBounceVertical = YES;
     _collectionView.backgroundColor=BG_COLOR;
-    [self.view addSubview:_collectionView];
+//    [bgView addSubview:_collectionView];
+    [bgView sd_addSubviews:@[_collectionView]];
+    _collectionView.sd_layout
+    .leftSpaceToView(bgView, 0)
+    .rightSpaceToView(bgView, 0)
+    .topSpaceToView(bgView, 44)
+    .bottomSpaceToView(bgView, 0);
+    
+    
+    
     [_collectionView registerClass:[SearchCell class] forCellWithReuseIdentifier:@"cell"];
 }
 
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 5;
+    return _searchModel.hotWords.count;
 }
 
 
@@ -162,18 +256,73 @@
     SearchCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     cell.backgroundColor=[UIColor whiteColor];
-    cell.nameLable.text=[NSString stringWithFormat:@"%lu",indexPath.item];
+    
+    cell.nameLable.text=_searchModel.hotWords[indexPath.item];
+    
     return cell;
     
 }
 
-
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@">>>%lu",indexPath.item);
+}
 
 
 #pragma mark ----网络请求热词
+//获取热词和搜索记录
 -(void)getReCi{
-    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:nil callback:^(id item) {
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Record withParame:nil callback:^(id item) {
+        SearchModel * model =[SearchModel modelObjectWithDictionary:item];
+        if (model.resultCode==1) {
+            _searchModel=model;
+            if (_searchModel.records.count==0) {
+                  self.baseTableView.sectionFooterHeight=0;
+            }else{
+                  self.baseTableView.sectionFooterHeight=44;
+            }
+            [self.baseTableView reloadData];
+            [self.collectionView reloadData];
+            [LCProgressHUD hide];
+        }else{
+            [LCProgressHUD showMessage:model.resultMessage];
+        }
         
+    } failedBlock:^(id error) {
+        
+    }];
+}
+
+//搜索框搜索
+-(void)searchTextName:(NSString*)textfield{
+    [LCProgressHUD showLoading:Message_Loading];
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:[ToolClass base64EncodedString:textfield] forKey:@"keyWord"];
+    
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic callback:^(id item) {
+            [LCProgressHUD hide];
+    } failedBlock:^(id error) {
+        
+    }];
+}
+
+//删除
+-(void)deleteID:(NSString*)idd{
+    [LCProgressHUD showLoading:Message_Loading];
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:idd forKey:@"id"];
+    
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Delete withParame:dic callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        
+        if ([code isEqualToString:@"1"]) {
+            [self.baseTableView reloadData];
+        }else{
+            
+        }
+
+        [LCProgressHUD hide];
     } failedBlock:^(id error) {
         
     }];
@@ -181,22 +330,30 @@
 
 
 
-
 #pragma mark ---按钮点击事件
+//搜索框取消
 -(void)rightButtonClick{
     [self.view endEditing:YES];
-    [self getReCi];
+    
+}
+//删除按钮(每个)
+-(void)deleteBtnClick:(UIButton*)btn{
+    NSString * nameId =_searchModel.records[btn.tag];
+    [self deleteID:nameId];
+   
 }
 
-
-
-
+//删除所有的
+-(void)btnAllClick{
+    [self deleteID:@""];
+}
 
 
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
    
+    [self searchTextName:[ToolClass isString:textField.text]];
     return YES;
 }
 /*

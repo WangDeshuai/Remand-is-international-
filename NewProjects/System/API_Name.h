@@ -15,6 +15,10 @@ static NSString *API_Email = @"email";
 static NSString *API_Type = @"account_type";
 static NSString * API_Headimg =@"head_img";
 static NSString * API_UserName =@"username";
+static NSString * Message_Loading=@"请稍后...";
+static NSString * Message_Success=@"成功";
+static NSString * Message_Fail=@"失败";
+
 #pragma mark ------注册---------
 ///注册验证用户名
 static NSString *RegistApi_Name =@"com_zft_zaisubaos_api_ApiRegCheckLoginNameEn";
@@ -30,19 +34,23 @@ static NSString *PswApi_Psw =@"com_zft_zaisubaos_api_ApiFindPwdAppEn";
 ///获取会员信息
 static NSString *VIPApi_Message =@"com_zft_zaisubaos_api_ApiMemberInfoEn";
 ///修改会员信息
-static NSString *VIPApi_modification =@"com_zft_zaisubaos_api_ApiMemberUpdateEn";
-
-
+static NSString *VIPApi_Modification =@"com_zft_zaisubaos_api_ApiMemberUpdateEn";
+///修改会员密码
+static NSString *VIPApi_Changepassword =@"com_zft_zaisubaos_api_ApiModifyPwdAppEn";
+///会员找回密码
+static NSString *VIPApi_Retrievepassword =@"com_zft_zaisubaos_api_ApiFindPwdAppEn";
 
 #pragma mark ------首页接口
 ///首页顶部广告
 static NSString * FirstApi_Topimage =@"com_zft_zaisubaos_api_ApiTopAdvertisementEn";
 ///首页商品展示
 static NSString * FirstApi_ShopShow =@"com_zft_zaisubaos_api_ApiHomePageProList";
+///首页获取热词记录
+static NSString * SearchApi_Record =@"com_zft_zaisubaos_api_ApiQrySearchWordRecord";
 ///首页搜索热词
-static NSString * SearchApi_Search =@"com_zft_zaisubaos_api_ApiQrySearchWordRecord";
-
-
+static NSString * SearchApi_Search =@"com_zft_zaisubaos_api_ApiSearchZsbAppEn";
+///首页删除搜索词记录
+static NSString * SearchApi_Delete =@"com_zft_zaisubaos_api_ApiDelSearchWordRecord";
 
 
 

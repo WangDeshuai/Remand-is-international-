@@ -23,6 +23,7 @@
     // Do any additional setup after loading the view.
     self.title=@"Release";
     self.backHomeBtn.hidden=YES;
+    self.view.backgroundColor=[UIColor whiteColor];
     [self setupPageView];
 }
 - (void)setupPageView {
@@ -38,19 +39,19 @@
     SGPageTitleViewConfigure *configure = [SGPageTitleViewConfigure pageTitleViewConfigure];
     configure.titleSelectedColor = [UIColor whiteColor];
     configure.indicatorStyle = SGIndicatorStyleCover;
-    configure.titleColor=[UIColor lightGrayColor];
+    configure.titleColor=[[UIColor blackColor]colorWithAlphaComponent:.7];
     configure.indicatorColor = Main_Color;
-    configure.indicatorAdditionalWidth = (ScreenWidth-30)/2;
-    configure.indicatorHeight=30;
+    configure.indicatorAdditionalWidth = (ScreenWidth-30)/2-2;
+    configure.indicatorHeight=39;
     configure.indicatorCornerRadius = 30;
     
-    self.pageTitleView = [SGPageTitleView pageTitleViewWithFrame:CGRectMake(15, pageTitleViewY+10, self.view.frame.size.width-30,35) delegate:self titleNames:titleArr configure:configure];
+    self.pageTitleView = [SGPageTitleView pageTitleViewWithFrame:CGRectMake(15, pageTitleViewY+10, self.view.frame.size.width-30,44) delegate:self titleNames:titleArr configure:configure];
     
     _pageTitleView.isTitleGradientEffect = NO;
     _pageTitleView.isNeedBounces = NO;
     self.pageTitleView.backgroundColor=[UIColor whiteColor];
     self.pageTitleView.isShowBottomSeparator=NO;
-    self.pageTitleView.layer.cornerRadius=35/2;
+    self.pageTitleView.layer.cornerRadius=44/2;
     self.pageTitleView.clipsToBounds=YES;
     self.pageTitleView.layer.borderWidth=1;
     self.pageTitleView.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.4].CGColor;

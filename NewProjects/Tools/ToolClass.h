@@ -13,7 +13,12 @@
 
 //#pragma mark --个人类型转换
 +(NSString *)registTyple:(NSString*)str;
+/**
+ *  转换为Base64编码
+ */
++(NSString *)base64EncodedString:(NSString*)string;
 
++(NSString*)base64Decode:(NSString *)string; 
 #pragma mark --性别转换
 +(NSString*)XingBieStr:(NSString*)xb;
 

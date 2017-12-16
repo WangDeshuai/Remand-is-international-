@@ -41,7 +41,7 @@
     self.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.5].CGColor;
     self.layer.borderWidth=.5;
     _namelabel=[UILabel new];
-    _namelabel.alpha=.5;
+    _namelabel.alpha=.7;
     _namelabel.font=[UIFont systemFontOfSize:15];
     [self.contentView sd_addSubviews:@[_namelabel]];
     _namelabel.sd_layout
@@ -52,6 +52,26 @@
     
     
     
+    _arrowBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    _arrowBtn.hidden=YES;
+    [_arrowBtn setImage:[UIImage imageNamed:@"release_arrow"] forState:0];
+    
+    _arrowBtn.contentHorizontalAlignment=2;
+    [self.contentView sd_addSubviews:@[_arrowBtn]];
+    _arrowBtn.sd_layout
+    .rightSpaceToView(self.contentView, 15)
+    .centerYEqualToView(self.contentView)
+    .widthIs(35)
+    .heightIs(35);
+    
+    _textField=[UITextField new];
+    _textField.font=[UIFont systemFontOfSize:15];
+    [self.contentView sd_addSubviews:@[_textField]];
+    _textField.sd_layout
+    .leftSpaceToView(_namelabel, 10)
+    .rightSpaceToView(_arrowBtn, 0)
+    .centerYEqualToView(self.contentView)
+    .heightIs(30);
     
     
 }
