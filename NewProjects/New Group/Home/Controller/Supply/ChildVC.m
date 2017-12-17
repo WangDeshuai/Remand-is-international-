@@ -45,6 +45,7 @@
         [button setTitle:array[i] forState:0];
         button.layer.borderColor=[[UIColor lightGrayColor] colorWithAlphaComponent:.7].CGColor;
         button.layer.borderWidth=1;
+        button.tag=i;
         [button setTitleColor:[UIColor lightGrayColor]   forState:0];
         [button addTarget:self action:@selector(topBtnClinck:) forControlEvents:UIControlEventTouchUpInside];
         button.titleLabel.font=[UIFont systemFontOfSize:15];
@@ -130,9 +131,32 @@
 #pragma mark -----按钮点击事件
 //topBtnClick
 -(void)topBtnClinck:(UIButton*)btn{
-    ChildView * vc =[[ChildView alloc]initWithFrame:CGRectMake(15, 64+45+12, (ScreenWidth-15*3)/2, 360) AndDataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
+    
+    int k =(ScreenWidth-15*3)/2;//view的宽度和按钮宽度一样
+    int h = 64+45+12;//view距离顶部的距离
+    int g=360;//view的高度
+    
+    if (btn.tag==0) {
+        [self CusterView:CGRectMake(15, h,k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
+        
+    }else if (btn.tag==1){
+          [self CusterView:CGRectMake(k+15+15, h, k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
+    }else if (btn.tag==2){
+        //35按钮的高度  15上下间距
+        [self CusterView:CGRectMake(15, h+35+15, k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
+    }else if (btn.tag==3){
+        [self CusterView:CGRectMake(k+15+15, h+35+15, k, g)DataArr:@[@"China",@"不知的",@"你是",@"你大爷是",@"让我一次一次",@"看看按钮的长度和高度"]];
+        
+    }
+    
+   
+}
+
+-(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr{
+    ChildView * vc =[[ChildView alloc]initWithFrame:frame AndDataArr:arr];
     [vc show];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

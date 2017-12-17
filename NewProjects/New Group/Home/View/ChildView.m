@@ -102,7 +102,9 @@
         UIButton * button =[UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = 100 + i;
         [button setTitleColor:[[UIColor blackColor]colorWithAlphaComponent:.5] forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(searBtnClink:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(searBtnClink:)
+         forControlEvents:UIControlEventTouchUpInside];
+        [btn setTitleColor:Main_Color forState:UIControlStateSelected];
         button.titleLabel.font=[UIFont systemFontOfSize:15];
         CGFloat length=[ToolClass WidthForString:_dataArray[i] withSizeOfFont:15];
         [button setTitle:_dataArray[i] forState:UIControlStateNormal];
@@ -189,7 +191,7 @@
 
 
 -(void)searBtnClink:(UIButton*)btn{
-    
+    btn.selected=!btn.selected;
 }
 - (void)show{
     //获取window对象

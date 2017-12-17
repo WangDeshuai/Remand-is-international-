@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		044F8C411FE669A100C3D8E0 /* ForgotpswVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F8C401FE669A100C3D8E0 /* ForgotpswVC.m */; };
+		044F8C441FE669D200C3D8E0 /* ForgotCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044F8C431FE669D200C3D8E0 /* ForgotCell.m */; };
 		04ED7B051FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B021FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.m */; };
 		04ED7B061FDC0ABB00424718 /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B041FDC0ABB00424718 /* UIView+SDAutoLayout.m */; };
 		04ED7B291FDC0AF100424718 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ED7B091FDC0AF100424718 /* MKAnnotationView+WebCache.m */; };
@@ -182,6 +184,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		044F8C3F1FE669A100C3D8E0 /* ForgotpswVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgotpswVC.h; sourceTree = "<group>"; };
+		044F8C401FE669A100C3D8E0 /* ForgotpswVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgotpswVC.m; sourceTree = "<group>"; };
+		044F8C421FE669D200C3D8E0 /* ForgotCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForgotCell.h; sourceTree = "<group>"; };
+		044F8C431FE669D200C3D8E0 /* ForgotCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForgotCell.m; sourceTree = "<group>"; };
 		04ED7B001FDC0ABB00424718 /* SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAutoLayout.h; sourceTree = "<group>"; };
 		04ED7B011FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+SDAutoTableViewCellHeight.h"; sourceTree = "<group>"; };
 		04ED7B021FDC0ABB00424718 /* UITableView+SDAutoTableViewCellHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+SDAutoTableViewCellHeight.m"; sourceTree = "<group>"; };
@@ -528,6 +534,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		044F8C3E1FE661A400C3D8E0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				04ED7B6E1FDD562500424718 /* ChildView.h */,
+				04ED7B6F1FDD562500424718 /* ChildView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		04ED7AFF1FDC0ABB00424718 /* SDAutoLayout */ = {
 			isa = PBXGroup;
 			children = (
@@ -652,8 +667,6 @@
 		04ED7B5D1FDD2CDD00424718 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				04ED7B6E1FDD562500424718 /* ChildView.h */,
-				04ED7B6F1FDD562500424718 /* ChildView.m */,
 				966632661FE500C60096ACB7 /* PhotoView.h */,
 				966632671FE500C60096ACB7 /* PhotoView.m */,
 			);
@@ -817,9 +830,9 @@
 		9674BA6A1FDE2D7600865E74 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				9674BA741FDE5D1100865E74 /* Controller */,
 				9695A11F1FE20FA90083A625 /* Model */,
 				9674BA751FDE611400865E74 /* Cell */,
-				9674BA741FDE5D1100865E74 /* Controller */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -831,6 +844,8 @@
 				9674BA6C1FDE2D9E00865E74 /* LoginVC.m */,
 				9674BA711FDE5D0600865E74 /* RegistVC.h */,
 				9674BA721FDE5D0600865E74 /* RegistVC.m */,
+				044F8C3F1FE669A100C3D8E0 /* ForgotpswVC.h */,
+				044F8C401FE669A100C3D8E0 /* ForgotpswVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -840,6 +855,8 @@
 			children = (
 				9674BA761FDE612A00865E74 /* RegistCell.h */,
 				9674BA771FDE612A00865E74 /* RegistCell.m */,
+				044F8C421FE669D200C3D8E0 /* ForgotCell.h */,
+				044F8C431FE669D200C3D8E0 /* ForgotCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1247,8 +1264,9 @@
 		96C91DBE1FD8F04700DF0CE3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				96862CC51FE3730F00A5C11F /* Model */,
 				04ED7B391FDC2EB300424718 /* Controller */,
+				044F8C3E1FE661A400C3D8E0 /* View */,
+				96862CC51FE3730F00A5C11F /* Model */,
 				04ED7B3A1FDC2EC200424718 /* Cell */,
 			);
 			path = Home;
@@ -1707,6 +1725,7 @@
 				04ED7B331FDC0AF100424718 /* UIImage+GIF.m in Sources */,
 				966632651FE4FC9D0096ACB7 /* UIView+Layout.m in Sources */,
 				96127BC61FDBD4D00040B21D /* TAAnimatedDotView.m in Sources */,
+				044F8C441FE669D200C3D8E0 /* ForgotCell.m in Sources */,
 				96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */,
 				966632571FE4FC9D0096ACB7 /* NSBundle+TZImagePicker.m in Sources */,
 				9674BA701FDE323700865E74 /* UIColor+ColorChange.m in Sources */,
@@ -1728,6 +1747,7 @@
 				96C91DB21FD8EF5100DF0CE3 /* LCProgressHUD.m in Sources */,
 				04ED7B4E1FDC395F00424718 /* UITextField+PlaceholderColor.m in Sources */,
 				96C91DA51FD8EF1C00DF0CE3 /* IQTitleBarButtonItem.m in Sources */,
+				044F8C411FE669A100C3D8E0 /* ForgotpswVC.m in Sources */,
 				96C91DFB1FD8F22C00DF0CE3 /* NSObject+MJCoding.m in Sources */,
 				96C91E501FD9261900DF0CE3 /* MJRefreshAutoNormalFooter.m in Sources */,
 				96C91E481FD9261900DF0CE3 /* SGPageTitleView.m in Sources */,

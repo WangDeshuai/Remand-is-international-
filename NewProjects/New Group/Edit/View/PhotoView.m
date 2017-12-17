@@ -22,9 +22,7 @@
     NSMutableArray *_selectedPhotos;
     NSMutableArray *_selectedAssets;
     BOOL _isSelectOriginalPhoto;
-    
     CGFloat _itemWH;
-    CGFloat _margin;
 }
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -32,13 +30,28 @@
 @property (nonatomic, assign) NSInteger rowNum;//每行展示几个
 @end
 @implementation PhotoView
-
+static CGFloat  _labelHeight =30;
 -(id)initWithFrame:(CGRect)frame MaxPhoto:(NSInteger)maxPhoto EachRowNumber:(NSInteger)number{
     self=[super initWithFrame:frame];
     if (self) {
-        self.backgroundColor=[UIColor yellowColor];
+        self.backgroundColor=[UIColor whiteColor];
         _maxNum=maxPhoto;
         _rowNum=number;
+        
+        UILabel * namelabel =[UILabel new];
+        namelabel.text=@"请选择照片，最少2个最多8个";
+        namelabel.alpha=.7;
+        namelabel.textAlignment=0;
+        namelabel.font=[UIFont systemFontOfSize:15];
+        [self sd_addSubviews:@[namelabel]];
+        namelabel.sd_layout
+        .leftSpaceToView(self,15)
+        .rightSpaceToView(self, 15)
+        .topSpaceToView(self, 0)
+        .heightIs(_labelHeight);
+        
+        
+        
         [self configCollectionView];
     }
     
@@ -52,17 +65,26 @@
     
     CGFloat kj=5;//间距
     CGFloat itemWH=(ScreenWidth-kj*(_rowNum+1))/_rowNum;  //item大小
+    _itemWH=itemWH;
     layout.itemSize = CGSizeMake(itemWH, itemWH);
     layout.minimumInteritemSpacing = kj;//宽度间距
-    layout.minimumLineSpacing = kj;//高度间距
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.frame.size.height) collectionViewLayout:layout];
+    layout.minimumLineSpacing = 0;//高度间距
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, _labelHeight, ScreenWidth, self.frame.size.height-_labelHeight) collectionViewLayout:layout];
     _collectionView.alwaysBounceVertical = YES;
     _collectionView.backgroundColor = [UIColor whiteColor];
-    _collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
     _collectionView.dataSource = self;
     _collectionView.delegate = self;
     _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     [self addSubview:_collectionView];
+    
+//    _collectionView.sd_layout
+//    .leftSpaceToView(self, 0)
+//    .rightSpaceToView(self, 0)
+//    .topSpaceToView(self, _labelHeight)
+//    .bottomSpaceToView(self, 0)
+    
+    
     [_collectionView registerClass:[TZTestCell class] forCellWithReuseIdentifier:@"TZTestCell"];
     
     
@@ -90,6 +112,7 @@
 //        cell.asset = _selectedAssets[indexPath.row];
         cell.deleteBtn.hidden = NO;
     }
+//    cell.backgroundColor=[UIColor redColor];
     cell.deleteBtn.tag = indexPath.row;
     [cell.deleteBtn setImage:[UIImage imageNamed:@"search_cancel"] forState:0];
     [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
@@ -116,6 +139,9 @@
             _selectedPhotos = [NSMutableArray arrayWithArray:photos];
             _selectedAssets = [NSMutableArray arrayWithArray:assets];
             _isSelectOriginalPhoto = isSelectOriginalPhoto;
+            if (_selectedPhotos.count<_rowNum) {
+                [self RowFrameHeight:_itemWH];
+            }
             [_collectionView reloadData];
         }];
         [_delegate presentViewController:imagePickerVc animated:YES completion:nil];
@@ -131,11 +157,19 @@
 - (void)pushTZImagePickerController {
     
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:_maxNum columnNumber:4 delegate:self pushPhotoPickerVc:YES];
-        imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
+    imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
+    imagePickerVc.naviBgColor=Main_Color;
     imagePickerVc.maxImagesCount=_maxNum;
 //    imagePickerVc.allowTakePicture = self.showTakePhotoBtnSwitch.isOn; // 在内部显示拍照按钮
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
 //        NSLog(@"输出图片>>%@",photos);
+        if (photos.count>=_rowNum) {
+            [self RowFrameHeight:_itemWH+_itemWH];
+        }else{
+             [self RowFrameHeight:_itemWH];
+        }
+        _collectionView.sd_layout
+        .bottomSpaceToView(self, 0);
         self.photosArrBlock(photos);
     }];
     [_delegate presentViewController:imagePickerVc animated:YES completion:nil];
@@ -146,13 +180,15 @@
 
 #pragma mark -----删除按钮
 - (void)deleteBtnClik:(UIButton* )sender {
-    NSLog(@">>>%lu",sender.tag);
     [_selectedPhotos removeObjectAtIndex:sender.tag];
     [_selectedAssets removeObjectAtIndex:sender.tag];
     [_collectionView performBatchUpdates:^{
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag+1 inSection:0];
         [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
+        if (_selectedPhotos.count<_rowNum) {
+              [self RowFrameHeight:_itemWH];
+        }
         [_collectionView reloadData];
     }];
 }
@@ -173,6 +209,11 @@
         [picker dismissViewControllerAnimated:YES completion:nil];
     }
 }
-
+//坐标
+-(void)RowFrameHeight:(CGFloat)height{
+    self.frame=CGRectMake(0, 0, self.frame.size.width, height+_labelHeight);
+    _collectionView.sd_layout
+    .bottomSpaceToView(self, 0);
+}
 
 @end

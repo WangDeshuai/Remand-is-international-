@@ -61,23 +61,26 @@
 
 -(UIView*)CreatFootView{
     UIView * footView =[UIView new];
-    footView.backgroundColor=[UIColor orangeColor];
+    footView.backgroundColor=[UIColor whiteColor];
     footView.sd_layout
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
     .topSpaceToView(self.view, 0)
-    .heightIs(400);
+    .heightIs(300);
     
     
-    PhotoView * view =[[PhotoView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 200) MaxPhoto:8 EachRowNumber:4];
+    PhotoView * view =[[PhotoView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 120) MaxPhoto:8 EachRowNumber:4];
     view.photosArrBlock=^(NSArray *photosArr){
         NSLog(@"照片>>>%@",photosArr);
     };
     view.delegate=self;
     [footView addSubview:view];
     
-//
+  
+    
+
     NSArray * btnArr =@[@"Release",@"Cancel"];
+    UIButton * btn =nil;
     int d =15;
     int k =(ScreenWidth-d*2);
     int g=35;
@@ -90,7 +93,7 @@
         sureBtn.sd_layout
         .leftSpaceToView(footView, d)
         .rightSpaceToView(footView, d)
-        .topSpaceToView(view, 20+(d+g)*i)
+        .topSpaceToView(view,0+(d+g)*i)
         .widthIs(k)
         .heightIs(g);
         if (i==0) {
@@ -101,9 +104,10 @@
             sureBtn.layer.borderWidth=.5;
             [sureBtn setTitleColor:[[UIColor lightGrayColor]colorWithAlphaComponent:.7] forState:0];
         }
-
+        btn=sureBtn;
     }
     
+    [footView setupAutoHeightWithBottomView:btn bottomMargin:10];
     return footView;
 }
 

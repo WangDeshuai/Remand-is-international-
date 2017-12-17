@@ -48,7 +48,11 @@
     
     NSArray *titleArr = @[@"DEFAULT", @"PRICE", @"RESERVE", @"TIME"];
     SGPageTitleViewConfigure *configure = [SGPageTitleViewConfigure pageTitleViewConfigure];
-    
+    if (@available(iOS 8.2, *)) {
+        configure.titleFont=[UIFont systemFontOfSize:15 weight:.3];
+    } else {
+        // Fallback on earlier versions
+    }
     configure.titleColor=[UIColor lightGrayColor];
     configure.titleSelectedColor=[UIColor whiteColor];
     

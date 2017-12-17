@@ -8,7 +8,8 @@
 
 #import "LoginVC.h"
 #import "RegistVC.h"//注册
-#import "LoginModel.h"
+#import "LoginModel.h"//登录
+#import "ForgotpswVC.h"//忘记密码
 @interface LoginVC ()
 @property(nonatomic,strong)UIView * bgView;
 @property(nonatomic,strong)UITextField * phoneText;
@@ -158,7 +159,8 @@
 #pragma mark -----------按钮点击事件---------
 //忘记密码
 -(void)forgetBtnClick{
-    
+    ForgotpswVC * vc =[ForgotpswVC new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 //注册按钮
 -(void)registBtnClick{
