@@ -11,14 +11,18 @@
 #import "ReleaseMainVC.h"
 #import "ChildView.h"
 #import "PurchaseDetailsVC.h"//采购详情
+#import "SuppleProduct.h"
 @interface ChildVC ()<UITableViewDelegate,UITableViewDataSource>
-@property(nonatomic,strong)UITableView * tableView;
+@property(nonatomic,strong)NSMutableArray  *categoryData;
+@property(nonatomic,strong)NSMutableArray  *cellDataArr;
 @end
 
 @implementation ChildVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _cellDataArr = [NSMutableArray array];
+    _categoryData = [NSMutableArray array];
     // Do any additional setup after loading the view.
     [self CreatTabelView];
 }
@@ -79,43 +83,42 @@
 
 //tableView
 -(void)CreatTabelView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64-44) style:UITableViewStylePlain];
-    _tableView=tableView;
-    tableView.dataSource=self;
-    tableView.delegate=self;
-    tableView.tableFooterView=[UIView new];
-    tableView.tableHeaderView=[self CreatViewHeadder];
-    tableView.backgroundColor=BG_COLOR;
-    tableView.sectionHeaderHeight=10;
-    tableView.rowHeight=100;
-    [self.view addSubview:tableView];
+    self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-64-44);
+    self.baseTableView.sectionHeaderHeight=10;
+    self.baseTableView.tableHeaderView=[self CreatViewHeadder];
+    self.baseTableView.rowHeight=100;
+    [self.view addSubview: self.baseTableView];
+    [self.baseTableView.mj_header beginRefreshing];
+}
+
+-(void)mjHeaderRefresh{
+    NSLog(@">>>>%@",_sortType);
+  
+    self.current=1;
+    [self getWangLuoJiekouDicInt:self.current];
+}
+-(void)mjFooterRefresh
+{
+    [self getWangLuoJiekouDicInt:self.current++];
 }
 
 #pragma mark ---代理  tableViewDataSource  tableViewDelegate
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return self.cellDataArr.count;
 }
 
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ChildCell * cell =[ChildCell cellWithTableView:tableView IndexPath:indexPath];
+    cell.model=self.cellDataArr[indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row==0) {
-        PurchaseDetailsVC * vc =[PurchaseDetailsVC new];
-        vc.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else
-    {
-        ReleaseMainVC * vc =[ReleaseMainVC new];
-        vc.hidesBottomBarWhenPushed=YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+    
     
   
 }
@@ -131,46 +134,51 @@
 #pragma mark -----按钮点击事件
 //topBtnClick
 -(void)topBtnClinck:(UIButton*)btn{
-    
-    int k =(ScreenWidth-15*3)/2;//view的宽度和按钮宽度一样
-    int h = 64+45+12;//view距离顶部的距离
     int g=360;//view的高度
-    
-    if (btn.tag==0) {
-        [self CusterView:CGRectMake(15, h,k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
-        
-    }else if (btn.tag==1){
-          [self CusterView:CGRectMake(k+15+15, h, k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
-    }else if (btn.tag==2){
-        //35按钮的高度  15上下间距
-        [self CusterView:CGRectMake(15, h+35+15, k, g)DataArr:@[@"China",@"Canada",@"United",@"States",@"Finland",@"Sweden",@"Norway",@"Unted",@"Kingdom",@"Ireland Netherlands",@"Belgium Luxembourg",@"France Monaco"]];
-    }else if (btn.tag==3){
-        [self CusterView:CGRectMake(k+15+15, h+35+15, k, g)DataArr:@[@"China",@"不知的",@"你是",@"你大爷是",@"让我一次一次",@"看看按钮的长度和高度"]];
-        
-    }
-    
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[btn convertRect:btn.bounds toView:window];
+    [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:self.categoryData];
    
 }
+
+
+#pragma mark --获取网络接口
+-(void)getWangLuoJiekouDicInt:(NSInteger )page {
+    //
+    NSDictionary *dic1 = @{@"keyWord":_keyWord,@"pageNo":[NSString stringWithFormat:@"%ld",(long)page],@"datatype":_dataType,@"sortType":_sortType};
+    
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic1 callback:^(id item) {
+        [LCProgressHUD hide];
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            self.categoryData = item[@"categorys"];
+            NSArray *dataArr = item[@"product"];
+            if (self.current==1) {
+                self.cellDataArr =[NSMutableArray array];
+            }
+            for (NSDictionary *item in dataArr) {
+                if ([item isKindOfClass:[NSDictionary class]]) {
+                    [self.cellDataArr addObject:[SuppleProduct modelObjectWithDictionary:item]];
+                }
+            }
+            [self.baseTableView reloadData];
+        }else{
+            self.current--;
+        }
+
+        [self.baseTableView.mj_header endRefreshing];
+        [self.baseTableView.mj_footer endRefreshing];
+    } failedBlock:^(id error) {
+        [self.baseTableView.mj_header endRefreshing];
+        [self.baseTableView.mj_footer endRefreshing];
+    }];
+}
+
 
 -(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr{
     ChildView * vc =[[ChildView alloc]initWithFrame:frame AndDataArr:arr];
     [vc show];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -66,6 +66,9 @@
     NSMutableArray *childArr=[NSMutableArray array];
     for (int i =0; i<4; i++) {
          ChildVC *oneVC = [[ChildVC alloc] init];
+         oneVC.dataType=[NSString stringWithFormat:@"%ld",_tagg+1];//按什么方式排序
+         oneVC.sortType=[NSString stringWithFormat:@"%d",i];// 1.供应 2.采购
+        oneVC.keyWord=_keyWord;//关键词传递
         [childArr addObject:oneVC];
     }
    

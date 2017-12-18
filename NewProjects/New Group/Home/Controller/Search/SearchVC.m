@@ -11,11 +11,14 @@
 #import "SearchCell.h"
 #import "SearchTabCell.h"
 #import "EditVC.h"
+#import "SearchView.h"
+#import "EditVC.h"
 @interface SearchVC ()<UITextFieldDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(nonatomic,strong)UITextField * searchText;
 @property(nonatomic,strong)UIView * topView;
 @property(nonatomic,strong)UICollectionView * collectionView;
 @property(nonatomic,strong)SearchModel * searchModel;
+@property(nonatomic,copy)NSString * datatype;
 @end
 
 @implementation SearchVC
@@ -33,6 +36,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.backHomeBtn.hidden=YES;
+    _datatype=@"1";
     //导航条右边取消按钮
     [self CreatCancelBtn];
     //导航条左边选框
@@ -63,12 +67,13 @@
 -(void)CreatBtn{
     //search
     UIButton * searBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    [searBtn setTitle:@"Purchase" forState:0];
+    [searBtn setTitle:@"Supply" forState:0];
     searBtn.backgroundColor=[UIColor clearColor];
     searBtn.titleLabel.font=[UIFont systemFontOfSize:15];
     [searBtn setImage:[UIImage imageNamed:@"home_search"] forState:0];
     searBtn.frame=CGRectMake(15, 0, 100, 35);
     [searBtn SG_imagePositionStyle:SGImagePositionStyleRight spacing:8];
+    [searBtn addTarget:self action:@selector(searBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.topView addSubview:searBtn];
     //line
     UIView * lineView =[UIView new];
@@ -135,7 +140,8 @@
 }
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SearchTabCell * cell =[SearchTabCell cellWithTableView:tableView IndexPath:indexPath];
-    cell.nameLabel.text=[ToolClass base64Decode:_searchModel.records[indexPath.row]];
+    NSDictionary * dic =_searchModel.records[indexPath.row];
+    cell.nameLabel.text=[ToolClass base64Decode:[dic objectForKey:@"word"]];
     cell.cancelBtn.tag=indexPath.row;
     [cell.cancelBtn addTarget:self action:@selector(deleteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
@@ -299,8 +305,21 @@
     [LCProgressHUD showLoading:Message_Loading];
     NSMutableDictionary * dic =[NSMutableDictionary new];
     [dic setObject:[ToolClass base64EncodedString:textfield] forKey:@"keyWord"];
-    
+    [dic setObject:_datatype forKey:@"datatype"];
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic callback:^(id item) {
+        
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        
+        if ([code isEqualToString:@"1"]) {
+            EditVC * vc =[EditVC new];
+            vc.tagg=[_datatype intValue]-1;
+            vc.keyWord=[ToolClass base64EncodedString:textfield];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            
+        }
+
+        
             [LCProgressHUD hide];
     } failedBlock:^(id error) {
         
@@ -317,7 +336,8 @@
         NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
         
         if ([code isEqualToString:@"1"]) {
-            [self.baseTableView reloadData];
+//            [self.baseTableView reloadData];
+            [self getReCi];
         }else{
             
         }
@@ -333,14 +353,17 @@
 #pragma mark ---按钮点击事件
 //搜索框取消
 -(void)rightButtonClick{
-    [self.view endEditing:YES];
+//    [self.view endEditing:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 //删除按钮(每个)
 -(void)deleteBtnClick:(UIButton*)btn{
-    NSString * nameId =_searchModel.records[btn.tag];
+    NSDictionary * dic =_searchModel.records[btn.tag];
+    NSString * nameId =[dic objectForKey:@"uid"];
+    
     [self deleteID:nameId];
-   
+    [self getReCi];
 }
 
 //删除所有的
@@ -348,7 +371,18 @@
     [self deleteID:@""];
 }
 
-
+//采购还是供应
+-(void)searBtnClick:(UIButton*)btn{
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[btn convertRect:btn.bounds toView:window];
+    SearchView * view =[[SearchView alloc]initWithFrame:CGRectMake(CGRectGetMinX(rect),  CGRectGetMaxY(rect),CGRectGetWidth(btn.frame),120) DataArr:@[@"Supply",@"Purchase"]];
+    view.NameTypeBlock = ^(NSString *type, NSString *name) {
+        [btn setTitle:name forState:0];
+        _datatype=type;
+         [btn SG_imagePositionStyle:SGImagePositionStyleRight spacing:8];
+    };
+    [view show];
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

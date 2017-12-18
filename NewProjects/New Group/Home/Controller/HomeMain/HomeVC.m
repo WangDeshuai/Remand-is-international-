@@ -159,6 +159,7 @@
     EditVC * vc =[EditVC new];
     vc.hidesBottomBarWhenPushed=YES;
     vc.tagg=btn.tag;
+    vc.keyWord=[ToolClass base64EncodedString:@"search"];//传递默认关键词
     [self.navigationController pushViewController:vc animated:YES];
 }
 //导航条搜索按

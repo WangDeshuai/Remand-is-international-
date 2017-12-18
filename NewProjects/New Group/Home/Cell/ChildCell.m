@@ -137,6 +137,17 @@
     [_moneyLabel setSingleLineAutoResizeWithMaxWidth:200];
     
 }
+
+-(void)setModel:(SuppleProduct *)model
+{
+    _model=model;
+    [_leftImage sd_setImageWithURL:[NSURL URLWithString:model.productImage.firstObject] placeholderImage:[UIImage imageNamed:@"mine_head"]];
+    _titleLabel.text=model.productName;
+    _tonsLabel.text=[NSString stringWithFormat:@"%.2ftons",model.stockNum];
+    _addArssLabel.text=model.address;
+    _moneyLabel.text=[NSString stringWithFormat:@"¥%.2f/t",model.price];
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

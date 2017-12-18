@@ -11,4 +11,5 @@
 @interface EditVC : BaseViewController
 //tagg==0 (supply进入)  tagg==1(purchase进入)
 @property(nonatomic,assign)NSInteger tagg;
+@property (nonatomic,copy)NSString * keyWord;
 @end

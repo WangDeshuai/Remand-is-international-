@@ -22,6 +22,10 @@
 #pragma mark --性别转换
 +(NSString*)XingBieStr:(NSString*)xb;
 
+#pragma mark --获取验证码倒计时
++(void)timeDaoJiShi:(UIButton*)btn;
+
+
 #pragma mark --判断是否登录（登录YES）
 +(BOOL)isLogin;
 #pragma mark --适配高度

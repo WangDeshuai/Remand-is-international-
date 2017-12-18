@@ -19,6 +19,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.current = 1;
     // Do any additional setup after loading the view.
     self.view.backgroundColor=BG_COLOR;
     self.navigationController.interactivePopGestureRecognizer.enabled=YES;
@@ -85,6 +86,7 @@
         tableView.rowHeight=70;
         tableView.tableFooterView=[UIView new];
         tableView.backgroundColor=BG_COLOR;
+        tableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
         tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(mjHeaderRefresh)];
         tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(mjFooterRefresh)];
         _baseTableView = tableView;

@@ -47,7 +47,11 @@
 		96127BC91FDBD4D00040B21D /* SDCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BC01FDBD4D00040B21D /* SDCollectionViewCell.m */; };
 		96127BCA1FDBD4D00040B21D /* SDCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BC21FDBD4D00040B21D /* SDCycleScrollView.m */; };
 		96127BCB1FDBD4D00040B21D /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 96127BC41FDBD4D00040B21D /* UIView+SDExtension.m */; };
+		964064BF1FE76372001A5D9B /* ChangePasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 964064BE1FE76372001A5D9B /* ChangePasswordVC.m */; };
 		9658C1AA1FE0C82700DFCB43 /* VipMenberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9658C1A91FE0C82700DFCB43 /* VipMenberVC.m */; };
+		965C9E8A1FE79ACC0098C6B3 /* SuppleProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 965C9E821FE79ACB0098C6B3 /* SuppleProduct.m */; };
+		965C9E901FE79C690098C6B3 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 965C9E8F1FE79C680098C6B3 /* SearchModel.m */; };
+		965C9E961FE7B1EB0098C6B3 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 965C9E951FE7B1EB0098C6B3 /* SearchView.m */; };
 		966632361FE4C2710096ACB7 /* SearchTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 966632351FE4C2710096ACB7 /* SearchTabCell.m */; };
 		966632571FE4FC9D0096ACB7 /* NSBundle+TZImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 9666323B1FE4FC9D0096ACB7 /* NSBundle+TZImagePicker.m */; };
 		966632581FE4FC9D0096ACB7 /* TZAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9666323D1FE4FC9D0096ACB7 /* TZAssetCell.m */; };
@@ -90,7 +94,6 @@
 		96B00DE41FDFD6DF000EB2D2 /* MemberVIPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */; };
 		96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */; };
 		96BA433B1FE3A7FF00F64E29 /* SearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA433A1FE3A7FF00F64E29 /* SearchVC.m */; };
-		96BA43441FE3BE9F00F64E29 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA43431FE3BE9F00F64E29 /* SearchModel.m */; };
 		96C91D351FD8EB0700DF0CE3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D341FD8EB0700DF0CE3 /* AppDelegate.m */; };
 		96C91D381FD8EB0700DF0CE3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D371FD8EB0700DF0CE3 /* ViewController.m */; };
 		96C91D3D1FD8EB0700DF0CE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96C91D3C1FD8EB0700DF0CE3 /* Assets.xcassets */; };
@@ -266,8 +269,16 @@
 		96127BC21FDBD4D00040B21D /* SDCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDCycleScrollView.m; sourceTree = "<group>"; };
 		96127BC31FDBD4D00040B21D /* UIView+SDExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDExtension.h"; sourceTree = "<group>"; };
 		96127BC41FDBD4D00040B21D /* UIView+SDExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDExtension.m"; sourceTree = "<group>"; };
+		964064BD1FE76372001A5D9B /* ChangePasswordVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChangePasswordVC.h; sourceTree = "<group>"; };
+		964064BE1FE76372001A5D9B /* ChangePasswordVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordVC.m; sourceTree = "<group>"; };
 		9658C1A81FE0C82700DFCB43 /* VipMenberVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VipMenberVC.h; sourceTree = "<group>"; };
 		9658C1A91FE0C82700DFCB43 /* VipMenberVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VipMenberVC.m; sourceTree = "<group>"; };
+		965C9E821FE79ACB0098C6B3 /* SuppleProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuppleProduct.m; sourceTree = "<group>"; };
+		965C9E851FE79ACC0098C6B3 /* SuppleProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuppleProduct.h; sourceTree = "<group>"; };
+		965C9E8E1FE79C680098C6B3 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
+		965C9E8F1FE79C680098C6B3 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
+		965C9E941FE7B1EB0098C6B3 /* SearchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
+		965C9E951FE7B1EB0098C6B3 /* SearchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
 		966632341FE4C2710096ACB7 /* SearchTabCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchTabCell.h; sourceTree = "<group>"; };
 		966632351FE4C2710096ACB7 /* SearchTabCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchTabCell.m; sourceTree = "<group>"; };
 		9666323A1FE4FC9D0096ACB7 /* NSBundle+TZImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+TZImagePicker.h"; sourceTree = "<group>"; };
@@ -352,8 +363,6 @@
 		96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberVIPCell.m; sourceTree = "<group>"; };
 		96BA43391FE3A7FF00F64E29 /* SearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchVC.h; sourceTree = "<group>"; };
 		96BA433A1FE3A7FF00F64E29 /* SearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchVC.m; sourceTree = "<group>"; };
-		96BA43431FE3BE9F00F64E29 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
-		96BA43451FE3BEA900F64E29 /* SearchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
 		96C91D301FD8EB0700DF0CE3 /* NewProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C91D331FD8EB0700DF0CE3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		96C91D341FD8EB0700DF0CE3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -539,6 +548,8 @@
 			children = (
 				04ED7B6E1FDD562500424718 /* ChildView.h */,
 				04ED7B6F1FDD562500424718 /* ChildView.m */,
+				965C9E941FE7B1EB0098C6B3 /* SearchView.h */,
+				965C9E951FE7B1EB0098C6B3 /* SearchView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -651,6 +662,7 @@
 				96B00DBE1FDF6D28000EB2D2 /* 发布信息 */,
 				96B00DBA1FDF634C000EB2D2 /* 我的 */,
 				96B00DBB1FDF6373000EB2D2 /* 基本信息 */,
+				964064C01FE7637E001A5D9B /* New Group */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -735,6 +747,15 @@
 				96127BBE1FDBD4D00040B21D /* TAPageControl.m */,
 			);
 			path = PageControl;
+			sourceTree = "<group>";
+		};
+		964064C01FE7637E001A5D9B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				964064BD1FE76372001A5D9B /* ChangePasswordVC.h */,
+				964064BE1FE76372001A5D9B /* ChangePasswordVC.m */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		9658C1A41FE0C79900DFCB43 /* vipmember */ = {
@@ -873,8 +894,10 @@
 		96862CC51FE3730F00A5C11F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				96BA43451FE3BEA900F64E29 /* SearchModel.h */,
-				96BA43431FE3BE9F00F64E29 /* SearchModel.m */,
+				965C9E8E1FE79C680098C6B3 /* SearchModel.h */,
+				965C9E8F1FE79C680098C6B3 /* SearchModel.m */,
+				965C9E851FE79ACC0098C6B3 /* SuppleProduct.h */,
+				965C9E821FE79ACB0098C6B3 /* SuppleProduct.m */,
 				96862CC61FE3732500A5C11F /* HomeViewList.h */,
 				96862CC81FE3732600A5C11F /* HomeViewList.m */,
 				96862CC91FE3732600A5C11F /* HomeViewModel.h */,
@@ -1641,6 +1664,7 @@
 				04ED7B551FDC405E00424718 /* MineCell.m in Sources */,
 				96C91E561FD9261900DF0CE3 /* MJRefreshNormalHeader.m in Sources */,
 				9674BA651FDE210C00865E74 /* PurchaseDetailsVC.m in Sources */,
+				965C9E901FE79C690098C6B3 /* SearchModel.m in Sources */,
 				96C91DA11FD8EF1C00DF0CE3 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				96C91D9B1FD8EF1C00DF0CE3 /* IQUIScrollView+Additions.m in Sources */,
 				04ED7B2F1FDC0AF100424718 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1661,6 +1685,7 @@
 				966632591FE4FC9D0096ACB7 /* TZAssetModel.m in Sources */,
 				96B00DC81FDF722C000EB2D2 /* ChildPublishCell.m in Sources */,
 				04ED7B291FDC0AF100424718 /* MKAnnotationView+WebCache.m in Sources */,
+				964064BF1FE76372001A5D9B /* ChangePasswordVC.m in Sources */,
 				96C91E531FD9261900DF0CE3 /* MJRefreshBackNormalFooter.m in Sources */,
 				96C91D431FD8EB0700DF0CE3 /* main.m in Sources */,
 				9674BA7E1FDE881E00865E74 /* BasicInforMationCell.m in Sources */,
@@ -1684,8 +1709,8 @@
 				96C91D9D1FD8EF1C00DF0CE3 /* IQUIView+Hierarchy.m in Sources */,
 				9666325B1FE4FC9D0096ACB7 /* TZImageCropManager.m in Sources */,
 				96C91E5D1FD9261900DF0CE3 /* UIView+MJExtension.m in Sources */,
-				96BA43441FE3BE9F00F64E29 /* SearchModel.m in Sources */,
 				96C91E021FD8F22C00DF0CE3 /* AFURLResponseSerialization.m in Sources */,
+				965C9E961FE7B1EB0098C6B3 /* SearchView.m in Sources */,
 				96C91E4A1FD9261900DF0CE3 /* MJRefreshAutoFooter.m in Sources */,
 				04ED7B2B1FDC0AF100424718 /* SDImageCache.m in Sources */,
 				966632681FE500C60096ACB7 /* PhotoView.m in Sources */,
@@ -1758,6 +1783,7 @@
 				96127BC71FDBD4D00040B21D /* TADotView.m in Sources */,
 				96C91E4C1FD9261900DF0CE3 /* MJRefreshComponent.m in Sources */,
 				96C91D9A1FD8EF1C00DF0CE3 /* IQNSArray+Sort.m in Sources */,
+				965C9E8A1FE79ACC0098C6B3 /* SuppleProduct.m in Sources */,
 				966632631FE4FC9D0096ACB7 /* TZProgressView.m in Sources */,
 				96C91DBB1FD8EFAB00DF0CE3 /* BaseViewController.m in Sources */,
 				04ED7B321FDC0AF100424718 /* UIButton+WebCache.m in Sources */,

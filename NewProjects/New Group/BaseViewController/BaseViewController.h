@@ -12,6 +12,7 @@
 @property(nonatomic,strong)UIButton * backHomeBtn;
 @property(nonatomic,strong)UIButton * rightButton;
 @property(nonatomic,strong)UITableView *baseTableView;
+@property(nonatomic,assign)NSInteger    current;
 ///头部刷新
 - (void)mjHeaderRefresh;
 ///加载更多
