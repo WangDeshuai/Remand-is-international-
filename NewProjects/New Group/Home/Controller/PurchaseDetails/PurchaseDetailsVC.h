@@ -9,5 +9,5 @@
 #import "BaseViewController.h"
 
 @interface PurchaseDetailsVC : BaseViewController
-
+@property(nonatomic,copy)NSString * codeText;
 @end

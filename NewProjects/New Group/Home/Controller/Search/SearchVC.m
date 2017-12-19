@@ -147,6 +147,16 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    EditVC * vc =[EditVC new];
+    vc.tagg=[_datatype intValue]-1;
+    NSDictionary * dic =_searchModel.records[indexPath.row];
+    vc.keyWord=[ToolClass base64EncodedString:[ToolClass base64Decode:[dic objectForKey:@"word"]]];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark ---区尾(清空历史记录)
 -(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 
@@ -272,7 +282,14 @@
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@">>>%lu",indexPath.item);
+    EditVC * vc =[EditVC new];
+    vc.tagg=[_datatype intValue]-1;
+    vc.keyWord=[ToolClass base64EncodedString:_searchModel.hotWords[indexPath.item]];
+    [self.navigationController pushViewController:vc animated:YES];
 }
+
+
+
 
 
 #pragma mark ----网络请求热词
@@ -331,17 +348,12 @@
     [LCProgressHUD showLoading:Message_Loading];
     NSMutableDictionary * dic =[NSMutableDictionary new];
     [dic setObject:idd forKey:@"id"];
-    
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Delete withParame:dic callback:^(id item) {
-        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
-        
-        if ([code isEqualToString:@"1"]) {
-//            [self.baseTableView reloadData];
-            [self getReCi];
-        }else{
-            
-        }
-
+//        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+//        if ([code isEqualToString:@"1"]) {
+//        }else{
+//
+//        }
         [LCProgressHUD hide];
     } failedBlock:^(id error) {
         
@@ -363,7 +375,8 @@
     NSString * nameId =[dic objectForKey:@"uid"];
     
     [self deleteID:nameId];
-    [self getReCi];
+    [_searchModel.records removeObjectAtIndex:btn.tag];
+    [self.baseTableView reloadData];
 }
 
 //删除所有的

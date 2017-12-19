@@ -31,7 +31,9 @@
     [dic setObject:@"4497002900020001" forKey:@"供应商"];
     [dic setObject:@"4497002900020002" forKey:@"采购商"];
     [dic setObject:@"4497002900020003" forKey:@"全部"];
-    
+    [dic setObject:@"免费会员" forKey:@"free"];
+    [dic setObject:@"vip会员" forKey:@"vip"];
+    [dic setObject:@"金牌供应商" forKey:@"goldvip"];
   return  [dic objectForKey:str];
 }
 

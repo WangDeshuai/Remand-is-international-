@@ -58,13 +58,15 @@
     .heightIs(20);
     
     _cancelBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_cancelBtn setBackgroundImage:[UIImage imageNamed:@"search_cancel"] forState:0];
+    [_cancelBtn setImage:[UIImage imageNamed:@"search_cancel"] forState:0];
+//    _cancelBtn.backgroundColor=[UIColor redColor];
+//    _cancelBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentRight;
     [self.contentView sd_addSubviews:@[_cancelBtn]];
     _cancelBtn.sd_layout
-    .rightSpaceToView(self.contentView,15)
+    .rightSpaceToView(self.contentView,0)
     .centerYEqualToView(self.contentView)
-    .widthIs(10)
-    .heightIs(10);
+    .widthIs(80)
+    .heightIs(50);
     
     
     _lineView=[UIView new];

@@ -40,8 +40,10 @@ NSString *const kSearchModelResultMessage = @"resultMessage";
     // This check serves to make sure that a non-NSDictionary object
     // passed into the model class doesn't break the parsing.
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
-            self.records = [self objectOrNilForKey:kSearchModelRecords fromDictionary:dict];
-            self.resultCode = [[self objectOrNilForKey:kSearchModelResultCode fromDictionary:dict] doubleValue];
+        self.records=[NSMutableArray array];
+            NSArray * arr = [self objectOrNilForKey:kSearchModelRecords fromDictionary:dict];
+        [self.records addObjectsFromArray:arr];
+        self.resultCode = [[self objectOrNilForKey:kSearchModelResultCode fromDictionary:dict] doubleValue];
             self.hotWords = [self objectOrNilForKey:kSearchModelHotWords fromDictionary:dict];
             self.resultMessage = [self objectOrNilForKey:kSearchModelResultMessage fromDictionary:dict];
 

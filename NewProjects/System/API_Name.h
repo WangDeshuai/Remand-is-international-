@@ -51,10 +51,10 @@ static NSString * SearchApi_Record =@"com_zft_zaisubaos_api_ApiQrySearchWordReco
 static NSString * SearchApi_Search =@"com_zft_zaisubaos_api_ApiSearchZsbAppEn";
 ///首页删除搜索词记录
 static NSString * SearchApi_Delete =@"com_zft_zaisubaos_api_ApiDelSearchWordRecord";
-
-
-
-
-
-
+///首页详情页
+static NSString * FirstApi_Particulars=@"com_zft_zaisubaos_api_ApiProductInfoAppEn";
+///首页详情页查看特权
+static NSString * FirstApi_Privilege=@"com_zft_zaisubaos_api_ApiGetUserAndTqAppEn";
+///首页详情页查看联系方式
+static NSString * FirstApi_Phone=@"com_zft_zaisubaos_api_ApiProductTelInfoAppEn";
 #endif /* API_Name_h */

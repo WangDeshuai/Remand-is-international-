@@ -48,6 +48,7 @@
     _contentlabel=[UILabel new];
     _contentlabel.alpha=.7;
     _contentlabel.font=[UIFont systemFontOfSize:15];
+    _contentlabel.textAlignment=2;
     [self.contentView sd_addSubviews:@[_contentlabel]];
     _contentlabel.sd_layout
     .leftSpaceToView(_namelabel, 10)

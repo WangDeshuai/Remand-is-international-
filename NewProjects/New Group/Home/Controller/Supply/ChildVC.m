@@ -8,7 +8,6 @@
 
 #import "ChildVC.h"
 #import "ChildCell.h"
-#import "ReleaseMainVC.h"
 #import "ChildView.h"
 #import "PurchaseDetailsVC.h"//采购详情
 #import "SuppleProduct.h"
@@ -117,9 +116,10 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    
+    SuppleProduct * md =self.cellDataArr[indexPath.row];
+    PurchaseDetailsVC * vc=[PurchaseDetailsVC new];
+    vc.codeText=md.productCode;
+    [self.navigationController pushViewController:vc animated:YES];
   
 }
 

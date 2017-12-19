@@ -84,6 +84,7 @@
 		969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */; };
 		969008AB1FE2639000C05DA6 /* BasiInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008AA1FE2639000C05DA6 /* BasiInfoView.m */; };
 		9695A1221FE2102C0083A625 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695A1211FE2102C0083A625 /* LoginModel.m */; };
+		969D32021FE8BCF3001C6C9F /* PurchaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D32011FE8BCF3001C6C9F /* PurchaseModel.m */; };
 		96B00DC11FDF6D56000EB2D2 /* PublishMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */; };
 		96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */; };
 		96B00DC81FDF722C000EB2D2 /* ChildPublishCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC71FDF722C000EB2D2 /* ChildPublishCell.m */; };
@@ -343,6 +344,8 @@
 		9695A1201FE2102C0083A625 /* LoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
 		9695A1211FE2102C0083A625 /* LoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
 		9695A1231FE227F80083A625 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		969D32001FE8BCF2001C6C9F /* PurchaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseModel.h; sourceTree = "<group>"; };
+		969D32011FE8BCF3001C6C9F /* PurchaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseModel.m; sourceTree = "<group>"; };
 		96B00DBF1FDF6D56000EB2D2 /* PublishMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublishMainVC.h; sourceTree = "<group>"; };
 		96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PublishMainVC.m; sourceTree = "<group>"; };
 		96B00DC21FDF6D7B000EB2D2 /* ChildPublishVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildPublishVC.h; sourceTree = "<group>"; };
@@ -609,7 +612,7 @@
 		04ED7B391FDC2EB300424718 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				96BA433D1FE3A81700F64E29 /* XiangQing */,
+				9674BA661FDE211200865E74 /* PurchaseDetails */,
 				96BA433C1FE3A80B00F64E29 /* Search */,
 				96862CC11FE3622600A5C11F /* HomeMain */,
 				04ED7B6A1FDD488300424718 /* Supply */,
@@ -671,7 +674,6 @@
 			isa = PBXGroup;
 			children = (
 				04ED7B691FDD487000424718 /* Release */,
-				9674BA661FDE211200865E74 /* PurchaseDetails */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -844,6 +846,8 @@
 			children = (
 				9674BA631FDE210C00865E74 /* PurchaseDetailsVC.h */,
 				9674BA641FDE210C00865E74 /* PurchaseDetailsVC.m */,
+				96862CC21FE363E600A5C11F /* ParticularVC.h */,
+				96862CC31FE363E600A5C11F /* ParticularVC.m */,
 			);
 			path = PurchaseDetails;
 			sourceTree = "<group>";
@@ -894,6 +898,8 @@
 		96862CC51FE3730F00A5C11F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				969D32001FE8BCF2001C6C9F /* PurchaseModel.h */,
+				969D32011FE8BCF3001C6C9F /* PurchaseModel.m */,
 				965C9E8E1FE79C680098C6B3 /* SearchModel.h */,
 				965C9E8F1FE79C680098C6B3 /* SearchModel.m */,
 				965C9E851FE79ACC0098C6B3 /* SuppleProduct.h */,
@@ -1044,15 +1050,6 @@
 				96BA433A1FE3A7FF00F64E29 /* SearchVC.m */,
 			);
 			path = Search;
-			sourceTree = "<group>";
-		};
-		96BA433D1FE3A81700F64E29 /* XiangQing */ = {
-			isa = PBXGroup;
-			children = (
-				96862CC21FE363E600A5C11F /* ParticularVC.h */,
-				96862CC31FE363E600A5C11F /* ParticularVC.m */,
-			);
-			path = XiangQing;
 			sourceTree = "<group>";
 		};
 		96C91D271FD8EB0700DF0CE3 = {
@@ -1710,6 +1707,7 @@
 				9666325B1FE4FC9D0096ACB7 /* TZImageCropManager.m in Sources */,
 				96C91E5D1FD9261900DF0CE3 /* UIView+MJExtension.m in Sources */,
 				96C91E021FD8F22C00DF0CE3 /* AFURLResponseSerialization.m in Sources */,
+				969D32021FE8BCF3001C6C9F /* PurchaseModel.m in Sources */,
 				965C9E961FE7B1EB0098C6B3 /* SearchView.m in Sources */,
 				96C91E4A1FD9261900DF0CE3 /* MJRefreshAutoFooter.m in Sources */,
 				04ED7B2B1FDC0AF100424718 /* SDImageCache.m in Sources */,

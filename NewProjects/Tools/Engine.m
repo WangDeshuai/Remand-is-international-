@@ -145,7 +145,8 @@ static AFHTTPSessionManager *manager=nil;
     NSDictionary *paramDic =@{@"api_key":API_key,@"api_input":jsonDataStr,@"api_target":apiName,@"api_secret":mdString,@"api_timespan":currentDate,@"api_token":[[NSUSE_DEFO objectForKey:API_Token]length]?[NSUSE_DEFO objectForKey:API_Token]:@""};
     // 1.获得请求管理者
     AFHTTPSessionManager *mgr = [self manager];
-    [mgr.requestSerializer setValue:@"zh_CN" forHTTPHeaderField:@"Accept-Language"];
+    [mgr.requestSerializer setValue:@"en" forHTTPHeaderField:@"Accept-Language"];
+        
     // 2.发送POST请求
     [mgr POST:[url stringByAppendingString:apiName]
    parameters:paramDic

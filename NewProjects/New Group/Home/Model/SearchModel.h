@@ -11,7 +11,7 @@
 
 @interface SearchModel : NSObject <NSCoding, NSCopying>
 
-@property (nonatomic, strong) NSArray *records;
+@property (nonatomic, strong) NSMutableArray *records;
 @property (nonatomic, assign) double resultCode;
 @property (nonatomic, strong) NSArray *hotWords;
 @property (nonatomic, strong) NSString *resultMessage;

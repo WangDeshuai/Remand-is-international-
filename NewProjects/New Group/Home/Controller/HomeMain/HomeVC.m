@@ -9,10 +9,11 @@
 #import "HomeVC.h"
 #import "SDCycleScrollView.h"
 #import "HomeCell.h"
-#import "EditVC.h"
+#import "EditVC.h"//供应,求购页
 #import "ParticularVC.h"
 #import "HomeViewModel.h"
-#import "SearchVC.h"
+#import "SearchVC.h"//搜索页
+#import "PurchaseDetailsVC.h"//详情页
 @interface HomeVC ()<SDCycleScrollViewDelegate>
 
 @property(nonatomic,strong)UIButton * searchBtn;
@@ -147,8 +148,10 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ParticularVC * vc =[ParticularVC new];
+    HomeViewList * model =self.cellDataModel.list[ indexPath.row];
+    PurchaseDetailsVC * vc =[PurchaseDetailsVC new];
       vc.hidesBottomBarWhenPushed=YES;
+    vc.codeText=model.productCode;
     [self.navigationController pushViewController:vc animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
