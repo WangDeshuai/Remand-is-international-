@@ -81,16 +81,22 @@ static AFHTTPSessionManager *manager=nil;
 }
 
 //get
--(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock
+-(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(id item))succeedBlock andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
- 
+   manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"text/json", @"application/json", @"text/javascript", @"text/xml", nil];
     [manager GET:URL parameters:Parameter progress:^(NSProgress * _Nonnull downloadProgress) {
         progressBlock(downloadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSDictionary *dic = responseObject;
-        succeedBlock(dic);
+        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Get=====%@",str);
+        
+        
+//        NSDictionary *dic = responseObject;
+        succeedBlock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"失败了>>>%@",error);
         failBlock(error);
     }];
 }

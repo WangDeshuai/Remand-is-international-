@@ -9,7 +9,19 @@
 #import "ReleaseChildVC.h"
 #import "ReleaseChildCell.h"
 #import "PhotoView.h"
+#import "AddressView.h"//国家
+#import "AreaView.h"
+#import "CommodityClassView.h"
 @interface ReleaseChildVC ()
+{
+    NSString * _countryCode;//国家code
+    NSString * _countryName;//国家名字
+    NSString * _addressName;//地区的name
+    NSString * _addressCode;//地区的code
+
+    
+
+}
 @property(nonatomic,strong)NSArray * dataArray;
 @end
 
@@ -17,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view.
     self.view.backgroundColor=[UIColor whiteColor];
     [self CreatDataArr];
@@ -24,15 +37,18 @@
 }
 
 -(void)CreatDataArr{
-    _dataArray=@[@"Product name",@"Location",@"Inventory quantity(T)",@"Supply price($)",@"Package",@"Single package weight(kg)",@"Colour",@"Mesh",@"Density(%)",@"Calcium content(%)",@"Flammability",@"Image"];
+//    _dataArray=@[@"Product name",@"Location",@"Inventory quantity(T)",@"Supply price($)",@"Package",@"Single package weight(kg)",@"Colour",@"Mesh",@"Density(%)",@"Calcium content(%)",@"Flammability",@"Image"];
+    _dataArray=@[@"Product name",@"Commodity class",@"Commodity prices",@"Inventory",@"Monetary unit",@"Describe",@"Country",@"Address",@"The failure time",@"Image"];
+    //1.商品名称  2.位置  3.商品库存  4.商品价格 5.包装 6.单包重量 7.颜色 8.网孔 9.密度 10.含钙量 11.图片
 }
 
 -(void)CreatTabelView{
-
-    self.baseTableView.frame=CGRectMake(0, 64+15+44, ScreenWidth, ScreenHeight-64-53-15-44);
+//
+    self.baseTableView.frame=CGRectMake(0, Distance_Top+15+44, ScreenWidth, ScreenHeight-Distance_Top-15-44-Tabbar_Height);
     self.baseTableView.rowHeight=55;
     self.baseTableView.mj_header=nil;
     self.baseTableView.mj_footer=nil;
+    self.baseTableView.backgroundColor=[UIColor whiteColor];
     self.baseTableView.tableFooterView=[self CreatFootView];
     self.baseTableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
     [self.view addSubview:self.baseTableView];
@@ -51,9 +67,16 @@
     cell.namelabel.text=_dataArray[indexPath.row];
     if (indexPath.row==1) {
         cell.arrowBtn.hidden=NO;
-    }else if (indexPath.row==11){
+         cell.textField.enabled=NO;
+       
+    }else if (indexPath.row==6){
         cell.arrowBtn.hidden=NO;
-        [cell.arrowBtn setImage:[UIImage imageNamed:@"release_add"] forState:0];
+        cell.textField.enabled=NO;
+         cell.textField.text=_countryName;
+    }else if (indexPath.row==7){
+        cell.arrowBtn.hidden=NO;
+        cell.textField.enabled=NO;
+        cell.textField.text=_addressName;
     }
     return cell;
 }
@@ -65,8 +88,7 @@
     footView.sd_layout
     .leftSpaceToView(self.view, 0)
     .rightSpaceToView(self.view, 0)
-    .topSpaceToView(self.view, 0)
-    .heightIs(300);
+    .topSpaceToView(self.view, 0);
     
     
     PhotoView * view =[[PhotoView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 120) MaxPhoto:8 EachRowNumber:4];
@@ -76,90 +98,136 @@
     view.delegate=self;
     [footView addSubview:view];
     
-  
-    
+  //120 + 35 +30 +10 +49
+    UIButton * sureBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    sureBtn.sd_cornerRadius=@(35/2);
+    sureBtn.backgroundColor=Main_Color;
+    [sureBtn setTitle:@"Release" forState:0];
+    sureBtn.titleLabel.font=[UIFont systemFontOfSize:15];
+    [footView sd_addSubviews:@[sureBtn]];
+    sureBtn.sd_layout
+    .leftSpaceToView(footView, 30)
+    .rightSpaceToView(footView, 30)
+    .topSpaceToView(view, 30)
+    .heightIs(35);
 
-    NSArray * btnArr =@[@"Release",@"Cancel"];
-    UIButton * btn =nil;
-    int d =15;
-    int k =(ScreenWidth-d*2);
-    int g=35;
-    for (int i =0; i<btnArr.count; i++) {
-        UIButton * sureBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-        sureBtn.sd_cornerRadius=@(g/2);
-        [sureBtn setTitle:btnArr[i] forState:0];
-        sureBtn.titleLabel.font=[UIFont systemFontOfSize:15];
-        [footView sd_addSubviews:@[sureBtn]];
-        sureBtn.sd_layout
-        .leftSpaceToView(footView, d)
-        .rightSpaceToView(footView, d)
-        .topSpaceToView(view,0+(d+g)*i)
-        .widthIs(k)
-        .heightIs(g);
-        if (i==0) {
-            sureBtn.backgroundColor=Main_Color;
-        }else{
-            sureBtn.backgroundColor=[UIColor whiteColor];
-            sureBtn.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.4].CGColor;
-            sureBtn.layer.borderWidth=.5;
-            [sureBtn setTitleColor:[[UIColor lightGrayColor]colorWithAlphaComponent:.7] forState:0];
-        }
-        btn=sureBtn;
-    }
+    [footView setupAutoHeightWithBottomView:sureBtn bottomMargin:10+Tabbar_Height];
     
-    [footView setupAutoHeightWithBottomView:btn bottomMargin:10];
+    __weak __typeof(footView)weakSelf = footView;
+    footView.didFinishAutoLayoutBlock=^(CGRect rect){
+        weakSelf.sd_layout
+        .heightIs(rect.size.height+Tabbar_Height);
+        NSLog(@">>>%f",rect.size.height);
+        [self.baseTableView setTableFooterView:weakSelf];
+    };
+
+
     return footView;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==1) {
+        //分类
+        [self getClassFenLeiMessageData];
+    }  else if (indexPath.row==6) {
+        //国家
+        [self getNationalData];
+    }else if (indexPath.row==7){
+        //地区
+        [self getNationalAreaDataCode:_countryCode];
+    }
+}
+#pragma mark ---获取国家
+-(void)getNationalData{
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/areaEn" andParameter:nil withSuccessBlock:^(id item) {
+        NSArray * array =item;
+        [self tanKaungSeleateTitle:@"请选择国家" DataTitleArr:array Int:0];
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+    }];
+}
+
+#pragma mark ---获取省市县
+-(void)getNationalAreaDataCode:(NSString*)code{
+    if ([[ToolClass isString:code] isEqualToString:@""]) {
+        [LCProgressHUD showMessage:@"请先选择国家"];
+        
+        return;
+    }
+    [LCProgressHUD showLoading:Message_Loading];
+    NSString *  urlStr =[NSString stringWithFormat:@"http://111.198.24.20:8603/areaEn/all/%@",[ToolClass isString:code]];
+    [[Engine sharedEngine] getwithUrl:urlStr andParameter:nil withSuccessBlock:^(id item) {
+        //省的数组
+        NSMutableArray * provinceArr=[item objectForKey:@"areas"];
+        int g=ScreenHeight/2;
+        AreaView * view =[[AreaView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择省市县" AndDataArr:provinceArr];
+        view.NameCodeBlock = ^(NSString *name, NSString *code) {
+            _addressName=name;
+            _addressCode=code;
+            [self.baseTableView reloadData];
+        };
+        [UIView animateWithDuration:animationTime animations:^{
+            view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+            [view show];;
+        } completion:^(BOOL finished) {
+        }];
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+    }];
+}
+
+#pragma mark ---获取分类信息
+-(void)getClassFenLeiMessageData{
+    
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/getCategoryEn" andParameter:nil withSuccessBlock:^(id item) {
+//        CommodityClassView
+        
+         NSMutableArray * provinceArr=[item objectForKey:@"children"];
+        int g=ScreenHeight/2;
+        CommodityClassView * view =[[CommodityClassView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择分类" AndDataArr:provinceArr];
+        view.NameCodeBlock = ^(NSString *name, NSString *code) {
+//            _addressName=name;
+//            _addressCode=code;
+//            [self.baseTableView reloadData];
+        };
+        [UIView animateWithDuration:animationTime animations:^{
+            view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+            [view show];;
+        } completion:^(BOOL finished) {
+        }];
+        
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+        
+    } andprogressBlock:^(NSProgress *progress) {
+        
+    }];
 }
 
 
 
-//- (void)configCollectionView {
-//    // 如不需要长按排序效果，将LxGridViewFlowLayout类改成UICollectionViewFlowLayout即可
-//    UICollectionViewFlowLayout * _layout=[[UICollectionViewFlowLayout alloc]init];
-//    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_layout];
-//    CGFloat rgb = 244 / 255.0;
-//    _collectionView.alwaysBounceVertical = YES;
-//    _collectionView.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:1.0];
-//    _collectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4);
-//    _collectionView.dataSource = self;
-//    _collectionView.delegate = self;
-//    _collectionView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-//    [self.view addSubview:_collectionView];
-//    [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"TZTestCell"];
-//}
-//
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-//    return _selectedPhotos.count + 1;
-//}
-//
-//- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TZTestCell" forIndexPath:indexPath];
-////    cell.videoImageView.hidden = YES;
-////    if (indexPath.row == _selectedPhotos.count) {
-////        cell.imageView.image = [UIImage imageNamed:@"AlbumAddBtn.png"];
-////        cell.deleteBtn.hidden = YES;
-////        cell.gifLable.hidden = YES;
-////    } else {
-////        cell.imageView.image = _selectedPhotos[indexPath.row];
-////        cell.asset = _selectedAssets[indexPath.row];
-////        cell.deleteBtn.hidden = NO;
-////    }
-////    if (!self.allowPickingGifSwitch.isOn) {
-////        cell.gifLable.hidden = YES;
-////    }
-////    cell.deleteBtn.tag = indexPath.row;
-////    [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
-//    return cell;
-//}
-//
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.row == _selectedPhotos.count) {
-//
-//    } else {
-//
-//    }
-//}
 
+
+#pragma mark --弹框调用
+-(void)tanKaungSeleateTitle:(NSString*)name DataTitleArr:(NSArray*)dataArr Int:(int)tag{
+    int g=ScreenHeight/2;
+    AddressView * view =[[AddressView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:name AndDataArr:dataArr];
+    view.ControlBlock = ^(NSString *name, NSString *code) {
+        _countryName=name;
+        _countryCode=code;
+        [self.baseTableView reloadData];
+    };
+    [UIView animateWithDuration:animationTime animations:^{
+        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        [view show];;
+    } completion:^(BOOL finished) {
+    }];
+    
+}
 
 
 

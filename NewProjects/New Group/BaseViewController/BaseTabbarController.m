@@ -17,18 +17,6 @@
 @end
 
 @implementation BaseTabbarController
-//改变系统导航栏高度
--(void)viewWillLayoutSubviews {
-    CGRect tabFrame = self.tabBar.frame;
-    int h =53;
-    if (kDevice_Is_iPhoneX==YES) {
-        h=85;
-    }
-    
-    tabFrame.size.height = h;
-    tabFrame.origin.y = ScreenHeight - h;
-    self.tabBar.frame = tabFrame;
-}
 
 
 - (void)viewDidLoad {
@@ -67,8 +55,8 @@
     //6.设置中间按钮为红色背景
     UIView * view =[UIView new];
     view.backgroundColor=Main_Color;
-    view.frame=CGRectMake(ScreenWidth/3, 0, ScreenWidth/3,self.tabBar.frame.size.height+self.tabBar.frame.origin.y);
-    [[UITabBar appearance] insertSubview:view atIndex:0];
+    view.frame=CGRectMake(ScreenWidth/3, 0, ScreenWidth/3,self.tabBar.height);
+    [self.tabBar insertSubview:view atIndex:0];
     //7.为中间按钮文字及选中状态为白色
      UITabBarItem *item = nav2.tabBarItem;
      [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]} forState:UIControlStateNormal];

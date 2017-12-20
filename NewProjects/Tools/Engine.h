@@ -15,7 +15,7 @@
 //post
 -(void)postwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock   andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock;
 //get
--(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock   andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock;
+-(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(id item))succeedBlock   andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock;
 //post(图片)
 -(void)postPictureDatewithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))block  withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock   andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock;
 

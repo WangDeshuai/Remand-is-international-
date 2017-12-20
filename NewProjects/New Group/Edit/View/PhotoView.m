@@ -72,6 +72,7 @@ static CGFloat  _labelHeight =30;
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, _labelHeight, ScreenWidth, self.frame.size.height-_labelHeight) collectionViewLayout:layout];
     _collectionView.alwaysBounceVertical = YES;
     _collectionView.backgroundColor = [UIColor whiteColor];
+    _collectionView.scrollEnabled = NO;
     _collectionView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
     _collectionView.dataSource = self;
     _collectionView.delegate = self;

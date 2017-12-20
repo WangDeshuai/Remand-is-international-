@@ -84,13 +84,12 @@ static const CGFloat ratio =0.66;
     UIView * headerView =[UIView new];
     headerView.backgroundColor=[UIColor clearColor];//换颜色就能看出来
     headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight-54);
-    NSLog(@">>>%f",headHeight);
     headerView.userInteractionEnabled=YES;
     //头像
     UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     headBtn.backgroundColor=[UIColor yellowColor];
     [headBtn addTarget:self action:@selector(headBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:@""] forState:0 placeholderImage:[UIImage imageNamed:@"mine_head"]];
+    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:@""] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
     headBtn.sd_cornerRadius=@(40);
     [headerView sd_addSubviews:@[headBtn]];
     headBtn.sd_layout

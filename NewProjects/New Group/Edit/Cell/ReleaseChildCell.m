@@ -55,7 +55,7 @@
     _arrowBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     _arrowBtn.hidden=YES;
     [_arrowBtn setImage:[UIImage imageNamed:@"release_arrow"] forState:0];
-    
+    _arrowBtn.userInteractionEnabled=NO;
     _arrowBtn.contentHorizontalAlignment=2;
     [self.contentView sd_addSubviews:@[_arrowBtn]];
     _arrowBtn.sd_layout
@@ -66,6 +66,7 @@
     
     _textField=[UITextField new];
     _textField.font=[UIFont systemFontOfSize:15];
+    _textField.textAlignment=2;
     [self.contentView sd_addSubviews:@[_textField]];
     _textField.sd_layout
     .leftSpaceToView(_namelabel, 10)

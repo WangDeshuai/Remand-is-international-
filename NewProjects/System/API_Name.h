@@ -18,6 +18,8 @@ static NSString * API_UserName =@"username";
 static NSString * Message_Loading=@"请稍后...";
 static NSString * Message_Success=@"成功";
 static NSString * Message_Fail=@"失败";
+static NSInteger  animationTime =.5;
+
 
 #pragma mark ------注册---------
 ///注册验证用户名
@@ -57,4 +59,6 @@ static NSString * FirstApi_Particulars=@"com_zft_zaisubaos_api_ApiProductInfoApp
 static NSString * FirstApi_Privilege=@"com_zft_zaisubaos_api_ApiGetUserAndTqAppEn";
 ///首页详情页查看联系方式
 static NSString * FirstApi_Phone=@"com_zft_zaisubaos_api_ApiProductTelInfoAppEn";
+///
+
 #endif /* API_Name_h */
