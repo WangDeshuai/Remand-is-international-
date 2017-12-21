@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AddressView : UIView
--(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSArray*)dataArr;
+-(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSArray*)dataArr IntType:(int)type;
 @property(nonatomic,copy)void(^ControlBlock)(NSString*name,NSString*code);
 -(void)show;
 -(void)dissmiss;

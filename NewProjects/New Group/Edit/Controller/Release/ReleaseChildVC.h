@@ -10,5 +10,5 @@
 
 @interface ReleaseChildVC : BaseViewController
 
-
+@property(nonatomic,copy) NSString *productType;
 @end

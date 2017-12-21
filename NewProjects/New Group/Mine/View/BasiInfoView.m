@@ -23,14 +23,7 @@
         
         _heightSelf=frame.size.height;
         _dataArray=dataArr;
-//        _lineView=[UIView new];
-//        _lineView.backgroundColor=Main_Color;
-//        [self sd_addSubviews:@[_lineView]];
-//        _lineView.sd_layout
-//        .leftSpaceToView(self, 0)
-//        .rightSpaceToView(self, 0)
-//        .topSpaceToView(self, 44)
-//        .heightIs(1);
+
         //灰色背景
         [self jiazaiView];
         UIView * headerView =[UIView new];
@@ -142,8 +135,8 @@
     if ([[ToolClass isString:_name] isEqualToString:@""]) {
         [LCProgressHUD showMessage:@"请选择类型"];
     }else{
-        self.NameBlock(_name);
-        [self dissmiss];
+        self.NameBlock(_name,[ToolClass registTyple:_name]);
+        [self canBtnClink];
     }
    
 }

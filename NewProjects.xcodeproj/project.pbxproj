@@ -86,6 +86,8 @@
 		969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */; };
 		969008AB1FE2639000C05DA6 /* BasiInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008AA1FE2639000C05DA6 /* BasiInfoView.m */; };
 		9695A1221FE2102C0083A625 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695A1211FE2102C0083A625 /* LoginModel.m */; };
+		969B93D71FEBAA2600B7117B /* BasiAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B93D61FEBAA2500B7117B /* BasiAreaView.m */; };
+		969B93DA1FEBB4F400B7117B /* BasiMainClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B93D91FEBB4F400B7117B /* BasiMainClassView.m */; };
 		969D32021FE8BCF3001C6C9F /* PurchaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 969D32011FE8BCF3001C6C9F /* PurchaseModel.m */; };
 		96B00DC11FDF6D56000EB2D2 /* PublishMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC01FDF6D56000EB2D2 /* PublishMainVC.m */; };
 		96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DC31FDF6D7B000EB2D2 /* ChildPublishVC.m */; };
@@ -352,6 +354,10 @@
 		9695A1201FE2102C0083A625 /* LoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
 		9695A1211FE2102C0083A625 /* LoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginModel.m; sourceTree = "<group>"; };
 		9695A1231FE227F80083A625 /* Singleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		969B93D51FEBAA2500B7117B /* BasiAreaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasiAreaView.h; sourceTree = "<group>"; };
+		969B93D61FEBAA2500B7117B /* BasiAreaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasiAreaView.m; sourceTree = "<group>"; };
+		969B93D81FEBB4F400B7117B /* BasiMainClassView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasiMainClassView.h; sourceTree = "<group>"; };
+		969B93D91FEBB4F400B7117B /* BasiMainClassView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasiMainClassView.m; sourceTree = "<group>"; };
 		969D32001FE8BCF2001C6C9F /* PurchaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseModel.h; sourceTree = "<group>"; };
 		969D32011FE8BCF3001C6C9F /* PurchaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseModel.m; sourceTree = "<group>"; };
 		96B00DBF1FDF6D56000EB2D2 /* PublishMainVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublishMainVC.h; sourceTree = "<group>"; };
@@ -677,7 +683,7 @@
 				96B00DCF1FDFAF1F000EB2D2 /* 查看记录 */,
 				96B00DBE1FDF6D28000EB2D2 /* 发布信息 */,
 				96B00DBB1FDF6373000EB2D2 /* 基本信息 */,
-				964064C01FE7637E001A5D9B /* New Group */,
+				964064C01FE7637E001A5D9B /* 修改密码 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -771,13 +777,13 @@
 			path = PageControl;
 			sourceTree = "<group>";
 		};
-		964064C01FE7637E001A5D9B /* New Group */ = {
+		964064C01FE7637E001A5D9B /* 修改密码 */ = {
 			isa = PBXGroup;
 			children = (
 				964064BD1FE76372001A5D9B /* ChangePasswordVC.h */,
 				964064BE1FE76372001A5D9B /* ChangePasswordVC.m */,
 			);
-			path = "New Group";
+			path = "修改密码";
 			sourceTree = "<group>";
 		};
 		9658C1A41FE0C79900DFCB43 /* vipmember */ = {
@@ -937,6 +943,10 @@
 			children = (
 				969008A91FE2639000C05DA6 /* BasiInfoView.h */,
 				969008AA1FE2639000C05DA6 /* BasiInfoView.m */,
+				969B93D51FEBAA2500B7117B /* BasiAreaView.h */,
+				969B93D61FEBAA2500B7117B /* BasiAreaView.m */,
+				969B93D81FEBB4F400B7117B /* BasiMainClassView.h */,
+				969B93D91FEBB4F400B7117B /* BasiMainClassView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1727,6 +1737,7 @@
 				9666325B1FE4FC9D0096ACB7 /* TZImageCropManager.m in Sources */,
 				96C91E5D1FD9261900DF0CE3 /* UIView+MJExtension.m in Sources */,
 				96C91E021FD8F22C00DF0CE3 /* AFURLResponseSerialization.m in Sources */,
+				969B93D71FEBAA2600B7117B /* BasiAreaView.m in Sources */,
 				969D32021FE8BCF3001C6C9F /* PurchaseModel.m in Sources */,
 				965C9E961FE7B1EB0098C6B3 /* SearchView.m in Sources */,
 				96C91E4A1FD9261900DF0CE3 /* MJRefreshAutoFooter.m in Sources */,
@@ -1753,6 +1764,7 @@
 				96862CC41FE363E600A5C11F /* ParticularVC.m in Sources */,
 				96127BC91FDBD4D00040B21D /* SDCollectionViewCell.m in Sources */,
 				96127BC81FDBD4D00040B21D /* TAPageControl.m in Sources */,
+				969B93DA1FEBB4F400B7117B /* BasiMainClassView.m in Sources */,
 				96862CCA1FE3732600A5C11F /* HomeViewModel.m in Sources */,
 				966632611FE4FC9D0096ACB7 /* TZPhotoPreviewCell.m in Sources */,
 				96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */,

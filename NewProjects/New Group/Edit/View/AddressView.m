@@ -7,21 +7,23 @@
 //
 
 #import "AddressView.h"
+#import "LeftMyAdressCell.h"
 @interface AddressView()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,assign)CGFloat heightSelf;//高度
 @property(nonatomic,strong)NSArray * dataArray;//传递过来数据源
 @property(nonatomic,copy)NSString *name;//选择好的name
 @property(nonatomic,copy)NSString * code;
+@property (nonatomic,assign)int type;//type=1代表获取的是国家数据 type==2代表是时间数据 type==3代表货币单位
 @end
 @implementation AddressView
 
--(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSArray*)dataArr{
+-(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSArray*)dataArr IntType:(int)type{
     self=[super initWithFrame:frame];
     if (self) {
         _heightSelf=frame.size.height;
         _dataArray=dataArr;
-      
+        _type=type;
         //灰色背景
         [self jiazaiView];
         UIView * headerView =[UIView new];
@@ -101,28 +103,46 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell =[tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (!cell) {
-        cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    LeftMyAdressCell * cell=[LeftMyAdressCell cellWithTableView:tableView];
+    cell.nameLabel.textAlignment=1;
+    if (_type==1) {
+        //国家
+        NSDictionary * dic =_dataArray[indexPath.row];
+        cell.name=[dic objectForKey:@"country_name"];
+    }else{
+        //时间 (或者货币单位)
+        cell.name=_dataArray[indexPath.row];
     }
-    NSDictionary * dic =_dataArray[indexPath.row];
-    cell.textLabel.text=[dic objectForKey:@"country_name"];;
-    cell.textLabel.textAlignment=1;
+    
+    
+    
     return cell;
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * dic =_dataArray[indexPath.row];
-    _name=[dic objectForKey:@"country_name"];
-    _code=[dic objectForKey:@"country_code"];
+   
+    
+    if (_type==1) {
+        //国家数据
+        NSDictionary * dic =_dataArray[indexPath.row];
+        _name=[dic objectForKey:@"country_name"];
+        _code=[dic objectForKey:@"country_code"];
+    }else if (_type==2){
+        //时间
+        _name=_dataArray[indexPath.row];
+        NSString * nameStr =_dataArray[indexPath.row];
+        _code=[ToolClass timeAddDay:[self stringAndDay:nameStr]];
+    }else{
+         _name=_dataArray[indexPath.row];
+         _code=[ToolClass registTyple:_dataArray[indexPath.row]];
+    }
     
 }
 
 //取消
 -(void)canBtnClink{
-//    int g =ScreenHeight/2;
     self.frame=CGRectMake(0, ScreenHeight-_heightSelf, ScreenWidth,_heightSelf);
     [UIView animateWithDuration:animationTime animations:^{
         self.frame=CGRectMake(0, ScreenHeight, ScreenWidth, _heightSelf);
@@ -136,7 +156,7 @@
         [LCProgressHUD showMessage:@"请选择类型"];
     }else{
         self.ControlBlock(_name, _code);
-        [self dissmiss];
+        [self canBtnClink];
     }
     
 }
@@ -163,4 +183,21 @@
     [self removeFromSuperview];
     
 }
+
+///时间轴 把里面的汉字转换成天数
+-(NSString*)stringAndDay:(NSString*)string{
+    NSDictionary * dic =@{@"三天":@"3",
+                          @"一周":@"7",
+                          @"半个月":@"15",
+                          @"一个月":@"30",
+                          @"两个月":@"60",
+                          @"三个月":@"90",
+                          @"半年":@"180",
+                          @"一年":@"365"};
+    NSString * day =[dic objectForKey:string];
+    return day;
+}
+
+
+
 @end

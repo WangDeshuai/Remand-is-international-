@@ -13,7 +13,7 @@
 /// frame --- 坐标  TitleName---标题名字 dataArr----数据源
 -(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSArray*)dataArr;
 ///返回的名字和对应的类型
-@property(nonatomic,copy)void(^NameBlock)(NSString*name);
+@property(nonatomic,copy)void(^NameBlock)(NSString*name,NSString*code);
 -(void)show;
 -(void)dissmiss;
 @end

@@ -8,7 +8,7 @@
 
 #import "LeftMyAdressCell.h"
 @interface LeftMyAdressCell()
-@property(nonatomic,strong)UILabel * nameLabel;
+
 @end
 @implementation LeftMyAdressCell
 

@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "邮箱(1)@1x.png",
+      "filename" : "地区@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "邮箱(1)@2x.png",
+      "filename" : "地区@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "邮箱(1)@3x.png",
+      "filename" : "地区@3x.png",
       "scale" : "3x"
     }
   ],

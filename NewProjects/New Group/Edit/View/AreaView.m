@@ -254,7 +254,7 @@
         return;
     }
     self.NameCodeBlock(_nameText, _codeText);
-    [self dissmiss];
+    [self canBtnClink];
 }
 
 -(void)jiazaiView{

@@ -10,5 +10,6 @@
 
 @interface LeftMyAdressCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView*)tableView;
+@property(nonatomic,strong)UILabel * nameLabel;
 @property(nonatomic,copy)NSString * name;
 @end

@@ -56,9 +56,11 @@
     self.pageTitleView.layer.borderWidth=1;
     self.pageTitleView.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.4].CGColor;
     [self.view addSubview:_pageTitleView];
-    ReleaseChildVC *oneVC = [[ReleaseChildVC alloc] init];
-    ReleaseChildVC *twoVC = [[ReleaseChildVC alloc] init];
   
+    ReleaseChildVC *oneVC = [[ReleaseChildVC alloc] init];
+    oneVC.productType=@"4497003000060001";
+    ReleaseChildVC *twoVC = [[ReleaseChildVC alloc] init];
+    twoVC.productType=@"4497003000070001";
     NSArray *childArr = @[oneVC, twoVC];
     /// pageContentView
     self.pageContentView = [[SGPageContentScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) parentVC:self childVCs:childArr];

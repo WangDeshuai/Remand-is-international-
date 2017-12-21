@@ -15,6 +15,7 @@
 #import "MemberVIPVC.h"//会员VIP
 #import "BasicInforMationVC.h"//基本信息
 #import "UserInfoBaseClass.h"
+#import "ChangePasswordVC.h"//修改密码
 @interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)NSArray * dataArray;
@@ -23,7 +24,6 @@
 @property(nonatomic,assign) CGRect  imageRect;
 @property(nonatomic,strong)UserInfoBaseClass * model;
 @end
-
 @implementation MineVC
 static const CGFloat headHeight =248;
 static const CGFloat ratio =0.66;
@@ -179,6 +179,15 @@ static const CGFloat ratio =0.66;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  
+    if ([ToolClass isLogin]==NO) {
+        LoginVC * vc =[LoginVC new];
+        vc.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    
+    
     if (indexPath.section==0) {
         if (indexPath.row==0) {
             //发布信息(publish)
@@ -209,6 +218,25 @@ static const CGFloat ratio =0.66;
             BasicInforMationVC * vc=[BasicInforMationVC new];
             vc.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row==1){
+            //改密码
+            ChangePasswordVC * vc =[ChangePasswordVC new];
+            vc.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row==2){
+            //退出
+            UIAlertController * alertView =[UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否退出" preferredStyle:1];
+            UIAlertAction * action1 =[UIAlertAction actionWithTitle:@"取消" style:0 handler:nil];
+            UIAlertAction * action2 =[UIAlertAction actionWithTitle:@"确认" style:0 handler:^(UIAlertAction * _Nonnull action) {
+                [NSUSE_DEFO removeObjectForKey:API_Type];
+                [NSUSE_DEFO removeObjectForKey:API_Email];
+                [NSUSE_DEFO removeObjectForKey:API_Token];
+                [NSUSE_DEFO removeObjectForKey:API_UserName];
+                [NSUSE_DEFO synchronize];
+            }];
+            [alertView addAction:action1];
+            [alertView addAction:action2];
+            [self presentViewController:alertView animated:YES completion:nil];
         }
     }
     
@@ -223,13 +251,15 @@ static const CGFloat ratio =0.66;
 
 #pragma  mark ----按钮点击事件----------
 -(void)headBtnClick{
-    LoginVC * vc =[LoginVC new];
-    vc.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:vc animated:YES];
+   
     if ([ToolClass isLogin]==NO) {
-      
+        LoginVC * vc =[LoginVC new];
+        vc.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }else{
-        
+        BasicInforMationVC * vc=[BasicInforMationVC new];
+        vc.hidesBottomBarWhenPushed=YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 

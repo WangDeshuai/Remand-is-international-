@@ -9,14 +9,29 @@
 #import "BasicInforMationVC.h"
 #import "BasicInforMationCell.h"
 #import "BasiInfoView.h"
+#import "BasiAreaView.h"
+#import "AddressView.h"
+#import "BasiMainClassView.h"
 @interface BasicInforMationVC ()<UITableViewDelegate,UITableViewDataSource>
 {
     NSString * _registName;///注册类型
-    NSString * _userName;///userType
+    NSString * _registCode;//注册code
+   
+    NSString * _userName;///个人类型(全部,供应商,采购商)
+    NSString * _userCode;//个人类型code
+   
+    NSString * _addressName;//地区名字
+    NSString * _addressCode;//地区code
+   
+    NSString * _className;//商品分类name
+    NSString * _classCode;//商品分类code
+    
+    
     NSString * allpeople;
 }
-@property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)NSArray * nameArray;
+@property(nonatomic,copy)NSString * countryStr;//国家str
+@property (nonatomic,copy)NSString * countryCode;//国家code
 @end
 
 @implementation BasicInforMationVC
@@ -47,7 +62,7 @@
 
 
 -(void)CreatImageArr{
-    _nameArray=@[@"Name",@"My member",@"Phone number",@"Mailbox",@"Other contacts",@"Registration Typle",@"User type",@"Main",@"Area"];
+    _nameArray=@[@"Name",@"My member",@"Corporate name",@"Phone number",@"Mailbox",@"Other contacts",@"Registration Typle",@"User type",@"Main",@"Country",@"Area"];
 }
 
 -(UIView*)CreatTabelViewHeader{
@@ -77,17 +92,17 @@
 
 
 -(void)CreatTableView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64) style:UITableViewStylePlain];
-    tableView.dataSource=self;
-    tableView.delegate=self;
-    _tableView=tableView;
-    tableView.rowHeight=65;
-    tableView.tableFooterView=[UIView new];
-    tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-    tableView.backgroundColor=[UIColor clearColor];
-    tableView.tableHeaderView=[self CreatTabelViewHeader];
-    tableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
-    [self.view addSubview:tableView];
+
+    self.baseTableView.frame=CGRectMake(0, Distance_Top, ScreenWidth, ScreenHeight-64);
+    self.baseTableView.rowHeight=65;
+    self.baseTableView.tableFooterView=[UIView new];
+    self.baseTableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    self.baseTableView.backgroundColor=[UIColor clearColor];
+    self.baseTableView.tableHeaderView=[self CreatTabelViewHeader];
+    self.baseTableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
+    self.baseTableView.mj_header=nil;
+    self.baseTableView.mj_footer=nil;
+    [self.view addSubview:self.baseTableView];
     
 }
 
@@ -110,28 +125,36 @@
         //会员类型
          cell.contentText.text=[NSUSE_DEFO objectForKey:API_Type];
          cell.contentText.enabled=NO;
-    }else if (indexPath.row==2){
+    }else if(indexPath.row==2){
+        //公司名称
+    } else if (indexPath.row==3){
         //电话
-    }else if (indexPath.row==3){
+    }else if (indexPath.row==4){
         //邮箱
         cell.contentText.text=[NSUSE_DEFO objectForKey:API_Email];
         cell.contentText.enabled=NO;
-    }else if (indexPath.row==4){
-        //备用联系
     }else if (indexPath.row==5){
+        //备用联系
+    }else if (indexPath.row==6){
         //注册类型
         cell.contentText.enabled=NO;
         cell.contentText.text=_registName;
-    }else if (indexPath.row==6){
+    }else if (indexPath.row==7){
         //个人类型
         cell.contentText.enabled=NO;
         cell.contentText.text=_userName;
-    }else if (indexPath.row==7){
+    }else if (indexPath.row==8){
         //主要营业
         cell.contentText.enabled=NO;
-    }else if (indexPath.row==8){
-        //地区
+        cell.contentText.text=_className;
+    }else if (indexPath.row==9){
+        //国家
         cell.contentText.enabled=NO;
+        cell.contentText.text=_countryStr;
+    }else if (indexPath.row==10){
+        //地区
+         cell.contentText.enabled=NO;
+        cell.contentText.text=_addressName;
     }
     
 
@@ -143,41 +166,146 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==5) {
+    if (indexPath.row==6) {
         [self tanKaungSeleateTitle:@"Registration" DataTitleArr:@[@"Personal",@"Company"] Int:5];
-    }else if (indexPath.row==6){
+    }else if (indexPath.row==7){
         //个人类型
         [self tanKaungSeleateTitle:@"User typle" DataTitleArr:@[@"全部",@"供应商",@"采购商"] Int:6];
+    }else if (indexPath.row==8){
+        //主营分类
+        [self getClassFenLeiMessageData];
+    }else if (indexPath.row==9){
+        //国家
+         [self getNationalData];
+    }else if (indexPath.row==10){
+        //地区
+         [self getNationalAreaDataCode:_countryCode];
     }
 }
 
 
 
-#pragma mark --弹框调用
+#pragma mark --------获取网络请求数据
+///只获取国家数据
+-(void)getNationalData{
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/areaEn" andParameter:nil withSuccessBlock:^(id item) {
+        NSArray * array =item;
+        [self tanKaungSeleateCountryTitle:@"请选择国家" DataTitleArr:array Int:1];
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+    }];
+}
+
+///根据国家code获取省市县地区数据
+-(void)getNationalAreaDataCode:(NSString*)code{
+    if ([[ToolClass isString:code] isEqualToString:@""]) {
+        [LCProgressHUD showMessage:@"请先选择国家"];
+        return;
+    }
+    [LCProgressHUD showLoading:Message_Loading];
+    NSString *  urlStr =[NSString stringWithFormat:@"http://111.198.24.20:8603/areaEn/all/%@",[ToolClass isString:code]];
+    [[Engine sharedEngine] getwithUrl:urlStr andParameter:nil withSuccessBlock:^(id item) {
+        //省的数组
+        NSMutableArray * provinceArr=[item objectForKey:@"areas"];
+        [self tanKaungAreaViewDataArray:provinceArr];
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+    }];
+}
+
+
+///获取分类信息数据
+-(void)getClassFenLeiMessageData{
+    
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/getCategoryEn" andParameter:nil withSuccessBlock:^(id item) {
+        NSMutableArray * provinceArr=[item objectForKey:@"children"];
+        [self tanKuangSeleateDataArray:provinceArr];
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+        
+    }];
+}
+
+
+#pragma mark ---------弹框调用
+/// 注册类型 或者 个人类型
 -(void)tanKaungSeleateTitle:(NSString*)name DataTitleArr:(NSArray*)dataArr Int:(int)tag{
     int g=ScreenHeight/3;
     BasiInfoView * view =[[BasiInfoView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:name AndDataArr:dataArr];
-
-        //注册
-        view.NameBlock = ^(NSString *name) {
+        view.NameBlock = ^(NSString *name,NSString*code) {
             if (tag==5) {//注册类型
                 _registName=name;
+                _registCode=code;
             }else if (tag==6){ //个人类型
                 _userName=name;
+                _userCode=code;
             }
-            [_tableView reloadData];
+            [self.baseTableView reloadData];
         };
-   
-    
-    
-    
-    
     [UIView animateWithDuration:.6 animations:^{
         view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
         [view show];;
     } completion:^(BOOL finished) {
     }];
     
+}
+
+///获取国家弹框调用(tag==1代表国家  tag==2代表失效时间)
+-(void)tanKaungSeleateCountryTitle:(NSString*)name DataTitleArr:(NSArray*)dataArr Int:(int)tag{
+    int g=ScreenHeight/3;
+    AddressView * view =[[AddressView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:name AndDataArr:dataArr IntType:tag];
+    view.ControlBlock = ^(NSString *name, NSString *code) {
+        if (tag==1) {
+            _countryStr=name;
+            _countryCode=code;
+        }
+        [self.baseTableView reloadData];
+    };
+    [UIView animateWithDuration:animationTime animations:^{
+        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        [view show];;
+    } completion:^(BOOL finished) {
+    }];
+    
+}
+
+
+///获取省市县(地区)弹框调用
+-(void)tanKaungAreaViewDataArray:(NSMutableArray*)dataArr
+{
+    int g=ScreenHeight/3;
+    BasiAreaView * view =[[BasiAreaView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择省市县" AndDataArr:dataArr];
+    view.NameCodeBlock = ^(NSString *name, NSString *code) {
+        _addressName=name;
+        _addressCode=code;
+        [self.baseTableView reloadData];
+    };
+    [UIView animateWithDuration:animationTime animations:^{
+        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        [view show];;
+    } completion:^(BOOL finished) {
+    }];
+}
+
+///获取分类弹框调用
+-(void)tanKuangSeleateDataArray:(NSMutableArray*)dataArr{
+    int g=ScreenHeight/3;
+     BasiMainClassView* view =[[BasiMainClassView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择分类" AndDataArr:dataArr];
+    view.NameCodeBlock = ^(NSString *name, NSString *code) {
+        _className=name;
+        _classCode=code;
+        [self.baseTableView reloadData];
+    };
+    [UIView animateWithDuration:animationTime animations:^{
+        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        [view show];;
+    } completion:^(BOOL finished) {
+    }];
 }
 
 

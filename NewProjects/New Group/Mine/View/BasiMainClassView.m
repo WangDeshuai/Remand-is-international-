@@ -6,9 +6,9 @@
 //  Copyright © 2017年 DSOperation. All rights reserved.
 //
 
-#import "CommodityClassView.h"
+#import "BasiMainClassView.h"
 #import "LeftMyAdressCell.h"
-@interface CommodityClassView ()<UITableViewDataSource,UITableViewDelegate>
+@interface BasiMainClassView ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView * leftTableView;
 @property(nonatomic,strong)UITableView * centerTableView;
 @property(nonatomic,strong)UITableView * rightTableView;
@@ -21,7 +21,7 @@
 @property (nonatomic,copy)NSString * nameText;//最终选择的结果(name)
 @property (nonatomic,copy)NSString * codeText;//最终结果对应的code(code)
 @end
-@implementation CommodityClassView
+@implementation BasiMainClassView
 static  NSString * Keyword_Arr =@"children";
 static  NSString * KeyWord_Name =@"categoryName";
 static  NSString * KeyWord_Code =@"categoryCode";
@@ -179,9 +179,9 @@ static  NSString * KeyWord_Code =@"categoryCode";
         cell.name=[cityDic objectForKey:KeyWord_Name];
         NSArray * xianyArr =[cityDic objectForKey:Keyword_Arr];
         if (xianyArr.count!=0) {
-             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }else{
-          cell.accessoryType=UITableViewCellAccessoryNone;
+            cell.accessoryType=UITableViewCellAccessoryNone;
         }
     }else{
         NSDictionary * xianDic =_xianArr[indexPath.row];
@@ -224,11 +224,11 @@ static  NSString * KeyWord_Code =@"categoryCode";
         NSArray * cityArr =[xianDic objectForKey:Keyword_Arr];
         [_xianArr removeAllObjects];
         [_xianArr addObjectsFromArray:cityArr];
-   
+        
         if (cityArr.count==0) {
             _nameText=[xianDic objectForKey:KeyWord_Name];
             _codeText=[xianDic objectForKey:KeyWord_Code];
-          
+            
         }
     }else{
         NSDictionary * xianDic =_xianArr[indexPath.row];
@@ -281,4 +281,5 @@ static  NSString * KeyWord_Code =@"categoryCode";
     
 }
 @end
+
 

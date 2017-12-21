@@ -34,8 +34,28 @@
     [dic setObject:@"免费会员" forKey:@"free"];
     [dic setObject:@"vip会员" forKey:@"vip"];
     [dic setObject:@"金牌供应商" forKey:@"goldvip"];
+    [dic setObject:@"4497003000020002" forKey:@"￥"];
+    [dic setObject:@"4497003000020003" forKey:@"$"];
+    [dic setObject:@"4497003000020004" forKey:@"€"];
   return  [dic objectForKey:str];
 }
+
+
+
+#pragma mark ---时间+天数
++(NSString*)timeAddDay:(NSString*)day{
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *Date0 = [NSDate date];
+    NSTimeInterval interval = 24*60*60;
+    NSString *titleString = [dateFormatter stringFromDate:[Date0 initWithTimeInterval:interval*[day integerValue] sinceDate:Date0]];
+    return titleString;
+}
+
+
+
+
 
 #pragma mark --获取验证码倒计时
 +(void)timeDaoJiShi:(UIButton*)btn{
