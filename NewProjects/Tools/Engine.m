@@ -53,33 +53,6 @@ static AFHTTPSessionManager *manager=nil;
 }
 
 #pragma mark --------网络请求封装
-//post
--(void)postwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(NSDictionary*dic))succeedBlock andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock
-{
-  
-    
-    AFHTTPSessionManager *manager = [self manager];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"text/json", @"application/json", @"text/javascript", @"text/xml", nil];
-    [manager.securityPolicy setAllowInvalidCertificates:YES];
- 
-    [manager POST:URL parameters:Parameter progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-        progressBlock(uploadProgress);
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"=====%@",str);
-        NSDictionary *dic = responseObject;
-        succeedBlock(dic);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [LCProgressHUD showFailure:@"服务器连接失败"];
-        failBlock(error);
-        
-    }];
-}
-
 //get
 -(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(id item))succeedBlock andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock
 {
@@ -91,50 +64,62 @@ static AFHTTPSessionManager *manager=nil;
         NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
         NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"Get=====%@",str);
-        
-        
-//        NSDictionary *dic = responseObject;
         succeedBlock(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"失败了>>>%@",error);
         failBlock(error);
     }];
 }
-//post
--(void)postPictureDatewithUrl:(NSString *)URL andParameter:(NSDictionary*)Parameter constructingBodyWithBlock:(void (^)(id<AFMultipartFormData> formData))block withSuccessBlock:(void(^)(NSDictionary *dic))succeedBlock andFailBlock:(void(^)(NSError *error))failBlock andprogressBlock:(void(^)(NSProgress *progress))progressBlock
+
+
+
+-(void)requestUpdatePoto:(id)imgs photoStr:(NSString *)photoStr urlStr:(NSString *)urlStr parameters:(NSDictionary *)parameters successBlock:(successBlock)successBlock failedBlock:(failedBlock)failedBlock 
 {
-  
-    AFHTTPSessionManager *manager =[self manager];;
-    [manager POST:URL parameters:Parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        block(formData);
-    } progress:^(NSProgress * _Nonnull uploadProgress) {
-        progressBlock(uploadProgress);
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData){
+        if ([imgs isKindOfClass:[NSArray class]]) {
+            NSArray * images = imgs;
+            for (int i = 0 ; i < images.count ;i ++) {
+                UIImage * img = imgs[i];
+                NSData *data = UIImageJPEGRepresentation(img, 0.1);
+                NSTimeInterval interval = [[NSDate date] timeIntervalSince1970] * 1000;
+                [formData appendPartWithFileData:data name:[NSString stringWithFormat:@"%.f",interval-i] fileName:[NSString stringWithFormat:@"%.f.png",interval-i] mimeType:@"image/png"];
+            }
+            
+        }else{
+            NSTimeInterval interval = [[NSDate date] timeIntervalSince1970] * 1000;
+            NSData *data = UIImageJPEGRepresentation(imgs, .1);
+            [formData appendPartWithFileData:data name:photoStr fileName:[NSString stringWithFormat:@"%.f.png",interval] mimeType:@"image/png"];
+        }
+    }progress:^(NSProgress * _Nonnull uploadProgress)
+     {} success:^(NSURLSessionDataTask * _Nonnull task, id  responseObject){
         
-        NSData *data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
-        NSString *str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"=====%@",str);
+         NSString* aStr= [[NSString alloc] initWithData:responseObject  encoding:NSASCIIStringEncoding];
+         aStr = [aStr stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+         NSLog(@"图片>>>%@",aStr);
+         successBlock(aStr);
+     } failure:^(NSURLSessionDataTask * _Nonnull task, NSError *_Nonnull error){
         
-        NSDictionary *dic = responseObject;
-        succeedBlock(dic);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [LCProgressHUD showFailure:@"服务器链接失败"];
-        failBlock(error);
-    }];
-    
-    
-    
-    
-    
-    
-    
+         NSData * data = error.userInfo[@"com.alamofire.serialization.response.error.data"];
+         NSString * str = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+         NSLog(@"tryuioiouyfghjkl服务器的错误原因:%@",str);
+       
+     }];
 }
+
+
+
+
+
+
 
 
 
 - (void)BJPostWithUrl:(NSString *)url withAPIName:(NSString *)apiName withParame:(NSDictionary *)parame callback:(void(^)(id item))callback failedBlock:(void(^)(id error))failedBlock
 {
-//    [LCProgressHUD showLoading:@"请稍后..."];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     formatter.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];

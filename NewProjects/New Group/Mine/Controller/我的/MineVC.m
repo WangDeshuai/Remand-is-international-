@@ -16,8 +16,7 @@
 #import "BasicInforMationVC.h"//基本信息
 #import "UserInfoBaseClass.h"
 #import "ChangePasswordVC.h"//修改密码
-@interface MineVC ()<UITableViewDelegate,UITableViewDataSource>
-@property(nonatomic,strong)UITableView * tableView;
+@interface MineVC ()
 @property(nonatomic,strong)NSArray * dataArray;
 @property(nonatomic,strong) UIImageView * imageview;
 @property(nonatomic,strong)NSArray * imageArray;
@@ -34,7 +33,10 @@ static const CGFloat ratio =0.66;
    [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
 //去掉透明后导航栏下边的黑边
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-    [self getVIPmessage];
+   
+     self.baseTableView.tableHeaderView=[self CraetTableViewHeader];
+    
+   
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -81,6 +83,7 @@ static const CGFloat ratio =0.66;
 
 //创建表头
 -(UIView*)CraetTableViewHeader{
+     [self getVIPmessage];
     UIView * headerView =[UIView new];
     headerView.backgroundColor=[UIColor clearColor];//换颜色就能看出来
     headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight-54);
@@ -89,7 +92,8 @@ static const CGFloat ratio =0.66;
     UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     headBtn.backgroundColor=[UIColor yellowColor];
     [headBtn addTarget:self action:@selector(headBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:@""] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
+//    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:_model.headImg] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
+    [headBtn setBackgroundImage:[UIImage imageNamed:@"placeholder_head"] forState:0];
     headBtn.sd_cornerRadius=@(40);
     [headerView sd_addSubviews:@[headBtn]];
     headBtn.sd_layout
@@ -128,23 +132,46 @@ static const CGFloat ratio =0.66;
     [namelabel2 setSingleLineAutoResizeWithMaxWidth:ScreenWidth];
     
     
+    if ([ToolClass isLogin]) {
+        namelabel.text=[NSUSE_DEFO objectForKey:API_UserName];
+        namelabel2.hidden=NO;
+    }else{
+        namelabel.text=@"Login";
+        namelabel2.hidden=YES;
+    }
     
+    
+    
+    [[Engine sharedEngine]BJPostWithUrl:Main_URL withAPIName:VIPApi_Message withParame:nil callback:^(id item) {
+        [LCProgressHUD hide];
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            UserInfoBaseClass * model =[UserInfoBaseClass modelObjectWithDictionary:item];
+            _model=model;
+           [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:_model.headImg] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
+            namelabel2.text=_model.vipType;;
+        }else{
+            
+        }
+        
+    } failedBlock:^(id error) {
+        
+    }];
     
     return headerView;
 }
 
 //创建tableView
 -(void)CreatTabelView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64-53) style:UITableViewStylePlain];
-    
-    _tableView=tableView;
-    tableView.dataSource=self;
-    tableView.delegate=self;
-    tableView.tableFooterView=[UIView new];
-    tableView.backgroundColor=[UIColor clearColor];
-    tableView.rowHeight=50;
-    tableView.tableHeaderView=[self CraetTableViewHeader];
-    [self.view addSubview:tableView];
+  
+    self.baseTableView.frame=CGRectMake(0, 64, ScreenWidth, ScreenHeight-64-53);
+    self.baseTableView.tableFooterView=[UIView new];
+    self.baseTableView.backgroundColor=[UIColor clearColor];
+    self.baseTableView.rowHeight=50;
+    self.baseTableView.mj_header=nil;
+    self.baseTableView.mj_footer=nil;
+   
+    [self.view addSubview:self.baseTableView];
 }
 #pragma mark -----表代理(tableViewDataSource--tableViewDelegate)
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -216,6 +243,7 @@ static const CGFloat ratio =0.66;
         if (indexPath.row==0) {
             //基本信息
             BasicInforMationVC * vc=[BasicInforMationVC new];
+            vc.model=_model;
             vc.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row==1){
@@ -233,6 +261,7 @@ static const CGFloat ratio =0.66;
                 [NSUSE_DEFO removeObjectForKey:API_Token];
                 [NSUSE_DEFO removeObjectForKey:API_UserName];
                 [NSUSE_DEFO synchronize];
+                 self.baseTableView.tableHeaderView=[self CraetTableViewHeader];
             }];
             [alertView addAction:action1];
             [alertView addAction:action2];
@@ -271,20 +300,7 @@ static const CGFloat ratio =0.66;
 //获取会员信息
 -(void)getVIPmessage{
     
-    [[Engine sharedEngine]BJPostWithUrl:Main_URL withAPIName:VIPApi_Message withParame:nil callback:^(id item) {
-        [LCProgressHUD hide];
-        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
-        if ([code isEqualToString:@"1"]) {
-            UserInfoBaseClass * model =[UserInfoBaseClass modelObjectWithDictionary:item];
-            _model=model;
-            
-        }else{
-            
-        }
-        
-    } failedBlock:^(id error) {
-        
-    }];
+   
 }
 
 

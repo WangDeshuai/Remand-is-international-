@@ -66,6 +66,17 @@
     .heightIs(30)
     .topSpaceToView(_titleLabel, 0);
     
+    _addBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+//    _addBtn.backgroundColor=[UIColor greenColor];
+    _addBtn.hidden=YES;
+    [self.contentView sd_addSubviews:@[_addBtn]];
+    _addBtn.sd_layout
+    .rightSpaceToView(self.contentView, 15)
+    .centerYEqualToView(self.contentView)
+    .widthIs(50)
+    .heightIs(50);
+    
+    
     
     _lineView=[UIView new];
     _lineView.backgroundColor=[[UIColor whiteColor] colorWithAlphaComponent:.4];

@@ -18,4 +18,5 @@
 @property(nonatomic,strong)UITextField * contentText;
 ///线条
 @property(nonatomic,strong)UIView * lineView;
+@property(nonatomic,strong)UIButton  *addBtn;
 @end

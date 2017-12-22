@@ -172,6 +172,10 @@
 		96C91E5B1FD9261900DF0CE3 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91E401FD9261900DF0CE3 /* UIScrollView+MJExtension.m */; };
 		96C91E5C1FD9261900DF0CE3 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91E421FD9261900DF0CE3 /* UIScrollView+MJRefresh.m */; };
 		96C91E5D1FD9261900DF0CE3 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91E441FD9261900DF0CE3 /* UIView+MJExtension.m */; };
+		96DAE23A1FECDCA400A82B58 /* ZJButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DAE2321FECDCA200A82B58 /* ZJButton.m */; };
+		96DAE23B1FECDCA400A82B58 /* ZJPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DAE2331FECDCA200A82B58 /* ZJPickerView.m */; };
+		96DAE23C1FECDCA400A82B58 /* ZJSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DAE2361FECDCA400A82B58 /* ZJSelectCell.m */; };
+		96DAE23D1FECDCA400A82B58 /* ZJSelectPhotoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 96DAE2371FECDCA400A82B58 /* ZJSelectPhotoTool.m */; };
 		96E9AD731FEA054B000243F4 /* AreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E9AD721FEA054B000243F4 /* AreaView.m */; };
 		96E9AD761FEA348B000243F4 /* LeftMyAdressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E9AD751FEA348B000243F4 /* LeftMyAdressCell.m */; };
 /* End PBXBuildFile section */
@@ -532,6 +536,14 @@
 		96C91E421FD9261900DF0CE3 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		96C91E431FD9261900DF0CE3 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		96C91E441FD9261900DF0CE3 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		96DAE2321FECDCA200A82B58 /* ZJButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJButton.m; sourceTree = "<group>"; };
+		96DAE2331FECDCA200A82B58 /* ZJPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJPickerView.m; sourceTree = "<group>"; };
+		96DAE2341FECDCA200A82B58 /* ZJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJPickerView.h; sourceTree = "<group>"; };
+		96DAE2351FECDCA300A82B58 /* ZJSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJSelectCell.h; sourceTree = "<group>"; };
+		96DAE2361FECDCA400A82B58 /* ZJSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJSelectCell.m; sourceTree = "<group>"; };
+		96DAE2371FECDCA400A82B58 /* ZJSelectPhotoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJSelectPhotoTool.m; sourceTree = "<group>"; };
+		96DAE2381FECDCA400A82B58 /* ZJButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJButton.h; sourceTree = "<group>"; };
+		96DAE2391FECDCA400A82B58 /* ZJSelectPhotoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJSelectPhotoTool.h; sourceTree = "<group>"; };
 		96DE70441FE119D20022935F /* API_Name.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = API_Name.h; sourceTree = "<group>"; };
 		96E9AD711FEA054B000243F4 /* AreaView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AreaView.h; sourceTree = "<group>"; };
 		96E9AD721FEA054B000243F4 /* AreaView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AreaView.m; sourceTree = "<group>"; };
@@ -665,10 +677,10 @@
 		04ED7B511FDC403500424718 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				96B00DBD1FDF63A1000EB2D2 /* 我的 */,
 				96B00DE51FDFD72A000EB2D2 /* 会员VIP */,
 				96B00DDD1FDFBDBA000EB2D2 /* 我的特权 */,
 				96B00DC51FDF71FC000EB2D2 /* 发布信息 */,
-				96B00DBD1FDF63A1000EB2D2 /* 我的 */,
 				96B00DBC1FDF638A000EB2D2 /* 基本信息 */,
 			);
 			path = Cell;
@@ -1190,6 +1202,7 @@
 		96C91D6A1FD8EEF500DF0CE3 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				96DAE2311FECDC9400A82B58 /* PhotoTools */,
 				04ED7B481FDC391600424718 /* Category */,
 				04ED7B431FDC362400424718 /* ToolClass.h */,
 				04ED7B421FDC362400424718 /* ToolClass.m */,
@@ -1530,6 +1543,21 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
+		96DAE2311FECDC9400A82B58 /* PhotoTools */ = {
+			isa = PBXGroup;
+			children = (
+				96DAE2381FECDCA400A82B58 /* ZJButton.h */,
+				96DAE2321FECDCA200A82B58 /* ZJButton.m */,
+				96DAE2341FECDCA200A82B58 /* ZJPickerView.h */,
+				96DAE2331FECDCA200A82B58 /* ZJPickerView.m */,
+				96DAE2351FECDCA300A82B58 /* ZJSelectCell.h */,
+				96DAE2361FECDCA400A82B58 /* ZJSelectCell.m */,
+				96DAE2391FECDCA400A82B58 /* ZJSelectPhotoTool.h */,
+				96DAE2371FECDCA400A82B58 /* ZJSelectPhotoTool.m */,
+			);
+			path = PhotoTools;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1686,6 +1714,7 @@
 				04ED7B681FDD3BDA00424718 /* ReleaseChildVC.m in Sources */,
 				96C91D381FD8EB0700DF0CE3 /* ViewController.m in Sources */,
 				9674BA7B1FDE836300865E74 /* BasicInforMationVC.m in Sources */,
+				96DAE23C1FECDCA400A82B58 /* ZJSelectCell.m in Sources */,
 				96C91E511FD9261900DF0CE3 /* MJRefreshAutoStateFooter.m in Sources */,
 				04ED7B2A1FDC0AF100424718 /* NSData+ImageContentType.m in Sources */,
 				04ED7B551FDC405E00424718 /* MineCell.m in Sources */,
@@ -1745,6 +1774,7 @@
 				966632681FE500C60096ACB7 /* PhotoView.m in Sources */,
 				9674BA781FDE612A00865E74 /* RegistCell.m in Sources */,
 				96C91E571FD9261900DF0CE3 /* MJRefreshStateHeader.m in Sources */,
+				96DAE23B1FECDCA400A82B58 /* ZJPickerView.m in Sources */,
 				96C91DA41FD8EF1C00DF0CE3 /* IQPreviousNextView.m in Sources */,
 				966632361FE4C2710096ACB7 /* SearchTabCell.m in Sources */,
 				96C91DA31FD8EF1C00DF0CE3 /* IQBarButtonItem.m in Sources */,
@@ -1810,6 +1840,7 @@
 				96C91DFB1FD8F22C00DF0CE3 /* NSObject+MJCoding.m in Sources */,
 				96C91E501FD9261900DF0CE3 /* MJRefreshAutoNormalFooter.m in Sources */,
 				96C91E481FD9261900DF0CE3 /* SGPageTitleView.m in Sources */,
+				96DAE23A1FECDCA400A82B58 /* ZJButton.m in Sources */,
 				9666325F1FE4FC9D0096ACB7 /* TZLocationManager.m in Sources */,
 				96C91E4B1FD9261900DF0CE3 /* MJRefreshBackFooter.m in Sources */,
 				96C91D9E1FD8EF1C00DF0CE3 /* IQUIViewController+Additions.m in Sources */,
@@ -1824,6 +1855,7 @@
 				04ED7B371FDC0AF100424718 /* UIImageView+WebCache.m in Sources */,
 				966632601FE4FC9D0096ACB7 /* TZPhotoPickerController.m in Sources */,
 				96C91E031FD8F22C00DF0CE3 /* AFURLSessionManager.m in Sources */,
+				96DAE23D1FECDCA400A82B58 /* ZJSelectPhotoTool.m in Sources */,
 				9674BA6D1FDE2D9E00865E74 /* LoginVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

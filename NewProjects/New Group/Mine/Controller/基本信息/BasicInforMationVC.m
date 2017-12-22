@@ -12,29 +12,39 @@
 #import "BasiAreaView.h"
 #import "AddressView.h"
 #import "BasiMainClassView.h"
-@interface BasicInforMationVC ()<UITableViewDelegate,UITableViewDataSource>
+#import "ZJSelectPhotoTool.h"
+@interface BasicInforMationVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
+    
+    NSString * _companyName;//公司名字
+    NSString * _phoneNum;//电话号码
+    NSString * _otherPhone;//备用联系方式
+    
     NSString * _registName;///注册类型
     NSString * _registCode;//注册code
    
     NSString * _userName;///个人类型(全部,供应商,采购商)
     NSString * _userCode;//个人类型code
-   
-    NSString * _addressName;//地区名字
-    NSString * _addressCode;//地区code
-   
+    
     NSString * _className;//商品分类name
     NSString * _classCode;//商品分类code
     
+    NSString * _addressName;//地区名字
+    NSString * _addressCode;//地区code
+  
+    NSMutableArray * _classCodeArr;//其它分类code (最后记得添加第一个code)
+    NSString * _imageStr;
+    UIImage * _headImage;
     
-    NSString * allpeople;
 }
-@property(nonatomic,strong)NSArray * nameArray;
+@property(nonatomic,strong)NSMutableArray * nameArray;
+@property(nonatomic,strong)NSMutableArray  *imageArr;
 @property(nonatomic,copy)NSString * countryStr;//国家str
-@property (nonatomic,copy)NSString * countryCode;//国家code
+@property(nonatomic,copy)NSString * countryCode;//国家code
+@property(nonatomic,strong)NSMutableArray * classNameArr;//其它分类的name
 @end
-
 @implementation BasicInforMationVC
+static int MaxMainNum =10;
 - (void)viewWillAppear:(BOOL)animated{
     // 设置导航栏背景透明(取值范围0~1)
     [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
@@ -62,7 +72,26 @@
 
 
 -(void)CreatImageArr{
-    _nameArray=@[@"Name",@"My member",@"Corporate name",@"Phone number",@"Mailbox",@"Other contacts",@"Registration Typle",@"User type",@"Main",@"Country",@"Area"];
+    _nameArray=[NSMutableArray array];//label数组创建
+    _imageArr=[NSMutableArray array];//最左边图标数组创建
+    _classNameArr=[NSMutableArray array];//存放其它分类的name
+    _classCodeArr=[NSMutableArray array];//存放其它分类的code
+    
+    NSArray * arr=@[@"Name",@"My member",@"Company name",@"Phone number",@"Mailbox",@"Other contacts",@"Registration Typle",@"User type",@"Main",@"Country",@"Area"];
+    [_nameArray addObjectsFromArray:arr];
+    
+    NSArray * imageAr=@[@"information_0",@"information_1",@"information_2",@"information_3",@"information_4",@"information_5",@"information_6",@"information_7",@"information_8",@"information_9",@"information_10"];
+    [_imageArr addObjectsFromArray:imageAr];
+    
+    /*
+     要在分类的数组中添加9个占位符,
+     因为要在tableView中展示选择的每及分类的名字,
+     是通过indexPath.row来取出的,所以需要添加9个
+     占位符
+     */
+    NSArray * class =@[@"",@"",@"",@"",@"",@"",@"",@"",@""];
+    [_classNameArr addObjectsFromArray:class];
+    
 }
 
 -(UIView*)CreatTabelViewHeader{
@@ -116,7 +145,11 @@
     BasicInforMationCell * cell =[BasicInforMationCell cellWithTableView:tableView IndexPath:indexPath];
     cell.backgroundColor=[UIColor clearColor];
     cell.titleLabel.text=_nameArray[indexPath.row];
-    cell.leftImage.image=[UIImage imageNamed:[NSString stringWithFormat:@"information_%lu",indexPath.row]];
+    cell.addBtn.tag=indexPath.row;
+    cell.contentText.delegate=self;
+    cell.contentText.tag=indexPath.row;
+    [cell.addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.leftImage.image=[UIImage imageNamed:_imageArr[indexPath.row]];
     if (indexPath.row==0) {
         //用户名
         cell.contentText.text=[NSUSE_DEFO objectForKey:API_UserName];
@@ -147,14 +180,27 @@
         //主要营业
         cell.contentText.enabled=NO;
         cell.contentText.text=_className;
-    }else if (indexPath.row==9){
+        cell.addBtn.hidden=NO;
+        [cell.addBtn setImage:[UIImage imageNamed:@"information_add"] forState:0];
+    }else if (indexPath.row==_nameArray.count-2){
         //国家
         cell.contentText.enabled=NO;
         cell.contentText.text=_countryStr;
-    }else if (indexPath.row==10){
+        cell.addBtn.hidden=YES;
+    }else if (indexPath.row==_nameArray.count-1){
         //地区
          cell.contentText.enabled=NO;
         cell.contentText.text=_addressName;
+        cell.addBtn.hidden=YES;
+    }else {
+        cell.addBtn.hidden=NO;
+        cell.contentText.enabled=NO;
+        [cell.addBtn setImage:[UIImage imageNamed:@"information_jian"] forState:0];
+        if (_classNameArr.count>indexPath.row) {
+             cell.contentText.text=_classNameArr[indexPath.row];
+        }
+      
+        
     }
     
 
@@ -166,20 +212,25 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row==6) {
+    
+    if (indexPath.row==0 || indexPath.row==1 || indexPath.row==2 ||indexPath.row==3 || indexPath.row==4 || indexPath.row==5 ) {
+    }else  if (indexPath.row==6) {
         [self tanKaungSeleateTitle:@"Registration" DataTitleArr:@[@"Personal",@"Company"] Int:5];
     }else if (indexPath.row==7){
         //个人类型
         [self tanKaungSeleateTitle:@"User typle" DataTitleArr:@[@"全部",@"供应商",@"采购商"] Int:6];
     }else if (indexPath.row==8){
         //主营分类
-        [self getClassFenLeiMessageData];
-    }else if (indexPath.row==9){
+        [self getClassFenLeiMessageDataInt:8];
+    }else if (indexPath.row==_nameArray.count-2){
         //国家
          [self getNationalData];
-    }else if (indexPath.row==10){
+    }else if (indexPath.row==_nameArray.count-1){
         //地区
          [self getNationalAreaDataCode:_countryCode];
+    }else{
+        //主营分类(其它)
+        [self getClassFenLeiMessageDataInt:indexPath.row];
     }
 }
 
@@ -218,18 +269,48 @@
 
 
 ///获取分类信息数据
--(void)getClassFenLeiMessageData{
-    
+-(void)getClassFenLeiMessageDataInt:(NSInteger)tag{
+    NSLog(@">>>>%lu",tag);
     [LCProgressHUD showLoading:Message_Loading];
     [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/getCategoryEn" andParameter:nil withSuccessBlock:^(id item) {
         NSMutableArray * provinceArr=[item objectForKey:@"children"];
-        [self tanKuangSeleateDataArray:provinceArr];
+        [self tanKuangSeleateDataArray:provinceArr Int:tag];
         [LCProgressHUD hide];
     } andFailBlock:^(NSError *error) {
     } andprogressBlock:^(NSProgress *progress) {
+
+    }];
+}
+
+
+///获取图片路径
+-(void)getImageUrlData{
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] requestUpdatePoto:_headImage photoStr:@"image" urlStr:ImageApi_Name parameters:nil successBlock:^(NSString *urlStr) {
+        _imageStr=urlStr;
+        [LCProgressHUD hide];
+    } failedBlock:nil];
+}
+///修改会员信息
+-(void)getVipMessageDic:(NSDictionary*)dic{
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:VIPApi_Modification withParame:dic callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        
+        if ([code isEqualToString:@"1"]) {
+            [LCProgressHUD showMessage:Message_Success];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [LCProgressHUD showFailure:[dic objectForKey:@"resultMessage"]];
+        }
+        
+    } failedBlock:^(id error) {
         
     }];
 }
+
+
+
 
 
 #pragma mark ---------弹框调用
@@ -293,12 +374,19 @@
 }
 
 ///获取分类弹框调用
--(void)tanKuangSeleateDataArray:(NSMutableArray*)dataArr{
+-(void)tanKuangSeleateDataArray:(NSMutableArray*)dataArr Int:(NSInteger)tag{
     int g=ScreenHeight/3;
      BasiMainClassView* view =[[BasiMainClassView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择分类" AndDataArr:dataArr];
     view.NameCodeBlock = ^(NSString *name, NSString *code) {
-        _className=name;
-        _classCode=code;
+        if (tag==8) {
+            _className=name;
+            _classCode=code;
+        }else{
+            [_classNameArr addObject:name];
+            [_classCodeArr addObject:code];
+            [_classCodeArr addObject:_classCode];
+        }
+        
         [self.baseTableView reloadData];
     };
     [UIView animateWithDuration:animationTime animations:^{
@@ -315,29 +403,77 @@
 #pragma mark --按钮点击事件---
 //头像选择
 -(void)btnImageClick:(UIButton*)btn{
-    
+    [ZJSelectPhotoTool showSeletPhotoWith:self NamesArray:@[@"Select from album", @"Take pictures"] IsEditing:NO BackImageBlock:^(UIImage *image) {
+        _headImage=image;
+        [self getImageUrlData];
+        [btn setBackgroundImage:image forState:0];
+        
+    } IsIcon:NO];
 }
 
-//保存
+///保存
 -(void)rightClick{
+    NSLog(@"公司名字>>>>%@",_companyName);
+    NSLog(@"公司电话>>>>>%@",_phoneNum);
+    NSLog(@"备用联系>>>>>%@",_otherPhone);
+    NSLog(@"注册类型>>>%@>>>%@",_registName,_registCode);
+    NSLog(@"用户类型>>>%@>>>%@",_userName,_userCode);
+    NSLog(@"主营类型>>>%@>>>%@>>>%@",_className,_classCode,_classCodeArr);
+    NSLog(@"地区name>>%@>>>>地区code%@",_addressName,_addressCode);
+   
+    NSMutableDictionary * dic =[NSMutableDictionary new];
+    [dic setObject:[ToolClass isString:_companyName] forKey:@"company_name"];
+    [dic setObject:[ToolClass isString:_phoneNum] forKey:@"company_phone"];
+    [dic setObject:[ToolClass isString:_otherPhone] forKey:@"mobile"];
+    [dic setObject:[ToolClass isString:_registCode] forKey:@"reg_type"];
+    [dic setObject:[ToolClass isString:_imageStr] forKey:@"head_img"];
+    [dic setObject:[ToolClass isString:_addressCode] forKey:@"area_code"];
+    [dic setObject:[ToolClass isString:_userCode] forKey:@"member_type"];
+    [dic setObject:_classCodeArr forKey:@"categorys"];
+    [self getVipMessageDic:dic];
     
 }
-
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+///添加main
+-(void)addBtnClick:(UIButton*)btn{
+   
+    if (btn.tag==8) {
+        if (_nameArray.count-10>=MaxMainNum) {
+            [LCProgressHUD showMessage:@"已经添加到最大个数"];
+            return;
+        }
+        /*
+         增加数据:
+         _nameArray.count-10 :_nameArray原始个数是11,去掉10个,主营从1开始,以此类推,主营1,主营2...
+         _nameArray.count-2 : 因为最后2个是 国家和地区,所以从-2的位置插入数据
+         */
+        [_nameArray insertObject:[NSString stringWithFormat:@"主营%lu",_nameArray.count-10] atIndex:_nameArray.count-2];
+        [_imageArr insertObject:@"information_8" atIndex:_imageArr.count-2];
+    }else{
+        //减掉
+        [_nameArray removeObjectAtIndex:btn.tag];
+        [_imageArr removeObjectAtIndex:btn.tag];
+        if (_classNameArr.count>btn.tag) {
+             [_classNameArr removeObjectAtIndex:btn.tag];
+             [_classCodeArr removeObjectAtIndex:btn.tag-9];
+        }
+      
+    }
+   
+    [self.baseTableView reloadData];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark --------TextFieldDelegate--------------
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (textField.tag==2) {
+        //公司name
+        _companyName=[ToolClass isString:textField.text];
+    }else if (textField.tag==3){
+        //电话号码
+        _phoneNum=[ToolClass isString:textField.text];
+    }else if (textField.tag==5){
+        //备用联系方式
+        _otherPhone=[ToolClass isString:textField.text];
+    }
 }
-*/
 
 @end
