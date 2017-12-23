@@ -45,9 +45,10 @@
 @end
 
 @implementation ReleaseChildVC
-
+static int  heightView ;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    heightView=ScreenHeight/3;
     self.view.backgroundColor=[UIColor whiteColor];
     NSLog(@">>>%@",_productType);
     [self CreatDataArr];
@@ -136,6 +137,7 @@
     sureBtn.sd_cornerRadius=@(35/2);
     sureBtn.backgroundColor=Main_Color;
     [sureBtn setTitle:@"Release" forState:0];
+    [sureBtn addTarget:self action:@selector(publicMessage) forControlEvents:UIControlEventTouchUpInside];
     sureBtn.titleLabel.font=[UIFont systemFontOfSize:15];
     [footView sd_addSubviews:@[sureBtn]];
     sureBtn.sd_layout
@@ -241,15 +243,14 @@
 #pragma mark --------弹框调用--------
 ///获取分类弹框调用
 -(void)tanKuangSeleateDataArray:(NSMutableArray*)dataArr{
-    int g=ScreenHeight/2;
-    CommodityClassView * view =[[CommodityClassView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择分类" AndDataArr:dataArr];
+    CommodityClassView * view =[[CommodityClassView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, heightView) TitleName:@"选择分类" AndDataArr:dataArr];
     view.NameCodeBlock = ^(NSString *name, NSString *code) {
         _className=name;
         _classCode=code;
         [self.baseTableView reloadData];
     };
     [UIView animateWithDuration:animationTime animations:^{
-        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        view.frame=CGRectMake(0, ScreenHeight-heightView, ScreenWidth,heightView);
         [view show];;
     } completion:^(BOOL finished) {
     }];
@@ -257,8 +258,8 @@
 
 ///获取国家弹框调用(tag==1代表国家  tag==2代表失效时间)
 -(void)tanKaungSeleateTitle:(NSString*)name DataTitleArr:(NSArray*)dataArr Int:(int)tag{
-    int g=ScreenHeight/2;
-    AddressView * view =[[AddressView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:name AndDataArr:dataArr IntType:tag];
+//    int g=ScreenHeight/2;
+    AddressView * view =[[AddressView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, heightView) TitleName:name AndDataArr:dataArr IntType:tag];
     view.ControlBlock = ^(NSString *name, NSString *code) {
         if (tag==1) {//国家
             _countryName=name;
@@ -274,7 +275,7 @@
         [self.baseTableView reloadData];
     };
     [UIView animateWithDuration:animationTime animations:^{
-        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        view.frame=CGRectMake(0, ScreenHeight-heightView, ScreenWidth, heightView);
         [view show];;
     } completion:^(BOOL finished) {
     }];
@@ -284,19 +285,34 @@
 ///获取省市县(地区)弹框调用
 -(void)tanKaungAreaViewDataArray:(NSMutableArray*)dataArr
 {
-    int g=ScreenHeight/2;
-    AreaView * view =[[AreaView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, g) TitleName:@"选择省市县" AndDataArr:dataArr];
+    AreaView * view =[[AreaView alloc]initWithFrame:CGRectMake(0, ScreenHeight, ScreenWidth, heightView) TitleName:@"选择省市县" AndDataArr:dataArr];
     view.NameCodeBlock = ^(NSString *name, NSString *code) {
         _addressName=name;
         _addressCode=code;
         [self.baseTableView reloadData];
     };
     [UIView animateWithDuration:animationTime animations:^{
-        view.frame=CGRectMake(0, ScreenHeight-g, ScreenWidth, g);
+        view.frame=CGRectMake(0, ScreenHeight-heightView, ScreenWidth,heightView);
         [view show];;
     } completion:^(BOOL finished) {
     }];
 }
+
+
+
+#pragma mark ----发布按钮点击事件
+-(void)publicMessage{
+    NSLog(@"商品的名字>>>%@>>>>",_proName);
+    NSLog(@"商品分类>>%@ID=%@",_className,_classCode);
+    NSLog(@"商品价格>>%@",_proPrice);
+    NSLog(@"库存>>>%@",_proInventory);
+    NSLog(@"单位名称>>>%@>>>>code=%@",_proMone,_proMoneCode);
+    NSLog(@"描述>>>%@",_proDecribe);
+    NSLog(@"国家>>%@>>>code=%@",_countryName,_countryCode);
+    NSLog(@"地区>>>%@>>>code=%@",_addressName,_addressCode);
+    NSLog(@"失效时间>>>%@>>>code=%@",_timeName,_timeCode);
+}
+
 
 
 
@@ -311,9 +327,24 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if (textField.tag==0) {
+        //公司名字
         _proName=textField.text;
+    }else if (textField.tag==2){
+        //公司价格
+        _proPrice=textField.text;
+    }else if (textField.tag==3){
+        //存货量
+        _proInventory=textField.text;
+    }else if (textField.tag==5){
+        //描述
+        _proDecribe=textField.text;
     }
 }
+
+
+
+
+
 - (NSArray *)nameArr
 {
     if (!_nameArr) {

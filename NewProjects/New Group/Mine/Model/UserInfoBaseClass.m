@@ -70,7 +70,7 @@ NSString *const kUserInfoBaseClassAreaCode = @"area_code";
     if(self && [dict isKindOfClass:[NSDictionary class]]) {
             self.areaName = [self objectOrNilForKey:kUserInfoBaseClassAreaName fromDictionary:dict];
             self.categorys = [self objectOrNilForKey:kUserInfoBaseClassCategorys fromDictionary:dict];
-            self.memberType = [self objectOrNilForKey:kUserInfoBaseClassMemberType fromDictionary:dict];
+            self.memberType = [ToolClass registTyple:[self objectOrNilForKey:kUserInfoBaseClassMemberType fromDictionary:dict]];
             self.headImg = [self objectOrNilForKey:kUserInfoBaseClassHeadImg fromDictionary:dict];
             self.mobile = [self objectOrNilForKey:kUserInfoBaseClassMobile fromDictionary:dict];
             self.resultMessage = [self objectOrNilForKey:kUserInfoBaseClassResultMessage fromDictionary:dict];
@@ -81,7 +81,7 @@ NSString *const kUserInfoBaseClassAreaCode = @"area_code";
             self.nikeName = [self objectOrNilForKey:kUserInfoBaseClassNikeName fromDictionary:dict];
             self.resultCode = [[self objectOrNilForKey:kUserInfoBaseClassResultCode fromDictionary:dict] doubleValue];
             self.emails = [self objectOrNilForKey:kUserInfoBaseClassEmails fromDictionary:dict];
-            self.regType = [self objectOrNilForKey:kUserInfoBaseClassRegType fromDictionary:dict];
+            self.regType = [ToolClass registTyple:[self objectOrNilForKey:kUserInfoBaseClassRegType fromDictionary:dict]];
             self.companyPhone = [self objectOrNilForKey:kUserInfoBaseClassCompanyPhone fromDictionary:dict];
             self.qq = [self objectOrNilForKey:kUserInfoBaseClassQq fromDictionary:dict];
             self.email = [self objectOrNilForKey:kUserInfoBaseClassEmail fromDictionary:dict];

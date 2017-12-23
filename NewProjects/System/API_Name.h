@@ -21,7 +21,7 @@ static NSString * Message_Fail=@"失败";
 static NSInteger  animationTime =.5;
 
 
-
+///图片转换地址
 static NSString *ImageApi_Name =@"http://111.198.24.20:8603/upload/img/opacity";
 
 #pragma mark ------注册---------

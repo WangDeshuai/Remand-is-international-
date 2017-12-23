@@ -26,19 +26,40 @@
 
 +(NSString *)registTyple:(NSString*)str{
     NSMutableDictionary * dic =[NSMutableDictionary new];
-    [dic setObject:@"4497002900010001" forKey:@"个人"];
-    [dic setObject:@"4497002900010002" forKey:@"公司"];
+//    [dic setObject:@"4497002900010001" forKey:@"个人"];
+//    [dic setObject:@"4497002900010002" forKey:@"公司"];
     [dic setObject:@"4497002900020001" forKey:@"供应商"];
     [dic setObject:@"4497002900020002" forKey:@"采购商"];
     [dic setObject:@"4497002900020003" forKey:@"全部"];
+   
     [dic setObject:@"4497002900010002" forKey:@"Company"];
     [dic setObject:@"4497002900010001" forKey:@"Personal"];
+    
+   
+
     [dic setObject:@"免费会员" forKey:@"free"];
     [dic setObject:@"vip会员" forKey:@"vip"];
     [dic setObject:@"金牌供应商" forKey:@"goldvip"];
     [dic setObject:@"4497003000020002" forKey:@"￥"];
     [dic setObject:@"4497003000020003" forKey:@"$"];
     [dic setObject:@"4497003000020004" forKey:@"€"];
+    
+    
+    [dic setObject:@"Company" forKey:@"4497002900010002"];
+    [dic setObject:@"Personal" forKey:@"4497002900010001"];
+//    [dic setObject:@"个人" forKey:@"4497002900010001"];
+//    [dic setObject:@"公司" forKey:@"4497002900010002"];
+    [dic setObject:@"供应商" forKey:@"4497002900020001"];
+    [dic setObject:@"采购商" forKey:@"4497002900020002"];
+    [dic setObject:@"全部" forKey:@"4497002900020003"];
+    
+    [dic setObject:@"free" forKey:@"免费会员"];
+    [dic setObject:@"vip" forKey:@"vip会员"];
+    [dic setObject:@"goldvip" forKey:@"金牌供应商"];
+    [dic setObject:@"￥" forKey:@"4497003000020002"];
+    [dic setObject:@"$" forKey:@"4497003000020003"];
+    [dic setObject:@"€" forKey:@"4497003000020004"];
+    
   return  [dic objectForKey:str];
 }
 

@@ -32,21 +32,22 @@
     NSString * _addressName;//地区名字
     NSString * _addressCode;//地区code
   
-    NSMutableArray * _classCodeArr;//其它分类code (最后记得添加第一个code)
-    NSString * _imageStr;
-    UIImage * _headImage;
+    NSMutableArray * _classNameArr;//其它分类的name
+    NSMutableArray * _classCodeArr;//其它分类code (最后,记得添加第一个code)
+   
+    NSString * _imageStr;//头像地址
     
 }
 @property(nonatomic,strong)NSMutableArray * nameArray;
 @property(nonatomic,strong)NSMutableArray  *imageArr;
 @property(nonatomic,copy)NSString * countryStr;//国家str
 @property(nonatomic,copy)NSString * countryCode;//国家code
-@property(nonatomic,strong)NSMutableArray * classNameArr;//其它分类的name
+@property(nonatomic,strong)UIImage * headImage;//头像
 @end
 @implementation BasicInforMationVC
 static int MaxMainNum =10;
 - (void)viewWillAppear:(BOOL)animated{
-    // 设置导航栏背景透明(取值范围0~1)
+    //设置导航栏背景透明(取值范围0~1)
     [[[self.navigationController.navigationBar subviews] objectAtIndex:0] setAlpha:0];
     //去掉透明后导航栏下边的黑边
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
@@ -76,12 +77,13 @@ static int MaxMainNum =10;
     _imageArr=[NSMutableArray array];//最左边图标数组创建
     _classNameArr=[NSMutableArray array];//存放其它分类的name
     _classCodeArr=[NSMutableArray array];//存放其它分类的code
-    
+ //标题
     NSArray * arr=@[@"Name",@"My member",@"Company name",@"Phone number",@"Mailbox",@"Other contacts",@"Registration Typle",@"User type",@"Main",@"Country",@"Area"];
     [_nameArray addObjectsFromArray:arr];
-    
+//图片
     NSArray * imageAr=@[@"information_0",@"information_1",@"information_2",@"information_3",@"information_4",@"information_5",@"information_6",@"information_7",@"information_8",@"information_9",@"information_10"];
     [_imageArr addObjectsFromArray:imageAr];
+    
     
     /*
      要在分类的数组中添加9个占位符,
@@ -92,6 +94,17 @@ static int MaxMainNum =10;
     NSArray * class =@[@"",@"",@"",@"",@"",@"",@"",@"",@""];
     [_classNameArr addObjectsFromArray:class];
     
+    if (_model.categorys.count>=1) {
+        _className=_model.categorys[0];//更换成名字(用来显示)
+        _classCode=_model.categorys[0];
+        for (int i=0; i<_model.categorys.count-1; i++) {
+            NSString * str =_model.categorys[i+1];
+            [_nameArray insertObject:[NSString stringWithFormat:@"主营%d",i+1] atIndex:_nameArray.count-2];
+            [_classCodeArr addObject:str];
+            [_classNameArr insertObject:str atIndex:_classNameArr.count];//更换成名字(用来显示)
+            [_imageArr insertObject:@"information_8" atIndex:_nameArray.count-2];
+        }
+    }
 }
 
 -(UIView*)CreatTabelViewHeader{
@@ -106,7 +119,7 @@ static int MaxMainNum =10;
     UIButton * btnImage =[UIButton buttonWithType:UIButtonTypeCustom];
     [btnImage addTarget:self action:@selector(btnImageClick:) forControlEvents:UIControlEventTouchUpInside];
     btnImage.sd_cornerRadius=@(40);
-    [btnImage sd_setBackgroundImageWithURL:[NSURL URLWithString:@""] forState:0 placeholderImage:[UIImage imageNamed:@"mine_head"]];
+    [btnImage sd_setBackgroundImageWithURL:[NSURL URLWithString:_model.headImg] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
     [headerView sd_addSubviews:@[btnImage]];
     btnImage.sd_layout
     .centerXEqualToView(headerView)
@@ -160,22 +173,28 @@ static int MaxMainNum =10;
          cell.contentText.enabled=NO;
     }else if(indexPath.row==2){
         //公司名称
+        cell.contentText.text=[self stingText:_companyName UserInfoBaseClassModel:_model.companyName];
     } else if (indexPath.row==3){
         //电话
+        cell.contentText.text=[self stingText:_phoneNum UserInfoBaseClassModel:_model.companyPhone];
     }else if (indexPath.row==4){
         //邮箱
         cell.contentText.text=[NSUSE_DEFO objectForKey:API_Email];
         cell.contentText.enabled=NO;
     }else if (indexPath.row==5){
         //备用联系
+        cell.contentText.text=[self stingText:_otherPhone UserInfoBaseClassModel:_model.mobile];
     }else if (indexPath.row==6){
         //注册类型
         cell.contentText.enabled=NO;
-        cell.contentText.text=_registName;
+         cell.contentText.text=[self stingText:_registName UserInfoBaseClassModel:_model.regType];
+        
+        
     }else if (indexPath.row==7){
         //个人类型
         cell.contentText.enabled=NO;
-        cell.contentText.text=_userName;
+//        cell.contentText.text=_userName;
+          cell.contentText.text=[self stingText:_userName UserInfoBaseClassModel:_model.memberType];
     }else if (indexPath.row==8){
         //主要营业
         cell.contentText.enabled=NO;
@@ -384,7 +403,6 @@ static int MaxMainNum =10;
         }else{
             [_classNameArr addObject:name];
             [_classCodeArr addObject:code];
-            [_classCodeArr addObject:_classCode];
         }
         
         [self.baseTableView reloadData];
@@ -413,23 +431,41 @@ static int MaxMainNum =10;
 
 ///保存
 -(void)rightClick{
-    NSLog(@"公司名字>>>>%@",_companyName);
-    NSLog(@"公司电话>>>>>%@",_phoneNum);
-    NSLog(@"备用联系>>>>>%@",_otherPhone);
-    NSLog(@"注册类型>>>%@>>>%@",_registName,_registCode);
-    NSLog(@"用户类型>>>%@>>>%@",_userName,_userCode);
-    NSLog(@"主营类型>>>%@>>>%@>>>%@",_className,_classCode,_classCodeArr);
-    NSLog(@"地区name>>%@>>>>地区code%@",_addressName,_addressCode);
-   
+//    NSLog(@"公司名字>>>>%@",_companyName);
+//    NSLog(@"公司电话>>>>>%@",_phoneNum);
+//    NSLog(@"备用联系>>>>>%@",_otherPhone);
+//    NSLog(@"注册类型>>>%@>>>%@",_registName,_registCode);
+//    NSLog(@"用户类型>>>%@>>>%@",_userName,_userCode);
+//    NSLog(@"主营类型>>>%@>>>%@>>>%@",_className,_classCode,_classCodeArr);
+//    NSLog(@"地区name>>%@>>>>地区code%@",_addressName,_addressCode);
+    
+    /*
+     1.[self stingText:xxx  UserInfoBaseClassModel:xxx];
+     判断定义的变量是否有值,如果有就取变量值,如果没有就取model值
+     2.[ToolClass  registTyple:xxx];
+     是把model中对应的汉字转换为code编码给后台上传
+     */
+    
+    //把第一个主营业务添加到 数组中
+    [_classCodeArr insertObject:_classCode atIndex:0];
+    
+    
+    NSString * str1 =[self stingText:_companyName UserInfoBaseClassModel:_model.companyName];
+    NSString * str2 =[self stingText:_phoneNum UserInfoBaseClassModel:_model.companyPhone];
+    NSString * str3 =[self stingText:_otherPhone UserInfoBaseClassModel:_model.mobile];
+    NSString * str4 =[self stingText:_registName UserInfoBaseClassModel:[ToolClass registTyple:_model.regType]];
+    NSString * str5 =[self stingText:_userName UserInfoBaseClassModel:[ToolClass registTyple:_model.memberType]];
+    NSArray * arr6 = _classCodeArr.count?_classCodeArr:_model.categorys;
+    NSString * str7 =[self stingText:_imageStr UserInfoBaseClassModel:_model.headImg];
     NSMutableDictionary * dic =[NSMutableDictionary new];
-    [dic setObject:[ToolClass isString:_companyName] forKey:@"company_name"];
-    [dic setObject:[ToolClass isString:_phoneNum] forKey:@"company_phone"];
-    [dic setObject:[ToolClass isString:_otherPhone] forKey:@"mobile"];
-    [dic setObject:[ToolClass isString:_registCode] forKey:@"reg_type"];
-    [dic setObject:[ToolClass isString:_imageStr] forKey:@"head_img"];
+    [dic setObject:str1 forKey:@"company_name"];
+    [dic setObject:str2 forKey:@"company_phone"];
+    [dic setObject:str3 forKey:@"mobile"];
+    [dic setObject:str4 forKey:@"reg_type"];
+    [dic setObject:str7 forKey:@"head_img"];
     [dic setObject:[ToolClass isString:_addressCode] forKey:@"area_code"];
-    [dic setObject:[ToolClass isString:_userCode] forKey:@"member_type"];
-    [dic setObject:_classCodeArr forKey:@"categorys"];
+    [dic setObject:str5 forKey:@"member_type"];
+    [dic setObject:arr6 forKey:@"categorys"];
     [self getVipMessageDic:dic];
     
 }
@@ -458,7 +494,15 @@ static int MaxMainNum =10;
         }
       
     }
-   
+   /*
+    "667700020002",
+    "667700020002",
+    "6677000100010001",
+    "6677000100020002",-
+    "6677000300040003",
+    "667700020003"  -
+    
+    */
     [self.baseTableView reloadData];
 }
 #pragma mark --------TextFieldDelegate--------------
@@ -475,5 +519,17 @@ static int MaxMainNum =10;
         _otherPhone=[ToolClass isString:textField.text];
     }
 }
+
+-(NSString*)stingText:(NSString*)str UserInfoBaseClassModel:(NSString*)modelStr{
+    
+    if ([[ToolClass isString:str] isEqualToString:@""]) {
+        return modelStr;
+    }else{
+        return str;
+    }
+}
+
+
+
 
 @end

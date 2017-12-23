@@ -144,6 +144,7 @@ static CGFloat  _labelHeight =30;
                 [self RowFrameHeight:_itemWH];
             }
             [_collectionView reloadData];
+            self.photosArrBlock(photos);
         }];
         [_delegate presentViewController:imagePickerVc animated:YES completion:nil];
     }
@@ -181,17 +182,32 @@ static CGFloat  _labelHeight =30;
 
 #pragma mark -----删除按钮
 - (void)deleteBtnClik:(UIButton* )sender {
-    [_selectedPhotos removeObjectAtIndex:sender.tag];
-    [_selectedAssets removeObjectAtIndex:sender.tag];
-    [_collectionView performBatchUpdates:^{
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag+1 inSection:0];
-        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    
+    [UIView animateWithDuration:1 animations:^{
+        [_selectedPhotos removeObjectAtIndex:sender.tag];
+        [_selectedAssets removeObjectAtIndex:sender.tag];
     } completion:^(BOOL finished) {
         if (_selectedPhotos.count<_rowNum) {
-              [self RowFrameHeight:_itemWH];
+            [self RowFrameHeight:_itemWH];
         }
         [_collectionView reloadData];
     }];
+    
+     self.photosArrBlock(_selectedPhotos);
+  
+    
+    
+    
+    
+//    [_collectionView performBatchUpdates:^{
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
+//        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
+//    } completion:^(BOOL finished) {
+//        if (_selectedPhotos.count<_rowNum) {
+//              [self RowFrameHeight:_itemWH];
+//        }
+//        [_collectionView reloadData];
+//    }];
 }
 
 #pragma mark ----相册中取消按钮

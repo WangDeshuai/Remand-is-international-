@@ -92,7 +92,6 @@ static const CGFloat ratio =0.66;
     UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];
     headBtn.backgroundColor=[UIColor yellowColor];
     [headBtn addTarget:self action:@selector(headBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:_model.headImg] forState:0 placeholderImage:[UIImage imageNamed:@"placeholder_head"]];
     [headBtn setBackgroundImage:[UIImage imageNamed:@"placeholder_head"] forState:0];
     headBtn.sd_cornerRadius=@(40);
     [headerView sd_addSubviews:@[headBtn]];
@@ -288,6 +287,7 @@ static const CGFloat ratio =0.66;
     }else{
         BasicInforMationVC * vc=[BasicInforMationVC new];
         vc.hidesBottomBarWhenPushed=YES;
+        vc.model=_model;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
