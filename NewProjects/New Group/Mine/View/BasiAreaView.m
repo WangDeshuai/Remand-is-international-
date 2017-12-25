@@ -24,7 +24,7 @@
 @implementation BasiAreaView
 static  NSString * Keyword_Arr =@"areas";
 static  NSString * KeyWord_Name =@"area_name";
-static  NSString * KeyWord_Code =@"area_code";
+static  NSString * KeyWord_Code =@"zid";
 -(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename  AndDataArr:(NSMutableArray*)dataArr{
     self=[super initWithFrame:frame];
     if (self) {
@@ -37,7 +37,7 @@ static  NSString * KeyWord_Code =@"area_code";
         _codeText=@"";
         //1.从省中取出市的数组进行判断
         NSDictionary * dic =_provincesArr[0];
-        NSArray * arr =[dic objectForKey:@"areas"];//城市的数组
+        NSArray * arr =[dic objectForKey:Keyword_Arr];//城市的数组
         //2.如果数组=0,说明没有市,tableView只有1个
         if (arr.count==0) {
             //只有1层
@@ -45,7 +45,7 @@ static  NSString * KeyWord_Code =@"area_code";
         }else{
             //3.如果数组有值,说明有城市,从城市中在取出 县的数组
             NSDictionary * dic2 =arr[0];
-            NSArray * arr2 =[dic2 objectForKey:@"areas"];//县的数组
+            NSArray * arr2 =[dic2 objectForKey:Keyword_Arr];//县的数组
             //4.如果县的数组个数=0 说明没有县城,tableView只有2个
             if (arr2.count==0) {
                 //只有2层,改变宽度
@@ -170,19 +170,19 @@ static  NSString * KeyWord_Code =@"area_code";
     
     if (_leftTableView==tableView) {
         NSDictionary * proDic =_provincesArr[indexPath.row];
-        cell.name=[proDic objectForKey:@"area_name"];
+        cell.name=[proDic objectForKey:KeyWord_Name];
         if (_width!=ScreenWidth) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
     }else if (_centerTableView==tableView){
         NSDictionary * cityDic =_cityArr[indexPath.row];
-        cell.name=[cityDic objectForKey:@"area_name"];
+        cell.name=[cityDic objectForKey:KeyWord_Name];
         if (_width!=ScreenWidth/2) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
     }else{
         NSDictionary * xianDic =_xianArr[indexPath.row];
-        cell.name= [xianDic objectForKey:@"area_name"];
+        cell.name= [xianDic objectForKey:KeyWord_Name];
     }
     
     
@@ -208,33 +208,33 @@ static  NSString * KeyWord_Code =@"area_code";
         [_rightTableView removeFromSuperview];
         [self CreatCenterTableView];
         NSDictionary * proDic =_provincesArr[indexPath.row];
-        NSArray * cityArr =[proDic objectForKey:@"areas"];
+        NSArray * cityArr =[proDic objectForKey:Keyword_Arr];
         [_cityArr removeAllObjects];
         [_xianArr removeAllObjects];
         [_cityArr addObjectsFromArray:cityArr];
         if (_width==ScreenWidth) {
             NSLog(@"name=%@>>>code=%@",[proDic objectForKey:@"area_name"],[proDic objectForKey:@"area_code"]);
-            _nameText=[proDic objectForKey:@"area_name"];
-            _codeText=[proDic objectForKey:@"area_code"];
+            _nameText=[proDic objectForKey:KeyWord_Name];
+            _codeText=[proDic objectForKey:KeyWord_Code];
         }
         
     }else if (_centerTableView==tableView){
         [_rightTableView removeFromSuperview];
         [self CreatRightTableView];
         NSDictionary * xianDic =_cityArr[indexPath.row];
-        NSArray * cityArr =[xianDic objectForKey:@"areas"];
+        NSArray * cityArr =[xianDic objectForKey:Keyword_Arr];
         [_xianArr removeAllObjects];
         [_xianArr addObjectsFromArray:cityArr];
         if (_width==ScreenWidth/2) {
             NSLog(@"name=%@>>>code=%@",[xianDic objectForKey:@"area_name"],[xianDic objectForKey:@"area_name"]);
-            _nameText=[xianDic objectForKey:@"area_name"];
-            _codeText=[xianDic objectForKey:@"area_code"];
+            _nameText=[xianDic objectForKey:KeyWord_Name];
+            _codeText=[xianDic objectForKey:KeyWord_Code];
         }
     }else{
         NSDictionary * xianDic =_xianArr[indexPath.row];
         NSLog(@"name>>>%@>>>code%@",[xianDic objectForKey:@"area_name"],[xianDic objectForKey:@"area_code"]);
-        _nameText=[xianDic objectForKey:@"area_name"];
-        _codeText=[xianDic objectForKey:@"area_code"];
+        _nameText=[xianDic objectForKey:KeyWord_Name];
+        _codeText=[xianDic objectForKey:KeyWord_Code];
     }
 }
 

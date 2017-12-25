@@ -71,6 +71,15 @@
     .rightSpaceToView(self.contentView, 15)
     .heightIs(20);
 }
+
+-(void)setModel:(MyPrivilegeList *)model
+{
+    _model=model;
+    
+    _timeLable.text=model.time;
+    _titleLabel.text=model.productName;
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

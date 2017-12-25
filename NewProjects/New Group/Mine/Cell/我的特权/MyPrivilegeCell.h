@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyPrivilegeList.h"
 @interface MyPrivilegeCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
+@property (nonatomic,strong)MyPrivilegeList * model;
 @end

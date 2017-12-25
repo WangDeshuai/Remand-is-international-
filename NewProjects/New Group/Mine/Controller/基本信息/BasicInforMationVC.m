@@ -95,13 +95,14 @@ static int MaxMainNum =10;
     [_classNameArr addObjectsFromArray:class];
     
     if (_model.categorys.count>=1) {
-        _className=_model.categorys[0];//更换成名字(用来显示)
+        _className=_model.categoryNames[0];//更换成名字(用来显示)
         _classCode=_model.categorys[0];
         for (int i=0; i<_model.categorys.count-1; i++) {
-            NSString * str =_model.categorys[i+1];
+            NSString * strName=_model.categoryNames[i+1];
+            NSString * strCode =_model.categorys[i+1];
             [_nameArray insertObject:[NSString stringWithFormat:@"主营%d",i+1] atIndex:_nameArray.count-2];
-            [_classCodeArr addObject:str];
-            [_classNameArr insertObject:str atIndex:_classNameArr.count];//更换成名字(用来显示)
+            [_classCodeArr addObject:strCode];
+            [_classNameArr insertObject:strName atIndex:_classNameArr.count];//更换成名字(用来显示)
             [_imageArr insertObject:@"information_8" atIndex:_nameArray.count-2];
         }
     }
@@ -320,7 +321,7 @@ static int MaxMainNum =10;
             [LCProgressHUD showMessage:Message_Success];
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            [LCProgressHUD showFailure:[dic objectForKey:@"resultMessage"]];
+            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
         }
         
     } failedBlock:^(id error) {

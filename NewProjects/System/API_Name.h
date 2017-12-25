@@ -44,6 +44,11 @@ static NSString *VIPApi_Modification =@"com_zft_zaisubaos_api_ApiMemberUpdateEn"
 static NSString *VIPApi_Changepassword =@"com_zft_zaisubaos_api_ApiModifyPwdAppEn";
 ///会员找回密码
 static NSString *VIPApi_Retrievepassword =@"com_zft_zaisubaos_api_ApiFindPwdAppEn";
+///查询用户发布的信息
+static NSString * UserApi_PublicMessage=@"com_zft_zaisubaos_api_ApiQryReleaseAppEn";
+///查询我的特权和消费记录页
+static NSString * PrivilegeApi_MyPrivilege=@"com_zft_zaisubaos_api_ApiQryMyPrivilegeAppEn";
+
 
 #pragma mark ------首页接口
 ///首页顶部广告
@@ -63,5 +68,9 @@ static NSString * FirstApi_Privilege=@"com_zft_zaisubaos_api_ApiGetUserAndTqAppE
 ///首页详情页查看联系方式
 static NSString * FirstApi_Phone=@"com_zft_zaisubaos_api_ApiProductTelInfoAppEn";
 ///
+
+
+#pragma mark ------发布信息接口
+
 
 #endif /* API_Name_h */

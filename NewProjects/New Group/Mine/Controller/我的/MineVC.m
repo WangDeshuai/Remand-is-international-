@@ -187,6 +187,7 @@ static const CGFloat ratio =0.66;
     MineCell * cell =[MineCell cellWithTableView:tableView IndexPath:indexPath];
     cell.namelabel.text=_dataArray[indexPath.section][indexPath.row];
     [cell.leftImage setImage:[UIImage imageNamed:_imageArray[indexPath.section][indexPath.row]] forState:0];
+    
     return cell;
 }
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

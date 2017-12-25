@@ -72,6 +72,8 @@
 		966632681FE500C60096ACB7 /* PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 966632671FE500C60096ACB7 /* PhotoView.m */; };
 		9666326D1FE5010C0096ACB7 /* TZTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 966632691FE5010B0096ACB7 /* TZTestCell.m */; };
 		96709ED31FE9FB8D00E65BE6 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96709ED21FE9FB8900E65BE6 /* AddressView.m */; };
+		9672A5791FF09F1000574E26 /* MyPrivilegeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9672A5771FF09F0F00574E26 /* MyPrivilegeList.m */; };
+		9672A57C1FF0EB1000574E26 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9672A57B1FF0EB1000574E26 /* UserInfoBaseClass.m */; };
 		9674BA651FDE210C00865E74 /* PurchaseDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA641FDE210C00865E74 /* PurchaseDetailsVC.m */; };
 		9674BA691FDE219400865E74 /* PurchaseDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA681FDE219400865E74 /* PurchaseDetailsCell.m */; };
 		9674BA6D1FDE2D9E00865E74 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA6C1FDE2D9E00865E74 /* LoginVC.m */; };
@@ -83,7 +85,6 @@
 		96862CC41FE363E600A5C11F /* ParticularVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96862CC31FE363E600A5C11F /* ParticularVC.m */; };
 		96862CCA1FE3732600A5C11F /* HomeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96862CC71FE3732600A5C11F /* HomeViewModel.m */; };
 		96862CCB1FE3732600A5C11F /* HomeViewList.m in Sources */ = {isa = PBXBuildFile; fileRef = 96862CC81FE3732600A5C11F /* HomeViewList.m */; };
-		969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */; };
 		969008AB1FE2639000C05DA6 /* BasiInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969008AA1FE2639000C05DA6 /* BasiInfoView.m */; };
 		9695A1221FE2102C0083A625 /* LoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695A1211FE2102C0083A625 /* LoginModel.m */; };
 		969B93D71FEBAA2600B7117B /* BasiAreaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 969B93D61FEBAA2500B7117B /* BasiAreaView.m */; };
@@ -329,6 +330,10 @@
 		9666326B1FE5010C0096ACB7 /* TZTestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZTestCell.h; sourceTree = "<group>"; };
 		96709ED11FE9FB8900E65BE6 /* AddressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressView.h; sourceTree = "<group>"; };
 		96709ED21FE9FB8900E65BE6 /* AddressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressView.m; sourceTree = "<group>"; };
+		9672A5771FF09F0F00574E26 /* MyPrivilegeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPrivilegeList.m; sourceTree = "<group>"; };
+		9672A5781FF09F0F00574E26 /* MyPrivilegeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPrivilegeList.h; sourceTree = "<group>"; };
+		9672A57A1FF0EB1000574E26 /* UserInfoBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoBaseClass.h; sourceTree = "<group>"; };
+		9672A57B1FF0EB1000574E26 /* UserInfoBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoBaseClass.m; sourceTree = "<group>"; };
 		9674BA631FDE210C00865E74 /* PurchaseDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PurchaseDetailsVC.h; sourceTree = "<group>"; };
 		9674BA641FDE210C00865E74 /* PurchaseDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PurchaseDetailsVC.m; sourceTree = "<group>"; };
 		9674BA671FDE219400865E74 /* PurchaseDetailsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PurchaseDetailsCell.h; sourceTree = "<group>"; };
@@ -351,8 +356,6 @@
 		96862CC71FE3732600A5C11F /* HomeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewModel.m; sourceTree = "<group>"; };
 		96862CC81FE3732600A5C11F /* HomeViewList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewList.m; sourceTree = "<group>"; };
 		96862CC91FE3732600A5C11F /* HomeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewModel.h; sourceTree = "<group>"; };
-		969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoBaseClass.m; sourceTree = "<group>"; };
-		969008A61FE2502400C05DA6 /* UserInfoBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoBaseClass.h; sourceTree = "<group>"; };
 		969008A91FE2639000C05DA6 /* BasiInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BasiInfoView.h; sourceTree = "<group>"; };
 		969008AA1FE2639000C05DA6 /* BasiInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BasiInfoView.m; sourceTree = "<group>"; };
 		9695A1201FE2102C0083A625 /* LoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginModel.h; sourceTree = "<group>"; };
@@ -975,8 +978,10 @@
 		9695A1241FE22B530083A625 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				969008A61FE2502400C05DA6 /* UserInfoBaseClass.h */,
-				969008A51FE2502400C05DA6 /* UserInfoBaseClass.m */,
+				9672A5781FF09F0F00574E26 /* MyPrivilegeList.h */,
+				9672A5771FF09F0F00574E26 /* MyPrivilegeList.m */,
+				9672A57A1FF0EB1000574E26 /* UserInfoBaseClass.h */,
+				9672A57B1FF0EB1000574E26 /* UserInfoBaseClass.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1754,7 +1759,6 @@
 				96C91E551FD9261900DF0CE3 /* MJRefreshGifHeader.m in Sources */,
 				9666325C1FE4FC9D0096ACB7 /* TZImageManager.m in Sources */,
 				04ED7B351FDC0AF100424718 /* UIImage+WebP.m in Sources */,
-				969008A71FE2502400C05DA6 /* UserInfoBaseClass.m in Sources */,
 				96C91E5A1FD9261900DF0CE3 /* NSBundle+MJRefresh.m in Sources */,
 				96B00DD51FDFAFA0000EB2D2 /* ViewRecordMainVC.m in Sources */,
 				9666326D1FE5010C0096ACB7 /* TZTestCell.m in Sources */,
@@ -1811,6 +1815,7 @@
 				04ED7B331FDC0AF100424718 /* UIImage+GIF.m in Sources */,
 				966632651FE4FC9D0096ACB7 /* UIView+Layout.m in Sources */,
 				96127BC61FDBD4D00040B21D /* TAAnimatedDotView.m in Sources */,
+				9672A5791FF09F1000574E26 /* MyPrivilegeList.m in Sources */,
 				044F8C441FE669D200C3D8E0 /* ForgotCell.m in Sources */,
 				96B00DC41FDF6D7B000EB2D2 /* ChildPublishVC.m in Sources */,
 				966632571FE4FC9D0096ACB7 /* NSBundle+TZImagePicker.m in Sources */,
@@ -1854,6 +1859,7 @@
 				04ED7B321FDC0AF100424718 /* UIButton+WebCache.m in Sources */,
 				04ED7B371FDC0AF100424718 /* UIImageView+WebCache.m in Sources */,
 				966632601FE4FC9D0096ACB7 /* TZPhotoPickerController.m in Sources */,
+				9672A57C1FF0EB1000574E26 /* UserInfoBaseClass.m in Sources */,
 				96C91E031FD8F22C00DF0CE3 /* AFURLSessionManager.m in Sources */,
 				96DAE23D1FECDCA400A82B58 /* ZJSelectPhotoTool.m in Sources */,
 				9674BA6D1FDE2D9E00865E74 /* LoginVC.m in Sources */,

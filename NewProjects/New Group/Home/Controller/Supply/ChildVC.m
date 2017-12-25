@@ -91,14 +91,14 @@
 }
 
 -(void)mjHeaderRefresh{
-    NSLog(@">>>>%@",_sortType);
+//    NSLog(@">>>>%@",_sortType);
   
     self.current=1;
     [self getWangLuoJiekouDicInt:self.current];
 }
 -(void)mjFooterRefresh
 {
-    [self getWangLuoJiekouDicInt:self.current++];
+    [self getWangLuoJiekouDicInt:++self.current];
 }
 
 #pragma mark ---代理  tableViewDataSource  tableViewDelegate
@@ -144,7 +144,8 @@
 
 #pragma mark --获取网络接口
 -(void)getWangLuoJiekouDicInt:(NSInteger )page {
-    //
+   
+    
     NSDictionary *dic1 = @{@"keyWord":_keyWord,@"pageNo":[NSString stringWithFormat:@"%ld",(long)page],@"datatype":_dataType,@"sortType":_sortType};
     
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic1 callback:^(id item) {

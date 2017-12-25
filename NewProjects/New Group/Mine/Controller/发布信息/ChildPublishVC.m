@@ -8,8 +8,7 @@
 
 #import "ChildPublishVC.h"
 #import "ChildPublishCell.h"
-@interface ChildPublishVC ()<UITableViewDelegate,UITableViewDataSource>
-@property(nonatomic,strong)UITableView * tableView;
+@interface ChildPublishVC ()
 @end
 
 @implementation ChildPublishVC
@@ -22,17 +21,23 @@
 }
 #pragma mark --控件创建---------
 -(void)CreatTableView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64-44) style:UITableViewStylePlain];
-    tableView.dataSource=self;
-    tableView.delegate=self;
-    _tableView=tableView;
-    tableView.rowHeight=160;
-    tableView.tableFooterView=[UIView new];
-    tableView.backgroundColor=BG_COLOR;
-    [self.view addSubview:tableView];
-    
+    self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-64-44);
+   
+    self.baseTableView.rowHeight=160;
+    self.baseTableView.tableFooterView=[UIView new];
+    self.baseTableView.backgroundColor=BG_COLOR;
+    [self.view addSubview:self.baseTableView];
+    [self.baseTableView.mj_header beginRefreshing];
+}
+-(void)mjHeaderRefresh
+{
+    [self getPublicMessage:1];
 }
 
+-(void)mjFooterRefresh
+{
+    
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 10;
@@ -44,7 +49,7 @@
     //
     [self tableViewCell:cell IndexPath:indexPath];
     //实现cell高度缓存
-   [_tableView useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
+   [self.baseTableView useCellFrameCacheWithIndexPath:indexPath tableView:tableView];
    
     return cell;
 }
@@ -73,12 +78,21 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [_tableView cellHeightForIndexPath:indexPath cellContentViewWidth:[ToolClass cellContentViewWith] tableView:tableView];
+    return 160;//[self.baseTableView cellHeightForIndexPath:indexPath cellContentViewWidth:[ToolClass cellContentViewWith] tableView:tableView];
 }
 
 
 
-
+#pragma mark ----网络请求类-------
+-(void)getPublicMessage:(int)page{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:UserApi_PublicMessage withParame:@{@"page":[NSString stringWithFormat:@"%d",page],@"auditStatus":@"0"} callback:^(id item) {
+        
+    } failedBlock:^(id error) {
+        
+    }];
+    
+    
+}
 
 
 
@@ -102,7 +116,7 @@
     if (_type==0) {
         //第一个界面的撤销
         //1.找到对应的cell
-        ChildPublishCell * cell =[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:btn.tag inSection:0]];
+        ChildPublishCell * cell =[self.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:btn.tag inSection:0]];
         //2.隐藏undo按钮
         cell.undoBtn.hidden=YES;
         //3.修改editbtn的背景颜色

@@ -8,11 +8,14 @@
 
 #import "MyPrivilegeVC.h"
 #import "MyPrivilegeCell.h"
+#import "MyPrivilegeList.h"
 @interface MyPrivilegeVC ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong) UIImageView * imageview;
-@property(nonatomic,strong)UITableView * tableView;
 @property(nonatomic,strong)UIButton * lastBtn;
 @property(nonatomic,assign) CGRect  imageRect;
+@property(nonatomic,strong)UILabel  *timesLabel;
+@property(nonatomic,strong)NSMutableArray * dataArray;
+@property(nonatomic,assign)NSInteger tag;
 @end
 
 @implementation MyPrivilegeVC
@@ -29,6 +32,8 @@ static const CGFloat ratio =0.66;
     // Do any additional setup after loading the view.
      self.automaticallyAdjustsScrollViewInsets=NO;
     self.title=@"My privilege";
+    _dataArray=[NSMutableArray new];
+    _tag=1;
     [self CreatBgImageView];
     [self CreatTableView];
 }
@@ -48,20 +53,27 @@ static const CGFloat ratio =0.66;
     headerView.frame=CGRectMake(0, 0, ScreenWidth, headHeight+10);
     headerView.userInteractionEnabled=YES;
     //头像
-    UIButton * headBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-    headBtn.backgroundColor=[UIColor yellowColor];
-//    [headBtn addTarget:self action:@selector(headBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [headBtn sd_setBackgroundImageWithURL:[NSURL URLWithString:@""] forState:0 placeholderImage:[UIImage imageNamed:@"mine_head"]];
-    headBtn.sd_cornerRadius=@(40);
-    [headerView sd_addSubviews:@[headBtn]];
-    headBtn.sd_layout
+    UILabel * timelabel =[UILabel new];
+    timelabel.backgroundColor=[UIColor whiteColor];
+    timelabel.text=0;
+    timelabel.textAlignment=1;
+    if (@available(iOS 8.2, *)) {
+        timelabel.font=[UIFont systemFontOfSize:18 weight:.3];
+    } else {
+        // Fallback on earlier versions
+    }
+    timelabel.textColor=Main_Color;
+    _timesLabel=timelabel;
+    timelabel.sd_cornerRadius=@(40);
+    [headerView sd_addSubviews:@[timelabel]];
+    timelabel.sd_layout
     .centerXEqualToView(headerView)
-    .topSpaceToView(headerView, 10+64)
+    .topSpaceToView(headerView, 20+Distance_Top)
     .widthIs(80)
     .heightIs(80);
     //名字
     UILabel * namelabel =[UILabel new];
-    namelabel.text=@"Alexandra";
+    namelabel.text=@"Remaining times";
     namelabel.textColor=[UIColor whiteColor];
     if (@available(iOS 8.2, *)) {
         namelabel.font=[UIFont systemFontOfSize:17 weight:.3];
@@ -69,54 +81,62 @@ static const CGFloat ratio =0.66;
     }
     [headerView sd_addSubviews:@[namelabel]];
     namelabel.sd_layout
-    .topSpaceToView(headBtn, 10)
-    .centerXEqualToView(headBtn)
+    .topSpaceToView(timelabel, 10)
+    .centerXEqualToView(timelabel)
     .heightIs(20);
     [namelabel setSingleLineAutoResizeWithMaxWidth:ScreenWidth];
 
     //副标题(名字下面label)
-    UILabel * namelabel2=[UILabel new];
-    namelabel2.text=@"Memvership level 3";
-    namelabel2.textColor=[[UIColor whiteColor]colorWithAlphaComponent:.5];
-    if (@available(iOS 8.2, *)) {
-        namelabel2.font=[UIFont systemFontOfSize:15 weight:.3];
-    } else {
-    }
+    UIButton * namelabel2=[UIButton buttonWithType:UIButtonTypeCustom];
+    namelabel2.titleLabel.font=[UIFont systemFontOfSize:15];
+    [namelabel2 setTitle:@"Buy privileges" forState:0];
+    namelabel2.layer.borderWidth=.5;
+    namelabel2.layer.borderColor=[UIColor whiteColor].CGColor;
+    namelabel2.sd_cornerRadius=@(25/2);
     [headerView sd_addSubviews:@[namelabel2]];
     namelabel2.sd_layout
     .topSpaceToView(namelabel, 5)
-    .centerXEqualToView(headBtn)
-    .heightIs(20);
-    [namelabel2 setSingleLineAutoResizeWithMaxWidth:ScreenWidth];
-//
+    .centerXEqualToView(timelabel)
+    .heightIs(25)
+    .widthIs(120);
+
     
     
     
     return headerView;
 }
 -(void)CreatTableView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight) style:UITableViewStylePlain];
     
-    _tableView=tableView;
-    tableView.dataSource=self;
-    tableView.delegate=self;
-    tableView.tableFooterView=[UIView new];
-    tableView.backgroundColor=[UIColor clearColor];
-    tableView.rowHeight=80;
-    tableView.sectionHeaderHeight=110;
-    tableView.tableHeaderView=[self CraetTableViewHeader];
-    [self.view addSubview:tableView];
-    
+    self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight);
+    self.baseTableView.tableFooterView=[UIView new];
+    self.baseTableView.backgroundColor=[UIColor clearColor];
+    self.baseTableView.rowHeight=80;
+    self.baseTableView.sectionHeaderHeight=110;
+    self.baseTableView.tableHeaderView=[self CraetTableViewHeader];
+    [self.view addSubview:self.baseTableView];
+    [self.baseTableView.mj_header beginRefreshing];
+}
+
+
+-(void)mjHeaderRefresh
+{
+    self.current=1;
+    [self getMyPrivilegePage:self.current];
+}
+-(void)mjFooterRefresh
+{
+    [self getMyPrivilegePage:++self.current];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _dataArray.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyPrivilegeCell * cell=[MyPrivilegeCell cellWithTableView:tableView IndexPath:indexPath];
+    cell.model=_dataArray[indexPath.row];
     return cell;
     
 }
@@ -188,11 +208,52 @@ static const CGFloat ratio =0.66;
     return bgview;
 }
 
-#pragma mark --按钮点击事件
+
+#pragma mark ---网络请求类
+-(void)getMyPrivilegePage:(NSInteger)page{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:PrivilegeApi_MyPrivilege withParame:@{@"page":[NSString stringWithFormat:@"%lu",page]} callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+            _timesLabel.text=[item objectForKey:@"tq"];
+            NSArray * listArr =[item objectForKey:@"list"];
+            if (self.current==1) {
+                self.dataArray=[NSMutableArray array];
+            }
+            for (NSDictionary * dic in listArr) {
+                [self.dataArray addObject:[MyPrivilegeList modelObjectWithDictionary:dic]];
+            }
+            [self.baseTableView reloadData];
+        }else{
+            self.current--;
+        }
+        [self.baseTableView.mj_header endRefreshing];
+        [self.baseTableView.mj_footer endRefreshing];
+    } failedBlock:^(id error) {
+         [self.baseTableView.mj_header endRefreshing];
+         [self.baseTableView.mj_footer endRefreshing];
+    }];
+}
+
+
+
+
+
+
+
+#pragma mark --------按钮点击事件--------
 -(void)btnClick:(UIButton*)btn{
     _lastBtn.selected=NO;
     btn.selected=YES;
     _lastBtn=btn;
+    _tag=btn.tag+1;
+    if (_tag==1) {
+        //左边
+          NSLog(@">>>%lu",self.current);
+    }else{
+        //右边
+    }
+  
+    
 }
 
 - (void)didReceiveMemoryWarning {
