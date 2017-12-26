@@ -158,7 +158,23 @@
     
 }
 
-
+-(void)setModel:(ChildPublishList *)model
+{
+    _model=model;
+    _titleLabel.text=model.productName;
+    _timeLable.text=model.expiryTime;
+    _weizhiLabel.text=model.address;
+    //4497003100040001:正在审核 4497003100040002:通过 4497003100040003:未通过
+    if ([model.isStatus isEqualToString:@"4497003100040001"]) {
+         _namelabel.hidden=YES;
+    }else if ([model.isStatus isEqualToString:@"4497003100040003"]){
+       
+        _namelabel.hidden=NO;
+        _editBtn.sd_layout.topSpaceToView(_namelabel, 10);
+    }else{
+        _namelabel.hidden=YES;
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

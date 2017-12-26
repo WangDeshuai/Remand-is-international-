@@ -32,6 +32,7 @@ static ZJPickerView *object = nil;
 
 + (void)showPickerViewWithNamesArray:(NSMutableArray *)names Block:(myBlock)block {
     
+   
     // 1. 判断当前Object是否为空, 如果为空就创建一个
     if ( object == nil) {
         @synchronized (self){ // 避免多个线程同时访问

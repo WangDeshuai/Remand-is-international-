@@ -8,7 +8,9 @@
 
 #import "ChildPublishVC.h"
 #import "ChildPublishCell.h"
+#import "ChildPublishList.h"
 @interface ChildPublishVC ()
+@property (nonatomic,strong)NSMutableArray * dataArray;
 @end
 
 @implementation ChildPublishVC
@@ -17,6 +19,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor=BG_COLOR;
+    _dataArray=[NSMutableArray array];
     [self CreatTableView];
 }
 #pragma mark --控件创建---------
@@ -31,16 +34,17 @@
 }
 -(void)mjHeaderRefresh
 {
-    [self getPublicMessage:1];
+    self.current=1;
+    [self getPublicMessage:self.current];
 }
 
 -(void)mjFooterRefresh
 {
-    
+   [self getPublicMessage:++self.current];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _dataArray.count;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -60,35 +64,56 @@
     cell.undoBtn.tag=indexPath.row;
      [cell.editBtn addTarget:self action:@selector(editBtnClick:) forControlEvents:UIControlEventTouchUpInside];
      [cell.undoBtn addTarget:self action:@selector(undoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if (_type==0) {
+    cell.model=_dataArray[indexPath.row];
+    if (_type==1) {
         //通过的
         cell.namelabel.hidden=YES;
+    
     }else{
         //审核中 未通过的
         [cell.undoBtn setTitle:@"Delete" forState:0];
-        if (indexPath.row==0|| indexPath.row==3) {
-            cell.namelabel.hidden=NO;
-            cell.editBtn.sd_layout.topSpaceToView(cell.namelabel, 15);
-        }else{
-            cell.namelabel.hidden=YES;
-            cell.editBtn.sd_layout.topSpaceToView(cell.namelabel, -15);
-        }
         
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 160;//[self.baseTableView cellHeightForIndexPath:indexPath cellContentViewWidth:[ToolClass cellContentViewWith] tableView:tableView];
+    
+    ChildPublishList * model =_dataArray[indexPath.row];
+    if ([model.isStatus isEqualToString:@"4497003100040003"]) {
+        return 180;
+    }else{
+       return  150;
+    }
+
 }
 
 
 
 #pragma mark ----网络请求类-------
--(void)getPublicMessage:(int)page{
-    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:UserApi_PublicMessage withParame:@{@"page":[NSString stringWithFormat:@"%d",page],@"auditStatus":@"0"} callback:^(id item) {
-        
+-(void)getPublicMessage:(NSInteger)page{
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:UserApi_PublicMessage withParame:@{@"page":[NSString stringWithFormat:@"%lu",page],@"auditStatus":[NSString stringWithFormat:@"%d",_type]} callback:^(id item) {
+        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
+        if ([code isEqualToString:@"1"]) {
+           
+            if (self.current==1) {
+                _dataArray=[NSMutableArray array];
+            }
+                NSArray * listArr =[item objectForKey:@"list"];
+                for (NSDictionary * dic in listArr) {
+                    [_dataArray addObject:[ChildPublishList modelObjectWithDictionary:dic]];
+                }
+           
+            
+             [self.baseTableView reloadData];
+        }else{
+            --self.current;
+            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
+        }
+         [self.baseTableView.mj_header endRefreshing];
+         [self.baseTableView.mj_footer endRefreshing];
     } failedBlock:^(id error) {
-        
+        [self.baseTableView.mj_header endRefreshing];
+        [self.baseTableView.mj_footer endRefreshing];
     }];
     
     

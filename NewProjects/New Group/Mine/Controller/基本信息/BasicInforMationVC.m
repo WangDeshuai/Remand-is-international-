@@ -101,11 +101,27 @@ static int MaxMainNum =10;
             NSString * strName=_model.categoryNames[i+1];
             NSString * strCode =_model.categorys[i+1];
             [_nameArray insertObject:[NSString stringWithFormat:@"主营%d",i+1] atIndex:_nameArray.count-2];
+            [_imageArr insertObject:@"information_8" atIndex:_imageArr.count-2];
             [_classCodeArr addObject:strCode];
             [_classNameArr insertObject:strName atIndex:_classNameArr.count];//更换成名字(用来显示)
-            [_imageArr insertObject:@"information_8" atIndex:_nameArray.count-2];
+
         }
     }
+    //以 空格 和 @"_" ,分割字符串
+    NSArray *addressNameArr = [_model.areaName componentsSeparatedByString:@"_"];
+    NSArray *addressCodeArr = [_model.areaCode componentsSeparatedByString:@"_"];
+//    NSLog(@">>>%@>>>%@",addressNameArr,addressCodeArr);
+   //国家name从地址数组中取出第一个
+    _countryStr=[addressNameArr firstObject];
+    //国家code从code数组中取出第一个
+    _countryCode=[addressCodeArr firstObject];
+    //地区名字
+    _addressName=_model.areaName;
+    _addressCode=[addressCodeArr lastObject];
+    
+    
+    
+    
 }
 
 -(UIView*)CreatTabelViewHeader{
@@ -210,8 +226,8 @@ static int MaxMainNum =10;
     }else if (indexPath.row==_nameArray.count-1){
         //地区
          cell.contentText.enabled=NO;
-        cell.contentText.text=_addressName;
-        cell.addBtn.hidden=YES;
+         cell.contentText.text=_addressName;
+         cell.addBtn.hidden=YES;
     }else {
         cell.addBtn.hidden=NO;
         cell.contentText.enabled=NO;
@@ -364,6 +380,9 @@ static int MaxMainNum =10;
         if (tag==1) {
             _countryStr=name;
             _countryCode=code;
+            //选择国家之后,要把地址一栏清空,防止出现国家和城市不统一
+            _addressName=@"";
+            _addressCode=@"";
         }
         [self.baseTableView reloadData];
     };
@@ -480,11 +499,16 @@ static int MaxMainNum =10;
         }
         /*
          增加数据:
-         _nameArray.count-10 :_nameArray原始个数是11,去掉10个,主营从1开始,以此类推,主营1,主营2...
-         _nameArray.count-2 : 因为最后2个是 国家和地区,所以从-2的位置插入数据
+        1.  _nameArray.count-10 :_nameArray原始个数是11,去掉10个,主营从1开始,以此类推,主营1,主营2...
+        2.  _nameArray.count-2 : 因为最后2个是 国家和地区,所以从-2的位置插入数据
+        3.  获取cell,是为了增加一行的时候,看看新增加的这一行是否有值,有值的话清空
          */
+       
+         BasicInforMationCell * cell =[self.baseTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_nameArray.count-2 inSection:0]];
         [_nameArray insertObject:[NSString stringWithFormat:@"主营%lu",_nameArray.count-10] atIndex:_nameArray.count-2];
         [_imageArr insertObject:@"information_8" atIndex:_imageArr.count-2];
+        
+        cell.contentText.text=@"";
     }else{
         //减掉
         [_nameArray removeObjectAtIndex:btn.tag];

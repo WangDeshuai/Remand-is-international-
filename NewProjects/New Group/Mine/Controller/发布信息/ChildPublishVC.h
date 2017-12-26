@@ -11,8 +11,8 @@
 @interface ChildPublishVC : BaseViewController
 
 /*
- type==0 -----APPROVED(审核通过)
- type==1 ------UNDER REVIEW(审核中未通过)
+ type==1 -----APPROVED(审核通过)
+ type==0 ------UNDER REVIEW(审核中未通过)
  */
 @property(nonatomic,assign)int type;
 

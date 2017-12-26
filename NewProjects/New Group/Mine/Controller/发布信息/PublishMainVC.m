@@ -61,7 +61,13 @@
     NSMutableArray *childArr=[NSMutableArray array];
     for (int i =0; i<titleArr.count; i++) {
         ChildPublishVC *oneVC = [[ChildPublishVC alloc] init];
-        oneVC.type=i;
+        if (i==0) {
+            //通过
+            oneVC.type=1;
+        }else{
+            //审核中
+            oneVC.type=0;
+        }
         [childArr addObject:oneVC];
     }
     

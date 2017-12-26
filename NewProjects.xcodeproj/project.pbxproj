@@ -74,6 +74,7 @@
 		96709ED31FE9FB8D00E65BE6 /* AddressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96709ED21FE9FB8900E65BE6 /* AddressView.m */; };
 		9672A5791FF09F1000574E26 /* MyPrivilegeList.m in Sources */ = {isa = PBXBuildFile; fileRef = 9672A5771FF09F0F00574E26 /* MyPrivilegeList.m */; };
 		9672A57C1FF0EB1000574E26 /* UserInfoBaseClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9672A57B1FF0EB1000574E26 /* UserInfoBaseClass.m */; };
+		96746C511FF21D7200805926 /* ChildPublishList.m in Sources */ = {isa = PBXBuildFile; fileRef = 96746C501FF21D7200805926 /* ChildPublishList.m */; };
 		9674BA651FDE210C00865E74 /* PurchaseDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA641FDE210C00865E74 /* PurchaseDetailsVC.m */; };
 		9674BA691FDE219400865E74 /* PurchaseDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA681FDE219400865E74 /* PurchaseDetailsCell.m */; };
 		9674BA6D1FDE2D9E00865E74 /* LoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9674BA6C1FDE2D9E00865E74 /* LoginVC.m */; };
@@ -334,6 +335,8 @@
 		9672A5781FF09F0F00574E26 /* MyPrivilegeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPrivilegeList.h; sourceTree = "<group>"; };
 		9672A57A1FF0EB1000574E26 /* UserInfoBaseClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoBaseClass.h; sourceTree = "<group>"; };
 		9672A57B1FF0EB1000574E26 /* UserInfoBaseClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoBaseClass.m; sourceTree = "<group>"; };
+		96746C4F1FF21D7100805926 /* ChildPublishList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildPublishList.h; sourceTree = "<group>"; };
+		96746C501FF21D7200805926 /* ChildPublishList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildPublishList.m; sourceTree = "<group>"; };
 		9674BA631FDE210C00865E74 /* PurchaseDetailsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PurchaseDetailsVC.h; sourceTree = "<group>"; };
 		9674BA641FDE210C00865E74 /* PurchaseDetailsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PurchaseDetailsVC.m; sourceTree = "<group>"; };
 		9674BA671FDE219400865E74 /* PurchaseDetailsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PurchaseDetailsCell.h; sourceTree = "<group>"; };
@@ -978,6 +981,8 @@
 		9695A1241FE22B530083A625 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				96746C4F1FF21D7100805926 /* ChildPublishList.h */,
+				96746C501FF21D7200805926 /* ChildPublishList.m */,
 				9672A5781FF09F0F00574E26 /* MyPrivilegeList.h */,
 				9672A5771FF09F0F00574E26 /* MyPrivilegeList.m */,
 				9672A57A1FF0EB1000574E26 /* UserInfoBaseClass.h */,
@@ -1788,6 +1793,7 @@
 				966632581FE4FC9D0096ACB7 /* TZAssetCell.m in Sources */,
 				04ED7B411FDC2F1A00424718 /* HomeCell.m in Sources */,
 				9674BA691FDE219400865E74 /* PurchaseDetailsCell.m in Sources */,
+				96746C511FF21D7200805926 /* ChildPublishList.m in Sources */,
 				96C91E5C1FD9261900DF0CE3 /* UIScrollView+MJRefresh.m in Sources */,
 				96C91DC31FD8F08400DF0CE3 /* HomeVC.m in Sources */,
 				96C91DB31FD8EF5100DF0CE3 /* MBProgressHUD.m in Sources */,

@@ -21,6 +21,9 @@ static ZJSelectPhotoTool *object = nil;
 
     object.isIcon = NO;
     
+    
+    
+    
     // 1. 判断当前对象是否为空
     if ( object == nil ) {
         

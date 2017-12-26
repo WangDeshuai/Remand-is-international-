@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ChildPublishList.h"
 @interface ChildPublishCell : UITableViewCell
 +(instancetype)cellWithTableView:(UITableView*)tableView IndexPath:(NSIndexPath *)indexPath;
 @property(nonatomic,strong)UIButton *editBtn;//编辑按钮
 @property(nonatomic,strong)UIButton * undoBtn;//撤销或者删除按钮
 @property(nonatomic,strong)UIButton * namelabel;//未通过提醒按钮
-
+@property (nonatomic,strong)ChildPublishList * model;
 @end

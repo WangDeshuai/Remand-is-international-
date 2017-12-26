@@ -37,7 +37,7 @@
     NSString * _proPrice;//商品价格
     NSString * _proInventory;//存货
     NSString * _proDecribe;//描述
-    NSMutableArray * phtopArray;
+    NSArray * _phtopArray;
   
 }
 @property(nonatomic,strong)NSArray * dataArray;
@@ -128,6 +128,7 @@ static int  heightView ;
     PhotoView * view =[[PhotoView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, 120) MaxPhoto:8 EachRowNumber:4];
     view.photosArrBlock=^(NSArray *photosArr){
         NSLog(@"照片>>>%@",photosArr);
+        _phtopArray=photosArr;
     };
     view.delegate=self;
     [footView addSubview:view];
@@ -302,15 +303,24 @@ static int  heightView ;
 
 #pragma mark ----发布按钮点击事件
 -(void)publicMessage{
-    NSLog(@"商品的名字>>>%@>>>>",_proName);
-    NSLog(@"商品分类>>%@ID=%@",_className,_classCode);
-    NSLog(@"商品价格>>%@",_proPrice);
-    NSLog(@"库存>>>%@",_proInventory);
-    NSLog(@"单位名称>>>%@>>>>code=%@",_proMone,_proMoneCode);
-    NSLog(@"描述>>>%@",_proDecribe);
-    NSLog(@"国家>>%@>>>code=%@",_countryName,_countryCode);
-    NSLog(@"地区>>>%@>>>code=%@",_addressName,_addressCode);
-    NSLog(@"失效时间>>>%@>>>code=%@",_timeName,_timeCode);
+//    NSLog(@"商品的名字>>>%@>>>>",_proName);
+//    NSLog(@"商品分类>>%@ID=%@",_className,_classCode);
+//    NSLog(@"商品价格>>%@",_proPrice);
+//    NSLog(@"库存>>>%@",_proInventory);
+//    NSLog(@"单位名称>>>%@>>>>code=%@",_proMone,_proMoneCode);
+//    NSLog(@"描述>>>%@",_proDecribe);
+//    NSLog(@"国家>>%@>>>code=%@",_countryName,_countryCode);
+//    NSLog(@"地区>>>%@>>>code=%@",_addressName,_addressCode);
+//    NSLog(@"失效时间>>>%@>>>code=%@",_timeName,_timeCode);
+    
+    [_phtopArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+    }];
+    [[Engine sharedEngine] requestUpdatePoto:_phtopArray photoStr:@"" urlStr:ImageApi_Name parameters:nil successBlock:^(NSString *urlStr) {
+        
+    } failedBlock:^(NSError *error) {
+        
+    }];
 }
 
 
