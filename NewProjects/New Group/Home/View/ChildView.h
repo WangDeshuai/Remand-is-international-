@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ChildView : UIView
--(id)initWithFrame:(CGRect)frame AndDataArr:(NSArray*)dataArr;
+-(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename AndDataArr:(NSArray*)dataArr;
 -(void)show;
 -(void)dissmiss;
 @end

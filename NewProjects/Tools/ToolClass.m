@@ -59,7 +59,7 @@
     [dic setObject:@"￥" forKey:@"4497003000020002"];
     [dic setObject:@"$" forKey:@"4497003000020003"];
     [dic setObject:@"€" forKey:@"4497003000020004"];
-    
+    [dic setObject:@"暂无" forKey:@""];
   return  [dic objectForKey:str];
 }
 

@@ -52,9 +52,14 @@
 
 
 -(void)CreatDataArr{
-    _leftNameArr=[[NSMutableArray alloc]initWithObjects:@"Notice number",@"Location",@"Inventory quantity",@"Price",@"Single package weight",@"Processing raw materials",@"Colour",@"Mesh",@"Density",@"Calcum content",@"Flammability", nil];
 
-   
+    _leftNameArr=[NSMutableArray array];
+    NSArray * leftArr =@[@"ProductCode",@"Price",@"ProductStock",@"StockUnits",@"ProductDescribe",@"ProductArea",@"ReleaseTime"];
+    
+    [_leftNameArr addObjectsFromArray:leftArr];
+    
+    //1.productCode 2.productArea  3.releaseTime  4.stockUnits 5.productDescribe
+    //6.productPriceWithoutTax 7.productStock
     /*
     1.编号 productCode 2.地址 productArea 3.存货重量productStock 4.价格productPriceWithoutTax
      5.重量singlePackWeight 6.处理原材料productMaterial 7.颜色productColour 8.网孔 meshNumberLook 9.密度 productDensityValue 10.钙calciumContent  11可燃性 combustion
@@ -190,17 +195,24 @@
         //内容
         
          _dataArray=[NSMutableArray array];;
+        //商品编号
         [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productCode]];
+        //价格
+        [_dataArray addObject:[NSString stringWithFormat:@"%.2f",_purchModel.productPriceWithoutTax]];
+        //存货量
+        [_dataArray addObject:[NSString stringWithFormat:@"%.2f ",_purchModel.productStock]];
+        //单位
+        [_dataArray addObject:[NSString stringWithFormat:@"%@",[ToolClass registTyple:_purchModel.stockUnits]]];
+        //描述
+        [_dataArray addObject:[NSString stringWithFormat:@"%@",[ToolClass isString:_purchModel.productDescribe]]];
+       //地址
         [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productArea]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%.2f tons",_purchModel.productStock]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%.2f dollars",_purchModel.productPriceWithoutTax]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%.2fkg per bag",_purchModel.singlePackWeight]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productMaterial]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productColour]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.meshNumberLook]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productDensityValue]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.calciumContent]];
-        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.combustion]];
+        //时间
+        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.releaseTime]];
+       
+//        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.productDensityValue]];
+//        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.calciumContent]];
+//        [_dataArray addObject:[NSString stringWithFormat:@"%@",_purchModel.combustion]];
         [self.baseTableView reloadData];
         [self.baseTableView.mj_header endRefreshing];
         [LCProgressHUD hide];
@@ -284,6 +296,11 @@
 }
 
 -(void)CreatAlertView:(NSString*)message Int:(int)tag{
+   
+    
+    if (_purchModel.book==1) {
+        [self ChanKanPhoneAddContent];
+    }else{
     UIAlertController * actionView =[UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:1];
     UIAlertAction * action1 =[UIAlertAction actionWithTitle:@"确认" style:0 handler:^(UIAlertAction * _Nonnull action) {
         if (tag==0) {
@@ -305,7 +322,7 @@
     [actionView addAction:action1];
     [self presentViewController:actionView animated:YES completion:nil];
     
-    
+    }
     
     
 }

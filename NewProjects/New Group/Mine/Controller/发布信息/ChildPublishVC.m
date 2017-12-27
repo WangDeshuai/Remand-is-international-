@@ -9,6 +9,8 @@
 #import "ChildPublishVC.h"
 #import "ChildPublishCell.h"
 #import "ChildPublishList.h"
+#import "ReleaseChildVC.h"
+#import "ReleaseModel.h"
 @interface ChildPublishVC ()
 @property (nonatomic,strong)NSMutableArray * dataArray;
 @end
@@ -25,11 +27,12 @@
 #pragma mark --控件创建---------
 -(void)CreatTableView{
     self.baseTableView.frame=CGRectMake(0, 0, ScreenWidth, ScreenHeight-64-44);
-   
     self.baseTableView.rowHeight=160;
     self.baseTableView.tableFooterView=[UIView new];
     self.baseTableView.backgroundColor=BG_COLOR;
+    self.baseTableView.clipsToBounds = YES;
     [self.view addSubview:self.baseTableView];
+    NSLog(@"%@",self.baseTableView);
     [self.baseTableView.mj_header beginRefreshing];
 }
 -(void)mjHeaderRefresh
@@ -64,7 +67,7 @@
     cell.undoBtn.tag=indexPath.row;
      [cell.editBtn addTarget:self action:@selector(editBtnClick:) forControlEvents:UIControlEventTouchUpInside];
      [cell.undoBtn addTarget:self action:@selector(undoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.model=_dataArray[indexPath.row];
+    cell.model=[ChildPublishList modelObjectWithDictionary:_dataArray[indexPath.row]];
     if (_type==1) {
         //通过的
         cell.namelabel.hidden=YES;
@@ -78,7 +81,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    ChildPublishList * model =_dataArray[indexPath.row];
+    ChildPublishList * model =  [ChildPublishList modelObjectWithDictionary:_dataArray[indexPath.row]];
     if ([model.isStatus isEqualToString:@"4497003100040003"]) {
         return 180;
     }else{
@@ -91,29 +94,28 @@
 
 #pragma mark ----网络请求类-------
 -(void)getPublicMessage:(NSInteger)page{
+    __weak typeof(self) weakSelf = self;
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:UserApi_PublicMessage withParame:@{@"page":[NSString stringWithFormat:@"%lu",page],@"auditStatus":[NSString stringWithFormat:@"%d",_type]} callback:^(id item) {
-        NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
-        if ([code isEqualToString:@"1"]) {
-           
+        [weakSelf.baseTableView.mj_header endRefreshing];
+        [weakSelf.baseTableView.mj_footer endRefreshing];
+        if ([item[@"resultCode"] integerValue] == 1) {
             if (self.current==1) {
-                _dataArray=[NSMutableArray array];
+                _dataArray=[NSMutableArray arrayWithArray:item[@"list"]];
+            }else
+            {
+                [_dataArray addObjectsFromArray:item[@"list"]];
             }
-                NSArray * listArr =[item objectForKey:@"list"];
-                for (NSDictionary * dic in listArr) {
-                    [_dataArray addObject:[ChildPublishList modelObjectWithDictionary:dic]];
-                }
-           
-            
-             [self.baseTableView reloadData];
+
         }else{
-            --self.current;
-            [LCProgressHUD showFailure:[item objectForKey:@"resultMessage"]];
+            self.current-=1;
+            [LCProgressHUD showFailure:item[@"resultMessage"]];
         }
-         [self.baseTableView.mj_header endRefreshing];
-         [self.baseTableView.mj_footer endRefreshing];
+        
+        
+        [self.baseTableView reloadData];
     } failedBlock:^(id error) {
-        [self.baseTableView.mj_header endRefreshing];
-        [self.baseTableView.mj_footer endRefreshing];
+        [weakSelf.baseTableView.mj_header endRefreshing];
+        [weakSelf.baseTableView.mj_footer endRefreshing];
     }];
     
     
@@ -127,7 +129,23 @@
 //    NSLog(@"点击了编辑>>type=%d---btn.tag=%lu",_type,(long)btn.tag);
     if (_type==0) {
         //第一个界面的编辑
-          NSLog(@"点击了第一个界面的编辑");
+          NSLog(@"点击了第一个界面的编辑%@",[btn superview]);
+        ChildPublishCell *cell = (ChildPublishCell *)[[btn superview] superview];
+        NSIndexPath *indexPath = [self.baseTableView indexPathForCell:cell];
+        NSDictionary *dataDic = self.dataArray[indexPath.row];
+        
+//        cell.del
+        [[Engine sharedEngine]BJPostWithUrl:Main_URL withAPIName:GetProductByUidAppEn withParame:@{@"uid":dataDic[@"uuid"]} callback:^(id item) {
+            if ([item[@"resultCode"] integerValue] == 1) {
+                ReleaseModel *model = [ReleaseModel modelObjectWithDictionary:item];  //数据模型转换
+                ReleaseChildVC *vc = [[ReleaseChildVC alloc]initWithModel:model]; //创建编辑页面
+                vc.title = @"编辑";
+                [self.navigationController pushViewController:vc animated:YES];     //跳转编辑页面
+            }else{
+                [LCProgressHUD showMessage:item[@"resultMessage"]];
+            }
+            NSLog(@"%@",item);
+        } failedBlock:nil];
     }else{
         //第二个界面的编辑
           NSLog(@"点击了第二个界面的编辑");

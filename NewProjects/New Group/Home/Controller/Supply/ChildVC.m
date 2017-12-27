@@ -134,11 +134,15 @@
 #pragma mark -----按钮点击事件
 //topBtnClick
 -(void)topBtnClinck:(UIButton*)btn{
-    int g=360;//view的高度
-    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
-    CGRect rect=[btn convertRect:btn.bounds toView:window];
-    [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:self.categoryData];
-   
+    if (btn.tag==0) {
+        [self getAllCountro:btn];
+    }else{
+        int g=360;//view的高度
+        UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+        CGRect rect=[btn convertRect:btn.bounds toView:window];
+        [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:self.categoryData Title:btn.titleLabel.text];
+    }
+    
 }
 
 
@@ -175,9 +179,32 @@
     }];
 }
 
+///获取国家
+-(void)getAllCountro:(UIButton*)btn{
+    [LCProgressHUD showLoading:Message_Loading];
+    [[Engine sharedEngine] getwithUrl:@"http://111.198.24.20:8603/areaEn" andParameter:nil withSuccessBlock:^(id item) {
+        NSArray * array =item;
+        NSMutableArray * nameArr=[NSMutableArray array];
+        for (NSDictionary * dicc in array) {
+            [nameArr addObject:[dicc objectForKey:@"country_name"]];
+        }
+         int g=360;//view的高度
+        UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+        CGRect rect=[btn convertRect:btn.bounds toView:window];
+         [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:nameArr Title:btn.titleLabel.text];;
+        
+        [LCProgressHUD hide];
+    } andFailBlock:^(NSError *error) {
+    } andprogressBlock:^(NSProgress *progress) {
+    }];
+}
 
--(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr{
-    ChildView * vc =[[ChildView alloc]initWithFrame:frame AndDataArr:arr];
+
+
+
+
+-(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr Title:(NSString*)title{
+    ChildView * vc =[[ChildView alloc]initWithFrame:frame TitleName:title AndDataArr:arr];
     [vc show];
 }
 

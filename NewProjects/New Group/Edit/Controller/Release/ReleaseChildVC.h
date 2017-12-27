@@ -8,7 +8,17 @@
 
 #import "BaseViewController.h"
 
+@class ReleaseModel;
+
 @interface ReleaseChildVC : BaseViewController
 
 @property(nonatomic,copy) NSString *productType;
+
+/**
+ 自定义初始化
+
+ @param mode 编辑的数据源
+ @return 类
+ */
+- (id)initWithModel:(ReleaseModel *)mode;
 @end

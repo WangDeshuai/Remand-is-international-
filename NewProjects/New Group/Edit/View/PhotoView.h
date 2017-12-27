@@ -14,4 +14,6 @@
 -(id)initWithFrame:(CGRect)frame MaxPhoto:(NSInteger)maxPhoto EachRowNumber:(NSInteger)number;
 @property(nonatomic,strong) id delegate;
 @property (nonatomic,copy)void(^photosArrBlock)(NSArray * photosArr);
+@property(nonatomic,strong)NSMutableArray *selectedPhotos;
+//@property(nonatomic,strong)NSMutableArray *selectedPhotosURL;
 @end

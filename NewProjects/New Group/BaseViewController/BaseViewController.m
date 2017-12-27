@@ -96,11 +96,11 @@
 //下拉刷新触发
 - (void)mjHeaderRefresh
 {
-    
+//      self.myRefreshView =self.baseTableView.mj_header;
 }
 //上拉加载更多
 - (void)mjFooterRefresh
 {
-    
+//      self.myRefreshView =self.baseTableView.mj_footer;
 }
 @end

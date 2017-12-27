@@ -67,10 +67,11 @@ static NSString * FirstApi_Particulars=@"com_zft_zaisubaos_api_ApiProductInfoApp
 static NSString * FirstApi_Privilege=@"com_zft_zaisubaos_api_ApiGetUserAndTqAppEn";
 ///首页详情页查看联系方式
 static NSString * FirstApi_Phone=@"com_zft_zaisubaos_api_ApiProductTelInfoAppEn";
-///
 
+///根据uid查询货品信息(修改接口用)
+static NSString  *GetProductByUidAppEn= @"com_zft_zaisubaos_api_ApiGetProductByUidAppEn";
 
 #pragma mark ------发布信息接口
-
-
+///国际站发布和修改货品接口
+static NSString * UserProductAddOrEditAppEn = @"com_zft_zaisubaos_api_ApiUserProductAddOrEditAppEn";
 #endif /* API_Name_h */

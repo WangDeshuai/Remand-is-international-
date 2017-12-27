@@ -40,9 +40,9 @@
     _namelabel.sd_layout
     .leftSpaceToView(self.contentView, 15)
     .centerYEqualToView(self.contentView)
-    .widthIs(200)
+   
     .heightIs(20);
-//    [_namelabel setSingleLineAutoResizeWithMaxWidth:200];
+    [_namelabel setSingleLineAutoResizeWithMaxWidth:200];
     
     
     _contentlabel=[UILabel new];

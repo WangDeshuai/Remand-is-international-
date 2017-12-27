@@ -15,10 +15,11 @@
 @property(nonatomic,strong)NSArray * dataArray;//数据源
 @property(nonatomic,strong)UIButton * titleBtn;
 @property(nonatomic,strong)UIView * lineView;
+@property (nonatomic,copy)NSString * title;
 @end
 @implementation ChildView
 
--(id)initWithFrame:(CGRect)frame AndDataArr:(NSArray*)dataArr{
+-(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename AndDataArr:(NSArray*)dataArr{
     self=[super initWithFrame:frame];
     if (self) {
         self.backgroundColor=[UIColor whiteColor];
@@ -26,6 +27,7 @@
         self.clipsToBounds=YES;
         self.layer.borderColor=Main_Color.CGColor;
         self.layer.borderWidth=1;
+        _title=titlename;
         _dataArray=dataArr;
         _WIDTH_X=frame.size.width;
         _HEIGHT_Y=frame.size.height;
@@ -42,7 +44,7 @@
 {
     if (!_titleBtn) {
         _titleBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        [_titleBtn setTitle:@"Area" forState:0];
+        [_titleBtn setTitle:_title forState:0];
         _titleBtn.titleLabel.font=[UIFont systemFontOfSize:15];
         [_titleBtn setTitleColor:Main_Color forState:0];
         [_titleBtn setImage:[UIImage imageNamed:@"arrows"] forState:0];

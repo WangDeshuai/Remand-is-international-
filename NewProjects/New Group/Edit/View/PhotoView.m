@@ -19,7 +19,7 @@
 #import "TZLocationManager.h"
 
 @interface PhotoView ()<TZImagePickerControllerDelegate,UICollectionViewDataSource,UICollectionViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate>{
-    NSMutableArray *_selectedPhotos;
+    
     NSMutableArray *_selectedAssets;
     BOOL _isSelectOriginalPhoto;
     CGFloat _itemWH;
@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, assign) NSInteger maxNum;//最多可以选择的张数
 @property (nonatomic, assign) NSInteger rowNum;//每行展示几个
+@property (nonatomic,strong)NSMutableArray *imageURLArr;
 @end
 @implementation PhotoView
 static CGFloat  _labelHeight =30;
@@ -49,9 +50,9 @@ static CGFloat  _labelHeight =30;
         .rightSpaceToView(self, 15)
         .topSpaceToView(self, 0)
         .heightIs(_labelHeight);
+        _imageURLArr = [NSMutableArray array];
         
-        
-        
+        _selectedPhotos = [NSMutableArray array];
         [self configCollectionView];
     }
     
@@ -109,7 +110,12 @@ static CGFloat  _labelHeight =30;
             cell.imageView.image = [UIImage imageNamed:@"release_pic"];
             cell.deleteBtn.hidden = YES;
     }else {
-        cell.imageView.image = _selectedPhotos[indexPath.row];
+        
+        if ([_selectedPhotos[indexPath.row] isKindOfClass:[UIImage class]]) {
+            cell.imageView.image = _selectedPhotos[indexPath.row];
+        }else {
+            [cell.imageView sd_setImageWithURL:[NSURL URLWithString:_selectedPhotos[indexPath.row]] placeholderImage:[UIImage imageNamed:@"placeholder_1"]];
+        }
 //        cell.asset = _selectedAssets[indexPath.row];
         cell.deleteBtn.hidden = NO;
     }
@@ -117,22 +123,16 @@ static CGFloat  _labelHeight =30;
     cell.deleteBtn.tag = indexPath.row;
     [cell.deleteBtn setImage:[UIImage imageNamed:@"search_cancel"] forState:0];
     [cell.deleteBtn addTarget:self action:@selector(deleteBtnClik:) forControlEvents:UIControlEventTouchUpInside];
-   
-    
-    
-   
-    
-    
     return cell;
 }
 #pragma mark ---点击方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == _selectedPhotos.count) {
+    if (indexPath.row == _selectedPhotos.count) {//点击加号
         if (_selectedPhotos.count==_maxNum) {
             return;
         }
         [self pushTZImagePickerController];
-    }else{
+    }/*else{
         TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithSelectedAssets:_selectedAssets selectedPhotos:_selectedPhotos index:indexPath.row];
         imagePickerVc.maxImagesCount = _maxNum;
          imagePickerVc.isSelectOriginalPhoto = _isSelectOriginalPhoto;
@@ -147,7 +147,7 @@ static CGFloat  _labelHeight =30;
             self.photosArrBlock(photos);
         }];
         [_delegate presentViewController:imagePickerVc animated:YES completion:nil];
-    }
+    }*/
 }
 
 
@@ -159,25 +159,43 @@ static CGFloat  _labelHeight =30;
 - (void)pushTZImagePickerController {
     
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:_maxNum columnNumber:4 delegate:self pushPhotoPickerVc:YES];
-    imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
+//    imagePickerVc.selectedAssets = _selectedAssets; // 目前已经选中的图片数组
     imagePickerVc.naviBgColor=Main_Color;
     imagePickerVc.maxImagesCount=_maxNum;
 //    imagePickerVc.allowTakePicture = self.showTakePhotoBtnSwitch.isOn; // 在内部显示拍照按钮
     [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-//        NSLog(@"输出图片>>%@",photos);
-        if (photos.count>=_rowNum) {
-            [self RowFrameHeight:_itemWH+_itemWH];
-        }else{
-             [self RowFrameHeight:_itemWH];
-        }
         _collectionView.sd_layout
         .bottomSpaceToView(self, 0);
-        self.photosArrBlock(photos);
+        NSMutableArray *muTablephotos = [NSMutableArray arrayWithArray:photos];
+        [self upLoadImage: muTablephotos];  //上传图片
     }];
     [_delegate presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
-
+- (void)upLoadImage:(NSMutableArray *)imageArr
+{
+    [[Engine sharedEngine]requestUpdatePoto:imageArr.firstObject photoStr:@"pic" urlStr:ImageApi_Name parameters:@{} successBlock:^(NSString *urlStr) {
+        if ([urlStr hasPrefix:@"http://"] || [urlStr hasPrefix:@"https://"]) {
+            [self.imageURLArr  addObject:urlStr];   //生成的URL 添加内存
+            [_selectedPhotos addObject:imageArr.firstObject];
+            //已经传完的image 方便传剩余未传的
+            [imageArr removeObject:imageArr.firstObject];
+            if (imageArr.count) {  //如果有继续上传
+                [self upLoadImage:imageArr];
+            }else{
+                self.photosArrBlock(self.imageURLArr);  //回传生成的URL
+            }
+            if (_selectedPhotos.count>=_rowNum) {
+                [self RowFrameHeight:_itemWH+_itemWH];
+            }else{
+                [self RowFrameHeight:_itemWH];
+            }
+            [self.collectionView reloadData];
+        }
+    } failedBlock:^(NSError *error) {
+        
+    }];
+}
 
 
 #pragma mark -----删除按钮
@@ -185,7 +203,8 @@ static CGFloat  _labelHeight =30;
     
     [UIView animateWithDuration:1 animations:^{
         [_selectedPhotos removeObjectAtIndex:sender.tag];
-        [_selectedAssets removeObjectAtIndex:sender.tag];
+        [self.imageURLArr removeObjectAtIndex:sender.tag];
+//        [_selectedAssets removeObjectAtIndex:sender.tag];
     } completion:^(BOOL finished) {
         if (_selectedPhotos.count<_rowNum) {
             [self RowFrameHeight:_itemWH];
@@ -193,21 +212,7 @@ static CGFloat  _labelHeight =30;
         [_collectionView reloadData];
     }];
     
-     self.photosArrBlock(_selectedPhotos);
-  
-    
-    
-    
-    
-//    [_collectionView performBatchUpdates:^{
-//        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:sender.tag inSection:0];
-//        [_collectionView deleteItemsAtIndexPaths:@[indexPath]];
-//    } completion:^(BOOL finished) {
-//        if (_selectedPhotos.count<_rowNum) {
-//              [self RowFrameHeight:_itemWH];
-//        }
-//        [_collectionView reloadData];
-//    }];
+     self.photosArrBlock(self.imageURLArr);
 }
 
 #pragma mark ----相册中取消按钮
@@ -215,7 +220,7 @@ static CGFloat  _labelHeight =30;
     NSLog(@"用户点击了取消");
 }
 - (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto {
-    _selectedPhotos = [NSMutableArray arrayWithArray:photos];
+//    _selectedPhotos = [NSMutableArray arrayWithArray:photos];
     _selectedAssets = [NSMutableArray arrayWithArray:assets];
     _isSelectOriginalPhoto = isSelectOriginalPhoto;
     [_collectionView reloadData];
@@ -232,5 +237,12 @@ static CGFloat  _labelHeight =30;
     _collectionView.sd_layout
     .bottomSpaceToView(self, 0);
 }
-
+-(void)setSelectedPhotos:(NSMutableArray *)selectedPhotos
+{
+    _selectedPhotos = selectedPhotos;
+    if ([selectedPhotos.firstObject isKindOfClass:[NSString class]]) {
+        self.imageURLArr = [NSMutableArray arrayWithArray:selectedPhotos];
+    }
+    [self.collectionView reloadData];
+}
 @end
