@@ -16,6 +16,7 @@
 @property(nonatomic,strong)UIButton * titleBtn;
 @property(nonatomic,strong)UIView * lineView;
 @property (nonatomic,copy)NSString * title;
+@property (nonatomic,strong)NSMutableArray * nameArray;
 @end
 @implementation ChildView
 
@@ -27,6 +28,7 @@
         self.clipsToBounds=YES;
         self.layer.borderColor=Main_Color.CGColor;
         self.layer.borderWidth=1;
+        _nameArray=[NSMutableArray array];
         _title=titlename;
         _dataArray=dataArr;
         _WIDTH_X=frame.size.width;
@@ -34,11 +36,44 @@
         [self titleBtn];
         [self lineView];
         [self CreatTabelView];
-        
+        [self sureBtn];
     }
     
     return self;
 }
+
+
+-(void)sureBtn{
+    NSArray * btnArr =@[@"Cancel",@"OK"];
+    int d =10;
+    int k =(_WIDTH_X-d*2);
+    int g=25;
+    for (int i =0; i<btnArr.count; i++) {
+        UIButton * sureBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+        sureBtn.layer.cornerRadius=g/2;
+        sureBtn.clipsToBounds=YES;
+        [sureBtn setTitle:btnArr[i] forState:0];
+        sureBtn.titleLabel.font=[UIFont systemFontOfSize:15];
+        sureBtn.frame=CGRectMake(d, _HEIGHT_Y-15-(d+g)*i-g, k, g);
+        [self addSubview:sureBtn];
+
+        sureBtn.tag=i?0:1;
+        [sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        if (i==1) {
+            sureBtn.backgroundColor=Main_Color;
+        }else{
+            sureBtn.backgroundColor=[UIColor whiteColor];
+            sureBtn.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.4].CGColor;
+            sureBtn.layer.borderWidth=.5;
+            [sureBtn setTitleColor:[[UIColor lightGrayColor]colorWithAlphaComponent:.7] forState:0];
+        }
+        
+    }
+}
+
+
+
+
 #pragma mark --创建表头
 -(UIButton*)titleBtn
 {
@@ -106,7 +141,6 @@
         [button setTitleColor:[[UIColor blackColor]colorWithAlphaComponent:.5] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(searBtnClink:)
          forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitleColor:Main_Color forState:UIControlStateSelected];
         button.titleLabel.font=[UIFont systemFontOfSize:15];
         CGFloat length=[ToolClass WidthForString:_dataArray[i] withSizeOfFont:15];
         [button setTitle:_dataArray[i] forState:UIControlStateNormal];
@@ -125,38 +159,11 @@
         [headerView addSubview:button];
     }
 
-//确认按钮
-    UIButton * bottomBtn=nil;
-    NSArray * btnArr =@[@"OK",@"Cancel"];
-    int d =15;
-    int k =(_WIDTH_X-d*2);
-    int g=25;
-    for (int i =0; i<btnArr.count; i++) {
-        UIButton * sureBtn =[UIButton buttonWithType:UIButtonTypeCustom];
-        sureBtn.sd_cornerRadius=@(g/2);
-        [sureBtn setTitle:btnArr[i] forState:0];
-        sureBtn.titleLabel.font=[UIFont systemFontOfSize:15];
-        [headerView sd_addSubviews:@[sureBtn]];
-        sureBtn.sd_layout
-        .leftSpaceToView(headerView, d)
-        .rightSpaceToView(headerView, d)
-        .topSpaceToView(btn, 30+(d+g)*i)
-        .widthIs(k)
-        .heightIs(g);
-        if (i==0) {
-            sureBtn.backgroundColor=Main_Color;
-        }else{
-            sureBtn.backgroundColor=[UIColor whiteColor];
-            sureBtn.layer.borderColor=[[UIColor lightGrayColor]colorWithAlphaComponent:.4].CGColor;
-            sureBtn.layer.borderWidth=.5;
-            [sureBtn setTitleColor:[[UIColor lightGrayColor]colorWithAlphaComponent:.7] forState:0];
-             bottomBtn=sureBtn;
-        }
-       
-    }
+//确认
+   
     
    
-    [headerView setupAutoHeightWithBottomView:bottomBtn bottomMargin:50];
+    [headerView setupAutoHeightWithBottomView:btn bottomMargin:50];
     __weak __typeof(headerView)weakSelf = headerView;
     headerView.didFinishAutoLayoutBlock=^(CGRect rect){
         weakSelf.sd_layout
@@ -176,10 +183,8 @@
 
 
 -(void)CreatTabelView{
-    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 36, _WIDTH_X ,_HEIGHT_Y) style:UITableViewStylePlain];
+    UITableView * tableView =[[UITableView alloc]initWithFrame:CGRectMake(0, 36, _WIDTH_X ,_HEIGHT_Y-120) style:UITableViewStylePlain];
     _tableView=tableView;
-    tableView.showsHorizontalScrollIndicator=NO;
-    tableView.showsVerticalScrollIndicator=NO;
     tableView.tableFooterView=[UIView new];
     tableView.tableHeaderView=[self CreatTableViewHeader];
     [self addSubview:tableView];
@@ -188,12 +193,36 @@
 
 
 
+-(void)sureBtnClick:(UIButton*)btn{
+    if (btn.tag==0) {
+        if (_nameArray.count==0) {
+            [LCProgressHUD showMessage:@"您还没有选择"];
+        }else{
+             self.NameBlock(_nameArray);
+             [self dissmiss];
+        }
+    }else{
+        //取消
+        [self dissmiss];
+    }
+}
 
 
-
-
+//点击选中
 -(void)searBtnClink:(UIButton*)btn{
     btn.selected=!btn.selected;
+    NSString * str =_dataArray[btn.tag-100];
+    if (btn.selected==YES) {
+        [btn setTitleColor:[UIColor whiteColor] forState:0];
+         btn.backgroundColor=Main_Color;
+        [_nameArray addObject:str];
+    }else{
+        [btn setTitleColor:[[UIColor blackColor]colorWithAlphaComponent:.5] forState:0];
+        btn.backgroundColor=[UIColor whiteColor];
+        [_nameArray removeObject:str];
+    }
+    
+   
 }
 - (void)show{
     //获取window对象

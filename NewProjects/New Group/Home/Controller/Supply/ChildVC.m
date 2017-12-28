@@ -12,6 +12,12 @@
 #import "PurchaseDetailsVC.h"//采购详情
 #import "SuppleProduct.h"
 @interface ChildVC ()<UITableViewDelegate,UITableViewDataSource>
+{
+    NSMutableArray * _addressNameArr;
+    NSMutableArray * _wasteArr;
+    NSMutableArray * _brokenArr;
+    NSMutableArray * _recycleArr;
+}
 @property(nonatomic,strong)NSMutableArray  *categoryData;
 @property(nonatomic,strong)NSMutableArray  *cellDataArr;
 @end
@@ -140,7 +146,7 @@
         int g=360;//view的高度
         UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
         CGRect rect=[btn convertRect:btn.bounds toView:window];
-        [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:self.categoryData Title:btn.titleLabel.text];
+        [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:self.categoryData Btn:btn];
     }
     
 }
@@ -151,8 +157,20 @@
    
     
     NSDictionary *dic1 = @{@"keyWord":_keyWord,@"pageNo":[NSString stringWithFormat:@"%ld",(long)page],@"datatype":_dataType,@"sortType":_sortType};
+    NSMutableDictionary * dic =[NSMutableDictionary dictionaryWithDictionary:dic1];
+    if (_addressNameArr.count!=0) {
+        [dic setObject:_addressNameArr forKey:@"address"];
+    }if (_wasteArr.count!=0) {
+        [dic setObject:_wasteArr forKey:@"wastePlastics"];
+    }if (_recycleArr!=0) {
+        [dic setObject:_recycleArr forKey:@"regeneratedParticle"];
+    }if (_brokenArr!=0) {
+        [dic setObject:_brokenArr forKey:@"brokenPlastic"];
+    }
     
-    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic1 callback:^(id item) {
+    
+    
+    [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:SearchApi_Search withParame:dic callback:^(id item) {
         [LCProgressHUD hide];
         NSString * code =[NSString stringWithFormat:@"%@",[item objectForKey:@"resultCode"]];
         if ([code isEqualToString:@"1"]) {
@@ -191,7 +209,7 @@
          int g=360;//view的高度
         UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
         CGRect rect=[btn convertRect:btn.bounds toView:window];
-         [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:nameArr Title:btn.titleLabel.text];;
+         [self CusterView:CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),CGRectGetWidth(rect), g)DataArr:nameArr Btn:btn];;
         
         [LCProgressHUD hide];
     } andFailBlock:^(NSError *error) {
@@ -203,8 +221,24 @@
 
 
 
--(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr Title:(NSString*)title{
-    ChildView * vc =[[ChildView alloc]initWithFrame:frame TitleName:title AndDataArr:arr];
+-(void)CusterView:(CGRect)frame DataArr:(NSArray*)arr Btn:(UIButton*)btn{
+    ChildView * vc =[[ChildView alloc]initWithFrame:frame TitleName:btn.titleLabel.text AndDataArr:arr];
+    vc.NameBlock = ^(NSMutableArray *dataArr) {
+       
+        btn.titleLabel.text=[dataArr componentsJoinedByString:@""];
+//        [btn setTitleColor:[UIColor redColor] forState:0];
+        if (btn.tag==0) {
+            _addressNameArr=dataArr;
+        }else if (btn.tag==1){
+            _wasteArr=dataArr;
+        }else if (btn.tag==2){
+            _brokenArr=dataArr;
+        }else if (btn.tag==3){
+            _recycleArr=dataArr;
+        }
+        
+        [self.baseTableView.mj_header beginRefreshing];
+    };
     [vc show];
 }
 

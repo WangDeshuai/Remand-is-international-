@@ -88,7 +88,7 @@
         tableView.backgroundColor=BG_COLOR;
         tableView.keyboardDismissMode=UIScrollViewKeyboardDismissModeOnDrag;
         tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(mjHeaderRefresh)];
-        tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(mjFooterRefresh)];
+        tableView.mj_footer = [MJRefreshBackGifFooter footerWithRefreshingTarget:self refreshingAction:@selector(mjFooterRefresh)];
         _baseTableView = tableView;
     }
     return _baseTableView;

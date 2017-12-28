@@ -97,6 +97,8 @@
 		96B00DE01FDFBF8B000EB2D2 /* MyPrivilegeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DDF1FDFBF8B000EB2D2 /* MyPrivilegeCell.m */; };
 		96B00DE41FDFD6DF000EB2D2 /* MemberVIPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */; };
 		96B00DE81FDFD78E000EB2D2 /* MemberVIPCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */; };
+		96B540F31FF4F589007E0FD4 /* SubmitVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B540F21FF4F589007E0FD4 /* SubmitVC.m */; };
+		96B540F71FF50230007E0FD4 /* PurchaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B540F61FF50230007E0FD4 /* PurchaseVC.m */; };
 		96BA433B1FE3A7FF00F64E29 /* SearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA433A1FE3A7FF00F64E29 /* SearchVC.m */; };
 		96C91D351FD8EB0700DF0CE3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D341FD8EB0700DF0CE3 /* AppDelegate.m */; };
 		96C91D381FD8EB0700DF0CE3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C91D371FD8EB0700DF0CE3 /* ViewController.m */; };
@@ -365,6 +367,10 @@
 		96B00DE31FDFD6DF000EB2D2 /* MemberVIPVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberVIPVC.m; sourceTree = "<group>"; };
 		96B00DE61FDFD78E000EB2D2 /* MemberVIPCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MemberVIPCell.h; sourceTree = "<group>"; };
 		96B00DE71FDFD78E000EB2D2 /* MemberVIPCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MemberVIPCell.m; sourceTree = "<group>"; };
+		96B540F11FF4F589007E0FD4 /* SubmitVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubmitVC.h; sourceTree = "<group>"; };
+		96B540F21FF4F589007E0FD4 /* SubmitVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubmitVC.m; sourceTree = "<group>"; };
+		96B540F51FF50230007E0FD4 /* PurchaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PurchaseVC.h; sourceTree = "<group>"; };
+		96B540F61FF50230007E0FD4 /* PurchaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PurchaseVC.m; sourceTree = "<group>"; };
 		96BA43391FE3A7FF00F64E29 /* SearchVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchVC.h; sourceTree = "<group>"; };
 		96BA433A1FE3A7FF00F64E29 /* SearchVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchVC.m; sourceTree = "<group>"; };
 		96C91D301FD8EB0700DF0CE3 /* NewProjects.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewProjects.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -650,6 +656,8 @@
 				96B00DBE1FDF6D28000EB2D2 /* 发布信息 */,
 				96B00DBB1FDF6373000EB2D2 /* 基本信息 */,
 				964064C01FE7637E001A5D9B /* 修改密码 */,
+				96B540F01FF4F544007E0FD4 /* 意见反馈 */,
+				96B540F41FF501A3007E0FD4 /* 消费记录 */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1051,6 +1059,33 @@
 			path = "会员VIP";
 			sourceTree = "<group>";
 		};
+		96B540EF1FF48208007E0FD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				96EAA9D71FF38FA900A78AF4 /* ReleaseModel.h */,
+				96EAA9D81FF38FA900A78AF4 /* ReleaseModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		96B540F01FF4F544007E0FD4 /* 意见反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				96B540F11FF4F589007E0FD4 /* SubmitVC.h */,
+				96B540F21FF4F589007E0FD4 /* SubmitVC.m */,
+			);
+			path = "意见反馈";
+			sourceTree = "<group>";
+		};
+		96B540F41FF501A3007E0FD4 /* 消费记录 */ = {
+			isa = PBXGroup;
+			children = (
+				96B540F51FF50230007E0FD4 /* PurchaseVC.h */,
+				96B540F61FF50230007E0FD4 /* PurchaseVC.m */,
+			);
+			path = "消费记录";
+			sourceTree = "<group>";
+		};
 		96BA433C1FE3A80B00F64E29 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -1316,8 +1351,7 @@
 		96C91DC01FD8F05B00DF0CE3 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
-				96EAA9D71FF38FA900A78AF4 /* ReleaseModel.h */,
-				96EAA9D81FF38FA900A78AF4 /* ReleaseModel.m */,
+				96B540EF1FF48208007E0FD4 /* Model */,
 				04ED7B5C1FDD2CC100424718 /* Controller */,
 				04ED7B5E1FDD2CE500424718 /* Cell */,
 				04ED7B5D1FDD2CDD00424718 /* View */,
@@ -1671,6 +1705,7 @@
 				964064BF1FE76372001A5D9B /* ChangePasswordVC.m in Sources */,
 				96EAA9DF1FF3900F00A78AF4 /* ChildPublishVC.m in Sources */,
 				96C91D431FD8EB0700DF0CE3 /* main.m in Sources */,
+				96B540F71FF50230007E0FD4 /* PurchaseVC.m in Sources */,
 				9674BA7E1FDE881E00865E74 /* BasicInforMationCell.m in Sources */,
 				96EAA9D91FF38FAA00A78AF4 /* ReleaseModel.m in Sources */,
 				96C91D991FD8EF1C00DF0CE3 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
@@ -1770,6 +1805,7 @@
 				04ED7B321FDC0AF100424718 /* UIButton+WebCache.m in Sources */,
 				04ED7B371FDC0AF100424718 /* UIImageView+WebCache.m in Sources */,
 				966632601FE4FC9D0096ACB7 /* TZPhotoPickerController.m in Sources */,
+				96B540F31FF4F589007E0FD4 /* SubmitVC.m in Sources */,
 				9672A57C1FF0EB1000574E26 /* UserInfoBaseClass.m in Sources */,
 				96C91E031FD8F22C00DF0CE3 /* AFURLSessionManager.m in Sources */,
 				96DAE23D1FECDCA400A82B58 /* ZJSelectPhotoTool.m in Sources */,

@@ -57,6 +57,7 @@ static AFHTTPSessionManager *manager=nil;
 -(void)getwithUrl:(NSString*)URL andParameter:(NSDictionary*)Parameter withSuccessBlock:(void(^)(id item))succeedBlock andFailBlock:(void(^)(NSError*error))failBlock andprogressBlock:(void(^)(NSProgress*progress))progressBlock
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+     [manager.requestSerializer setValue:@"en" forHTTPHeaderField:@"Accept-Language"];
    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"text/json", @"application/json", @"text/javascript", @"text/xml", nil];
     [manager GET:URL parameters:Parameter progress:^(NSProgress * _Nonnull downloadProgress) {
         progressBlock(downloadProgress);

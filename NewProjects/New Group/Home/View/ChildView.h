@@ -10,6 +10,7 @@
 
 @interface ChildView : UIView
 -(id)initWithFrame:(CGRect)frame TitleName:(NSString*)titlename AndDataArr:(NSArray*)dataArr;
+@property (nonatomic,copy)void(^NameBlock)(NSMutableArray* dataArr);
 -(void)show;
 -(void)dissmiss;
 @end

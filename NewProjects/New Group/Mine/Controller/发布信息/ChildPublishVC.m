@@ -95,9 +95,9 @@
 #pragma mark ----网络请求类-------
 -(void)getPublicMessage:(NSInteger)page{
     __weak typeof(self) weakSelf = self;
+    NSLog(@"%@",[NSString stringWithFormat:@"%lu",page]);
     [[Engine sharedEngine] BJPostWithUrl:Main_URL withAPIName:UserApi_PublicMessage withParame:@{@"page":[NSString stringWithFormat:@"%lu",page],@"auditStatus":[NSString stringWithFormat:@"%d",_type]} callback:^(id item) {
-        [weakSelf.baseTableView.mj_header endRefreshing];
-        [weakSelf.baseTableView.mj_footer endRefreshing];
+        
         if ([item[@"resultCode"] integerValue] == 1) {
             if (self.current==1) {
                 _dataArray=[NSMutableArray arrayWithArray:item[@"list"]];
@@ -105,14 +105,18 @@
             {
                 [_dataArray addObjectsFromArray:item[@"list"]];
             }
-
+            if ([item[@"list"] count]<=0) {
+                self.current-=1;
+            }
         }else{
-            self.current-=1;
+            
             [LCProgressHUD showFailure:item[@"resultMessage"]];
         }
         
         
         [self.baseTableView reloadData];
+        [self.baseTableView.mj_header endRefreshing];
+        [self.baseTableView.mj_footer endRefreshing];
     } failedBlock:^(id error) {
         [weakSelf.baseTableView.mj_header endRefreshing];
         [weakSelf.baseTableView.mj_footer endRefreshing];

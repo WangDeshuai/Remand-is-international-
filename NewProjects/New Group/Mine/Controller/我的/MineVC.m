@@ -16,6 +16,8 @@
 #import "BasicInforMationVC.h"//基本信息
 #import "UserInfoBaseClass.h"
 #import "ChangePasswordVC.h"//修改密码
+#import "SubmitVC.h"//意见反馈
+#import "PurchaseVC.h"//消费记录
 @interface MineVC ()
 @property(nonatomic,strong)NSArray * dataArray;
 @property(nonatomic,strong) UIImageView * imageview;
@@ -58,7 +60,7 @@ static const CGFloat ratio =0.66;
 //数据源
 -(void)CreatData{
    NSArray * arr1=@[@"Published Infomation",@"View Records",@"My Privilege",@"Member Purchase",@"Purchase History"];
-    NSArray * arr2=@[@"Basic Information",@"Change Password",@"Launch The Current Account"];
+    NSArray * arr2=@[@"Submit comments",@"Change Password",@"Launch The Current Account"];
     NSArray * image1 =@[@"mine_0",@"mine_1",@"mine_2",@"mine_3",@"mine_4"];
     NSArray * image2=@[@"mine_5",@"mine_6",@"mine_7"];
     _dataArray=@[arr1,arr2];
@@ -237,13 +239,15 @@ static const CGFloat ratio =0.66;
             vc.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row==4){
-            
+            //消费记录
+            PurchaseVC * vc =[PurchaseVC new];
+            vc.hidesBottomBarWhenPushed=YES;
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }else if (indexPath.section==1){
         if (indexPath.row==0) {
-            //基本信息
-            BasicInforMationVC * vc=[BasicInforMationVC new];
-            vc.model=_model;
+            //意见反馈
+            SubmitVC * vc=[SubmitVC new];
             vc.hidesBottomBarWhenPushed=YES;
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row==1){
